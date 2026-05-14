@@ -270,16 +270,17 @@
     }
 
     .hero {
+      position: relative;
+      isolation: isolate;
       min-height: 96svh;
       padding: 150px 0 92px;
       display: flex;
       align-items: center;
       overflow: hidden;
       background:
-        linear-gradient(90deg, rgba(241, 236, 221, 0.99) 0%, rgba(241, 236, 221, 0.95) 36%, rgba(241, 236, 221, 0.52) 58%, rgba(241, 236, 221, 0.06) 100%),
-        url("assets/hireable-interview-practice.png");
-      background-size: cover;
-      background-position: center right;
+        radial-gradient(circle at 78% 24%, rgba(142, 163, 174, 0.3), transparent 32%),
+        radial-gradient(circle at 16% 86%, rgba(255, 132, 82, 0.12), transparent 28%),
+        linear-gradient(90deg, rgba(241, 236, 221, 1) 0%, rgba(241, 236, 221, 0.94) 55%, rgba(241, 236, 221, 0.78) 100%);
     }
 
     .hero::after {
@@ -345,8 +346,114 @@
 
     .hero-copy {
       position: relative;
+      z-index: 4;
+      width: min(650px, 100%);
+    }
+
+    .hero-grid {
+      position: relative;
       z-index: 2;
-      width: min(690px, 100%);
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-showcase {
+      position: relative;
+      height: clamp(520px, 50vw, 670px);
+      margin: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--black);
+      box-shadow: 0 36px 90px rgba(17, 17, 17, 0.18);
+    }
+
+    .hero-showcase::before,
+    .hero-showcase::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-showcase::before {
+      z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(17, 17, 17, 0.02), rgba(17, 17, 17, 0.42)),
+        linear-gradient(90deg, rgba(17, 17, 17, 0.36), transparent 42%);
+    }
+
+    .hero-showcase::after {
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.12);
+    }
+
+    .hero-showcase img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 48% center;
+    }
+
+    .showcase-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 3;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--white);
+    }
+
+    .showcase-copy strong {
+      display: block;
+      max-width: 310px;
+      font-size: 20px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .showcase-copy span {
+      display: block;
+      margin-top: 7px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .showcase-pill {
+      flex: 0 0 auto;
+      min-width: 112px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: var(--white);
+      text-align: center;
+      backdrop-filter: blur(18px);
+    }
+
+    .showcase-pill b {
+      display: block;
+      color: var(--coral);
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .showcase-pill small {
+      display: block;
+      margin-top: 4px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 10px;
+      font-weight: 850;
+      text-transform: uppercase;
     }
 
     .hero-sub {
@@ -605,6 +712,64 @@
       background:
         radial-gradient(circle at 18% 12%, rgba(142, 163, 174, 0.2), transparent 30%),
         linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+    }
+
+    .scene-gallery {
+      padding: 0 0 104px;
+      color: var(--white);
+      background: #0d0d0d;
+    }
+
+    .scene-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.925fr) minmax(0, 0.925fr);
+      gap: 16px;
+    }
+
+    .scene-frame {
+      position: relative;
+      height: 350px;
+      margin: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: var(--black);
+      box-shadow: 0 28px 76px rgba(0, 0, 0, 0.28);
+    }
+
+    .scene-frame:first-child {
+      height: 430px;
+    }
+
+    .scene-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17, 17, 17, 0.02), rgba(17, 17, 17, 0.52));
+      pointer-events: none;
+    }
+
+    .scene-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .scene-frame figcaption {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      z-index: 2;
+      max-width: 280px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: rgba(17, 17, 17, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.35;
+      backdrop-filter: blur(16px);
     }
 
     .split-band h2,
@@ -1184,6 +1349,19 @@
         width: 274px;
       }
 
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      .hero-showcase {
+        height: 460px;
+      }
+
+      .hero-showcase img {
+        object-position: 46% center;
+      }
+
       .thought:nth-child(1),
       .thought:nth-child(3),
       .thought:nth-child(5) {
@@ -1196,6 +1374,14 @@
       .practice-layout,
       .footer-grid {
         grid-template-columns: 1fr;
+      }
+
+      .scene-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .scene-frame:first-child {
+        grid-column: 1 / -1;
       }
 
       .features-grid,
@@ -1232,10 +1418,8 @@
         min-height: auto;
         padding: 120px 0 54px;
         background:
-          linear-gradient(180deg, rgba(241, 236, 221, 0.96) 0%, rgba(241, 236, 221, 0.92) 58%, rgba(241, 236, 221, 0.62) 100%),
-          url("assets/hireable-interview-practice.png");
-        background-size: cover;
-        background-position: 58% center;
+          radial-gradient(circle at 72% 20%, rgba(142, 163, 174, 0.28), transparent 36%),
+          linear-gradient(180deg, rgba(241, 236, 221, 1) 0%, rgba(241, 236, 221, 0.96) 100%);
       }
 
       h1 {
@@ -1265,6 +1449,28 @@
 
       .hero-micro {
         font-size: 16px;
+      }
+
+      .hero-showcase {
+        height: 330px;
+      }
+
+      .showcase-caption {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .showcase-copy strong {
+        max-width: 280px;
+        font-size: 17px;
+      }
+
+      .showcase-pill {
+        min-width: 96px;
+        padding: 10px 12px;
       }
 
       .hero-actions {
@@ -1305,8 +1511,19 @@
       .features-grid,
       .testimonial-grid,
       .difference-grid,
+      .scene-strip,
       .before-after {
         grid-template-columns: 1fr;
+      }
+
+      .scene-gallery {
+        padding-bottom: 74px;
+      }
+
+      .scene-frame,
+      .scene-frame:first-child {
+        grid-column: auto;
+        height: 250px;
       }
 
       .ba-col.after {
@@ -1376,7 +1593,7 @@
         <div class="story-step">06 Proof</div>
       </div>
 
-      <div class="container">
+      <div class="container hero-grid">
         <div class="hero-copy reveal">
           <h1>Maybe you know the answer... but don't know how to say it.</h1>
           <p class="lead hero-sub">Your skills are not the problem. Your communication confidence is.</p>
@@ -1386,6 +1603,20 @@
             <div class="micro-note">Practice before the interview decides for you.</div>
           </div>
         </div>
+
+        <figure class="hero-showcase reveal">
+          <img src="assets/hireable-interview-practice.png" alt="Candidate practicing a video interview with HIREABLE" />
+          <figcaption class="showcase-caption">
+            <span class="showcase-copy">
+              <strong>Real interview pressure, practiced before it counts.</strong>
+              <span>Live mocks + AI feedback</span>
+            </span>
+            <span class="showcase-pill" aria-hidden="true">
+              <b>82</b>
+              <small>Clarity</small>
+            </span>
+          </figcaption>
+        </figure>
       </div>
 
       <div class="thought-cloud" aria-hidden="true">
@@ -1451,6 +1682,23 @@
             <p>We rebuild how you structure answers, handle pressure, and present yourself - using real simulation, not theory.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="scene-gallery" aria-label="HIREABLE visual journey">
+      <div class="container scene-strip">
+        <figure class="scene-frame reveal">
+          <img src="assets/hireable-pressure.png" alt="Candidate under interview pressure while preparing at a laptop" />
+          <figcaption>First we recreate the pressure, so the panic has somewhere to show up.</figcaption>
+        </figure>
+        <figure class="scene-frame reveal">
+          <img src="assets/hireable-interview-practice.png" alt="Candidate in a calm video interview practice session" />
+          <figcaption>Then we shape the answer: short, clear, and easy to follow.</figcaption>
+        </figure>
+        <figure class="scene-frame reveal">
+          <img src="assets/hireable-practice.png" alt="Candidate using an AI interview simulator with feedback on screen" />
+          <figcaption>Finally, we repeat it until confidence feels normal.</figcaption>
+        </figure>
       </div>
     </section>
 
