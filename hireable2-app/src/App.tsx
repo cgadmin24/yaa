@@ -6,8 +6,7 @@ const videoSrc =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260505_101331_74f9b798-3f00-4e86-8a01-377aa16ffeaa.mp4";
 
 type Logo = {
-  alt: string;
-  src: string;
+  label: string;
   gradient: {
     from: string;
     to: string;
@@ -16,43 +15,35 @@ type Logo = {
 
 const logos: Logo[] = [
   {
-    alt: "Procure",
-    src: "https://svgl.app/library/procure.svg",
+    label: "Stop freezing",
     gradient: { from: "#60a5fa", to: "#1d4ed8" }
   },
   {
-    alt: "Shopify",
-    src: "https://svgl.app/library/shopify.svg",
+    label: "Answer cleaner",
     gradient: { from: "#fde047", to: "#f59e0b" }
   },
   {
-    alt: "Blender",
-    src: "https://svgl.app/library/blender.svg",
+    label: "Speak calmer",
     gradient: { from: "#7dd3fc", to: "#2563eb" }
   },
   {
-    alt: "Figma",
-    src: "https://svgl.app/library/figma.svg",
+    label: "Live HR mocks",
     gradient: { from: "#c084fc", to: "#7c3aed" }
   },
   {
-    alt: "Spotify",
-    src: "https://svgl.app/library/spotify.svg",
+    label: "AI pressure reps",
     gradient: { from: "#fb7185", to: "#e11d48" }
   },
   {
-    alt: "Lottielab",
-    src: "https://svgl.app/library/lottielab.svg",
+    label: "Direct feedback",
     gradient: { from: "#facc15", to: "#22c55e" }
   },
   {
-    alt: "Google Cloud",
-    src: "https://svgl.app/library/google-cloud.svg",
+    label: "Less rambling",
     gradient: { from: "#bae6fd", to: "#38bdf8" }
   },
   {
-    alt: "Bing",
-    src: "https://svgl.app/library/bing.svg",
+    label: "Ready for follow-ups",
     gradient: { from: "#67e8f9", to: "#14b8a6" }
   }
 ];
@@ -71,17 +62,14 @@ function MarqueeScroller() {
         WebkitMaskImage:
           "linear-gradient(to right, transparent, black 12%, black 88%, transparent)"
       }}
-      aria-label="Partner logo marquee"
+      aria-label="Hireable outcome marquee"
     >
       <div className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused]">
         {marqueeLogos.map((logo, index) => (
-          <a
+          <div
             className={cn(logoCardClass)}
-            href="https://svgl.app"
-            key={`${logo.alt}-${index}`}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`${logo.alt} logo from SVGL`}
+            key={`${logo.label}-${index}`}
+            aria-label={logo.label}
           >
             <span
               className="absolute inset-0 z-0 scale-150 opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
@@ -90,14 +78,10 @@ function MarqueeScroller() {
               }}
               aria-hidden="true"
             />
-            <img
-              className="relative z-10 max-h-9 max-w-[92px] object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
-              src={logo.src}
-              alt={logo.alt}
-              loading="lazy"
-              decoding="async"
-            />
-          </a>
+            <span className="relative z-10 px-5 text-center text-[13px] font-semibold leading-tight text-[#0a1b33] transition-colors duration-300 group-hover:text-white">
+              {logo.label}
+            </span>
+          </div>
         ))}
       </div>
     </section>
@@ -129,14 +113,14 @@ function App() {
               className="w-full max-w-[560px] min-w-0"
             >
               <h1 className="font-display text-[42px] md:text-[56px] font-medium tracking-tight text-[#0a1b33] leading-[0.96]">
-                Foundation of the
+                Your skills are ready.
                 <br />
-                new digital epoch
+                Your delivery isn't.
               </h1>
               <p className="mt-6 w-full max-w-[300px] sm:max-w-[420px] md:max-w-[500px] font-sans text-[14px] md:text-[15px] text-[#64748b] leading-6 md:leading-7">
-                Designing products, powering ecosystems and laying the
-                foundation of a decentralized web for enterprises, builders and
-                communities alike.
+                Hireable fixes the interview gap with live mocks, AI pressure,
+                and direct feedback that makes you clear, calm, and hard to
+                ignore.
               </p>
               <motion.button
                 className="mt-8 rounded-full bg-[#0a152d] px-6 py-3 text-[13px] font-semibold text-white shadow-[0_14px_30px_rgba(10,21,45,0.2)] outline-none transition-shadow hover:shadow-[0_18px_40px_rgba(10,21,45,0.28)] focus-visible:ring-2 focus-visible:ring-[#0a152d] focus-visible:ring-offset-4"
@@ -144,7 +128,7 @@ function App() {
                 whileTap={{ scale: 0.98 }}
                 type="button"
               >
-                Contact Us
+                Talk To An Expert
               </motion.button>
             </motion.div>
           </div>
@@ -166,25 +150,25 @@ function App() {
                 href="/hireable2"
                 aria-label="Hireable2 home"
               >
-                ✦
+                {"\u2726"}
               </a>
               <button
-                className="px-4 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap"
+                className="px-3 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap sm:px-4"
                 type="button"
               >
-                Products
+                Method
               </button>
               <button
-                className="px-4 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap"
+                className="px-3 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap sm:px-4"
                 type="button"
               >
-                Docs
+                Mocks
               </button>
               <button
-                className="inline-flex items-center gap-1.5 bg-white px-5 py-2 rounded-full text-[12px] font-semibold text-[#0a1b33] border border-slate-200/60 shadow-sm hover:border-slate-300 transition-all whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 bg-white px-4 py-2 rounded-full text-[12px] font-semibold text-[#0a1b33] border border-slate-200/60 shadow-sm hover:border-slate-300 transition-all whitespace-nowrap sm:px-5"
                 type="button"
               >
-                Get in touch
+                Talk To An Expert
                 <ChevronRight className="h-3.5 w-3.5" strokeWidth={2.4} />
               </button>
             </motion.nav>
