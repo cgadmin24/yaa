@@ -12,6 +12,10 @@
     {
       "source": "/hireable",
       "destination": "/hireable/index.html"
+    },
+    {
+      "source": "/hireable2",
+      "destination": "/hireable2/index.html"
     }
   ]
 }
