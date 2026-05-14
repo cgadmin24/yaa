@@ -486,12 +486,13 @@
     .thought-cloud {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      z-index: 5;
       pointer-events: none;
     }
 
     .thought {
       position: absolute;
+      z-index: 1;
       max-width: 235px;
       padding: 13px 15px;
       border-radius: 8px;
@@ -538,7 +539,7 @@
       position: absolute;
       right: max(24px, calc((100vw - var(--max)) / 2));
       bottom: 104px;
-      z-index: 2;
+      z-index: 6;
       width: 300px;
       padding: 16px;
       border-radius: 8px;
