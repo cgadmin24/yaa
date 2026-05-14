@@ -4,6 +4,8 @@ import { cn } from "./lib/utils";
 
 const videoSrc =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260505_101331_74f9b798-3f00-4e86-8a01-377aa16ffeaa.mp4";
+const contactHref =
+  "mailto:info@theclosinggap.net?subject=Talk%20To%20An%20Expert%20-%20HIREABLE";
 
 type Logo = {
   label: string;
@@ -64,12 +66,16 @@ function MarqueeScroller() {
       }}
       aria-label="Hireable outcome marquee"
     >
-      <div className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused]">
+      <div
+        className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused]"
+        role="list"
+      >
         {marqueeLogos.map((logo, index) => (
           <div
             className={cn(logoCardClass)}
             key={`${logo.label}-${index}`}
-            aria-label={logo.label}
+            role="listitem"
+            aria-hidden={index >= logos.length}
           >
             <span
               className="absolute inset-0 z-0 scale-150 opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
@@ -112,7 +118,7 @@ function App() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="w-full max-w-[560px] min-w-0"
             >
-              <h1 className="font-display text-[42px] md:text-[56px] font-medium tracking-tight text-[#0a1b33] leading-[0.96]">
+              <h1 className="font-display text-[38px] min-[380px]:text-[42px] md:text-[56px] font-medium tracking-tight text-[#0a1b33] leading-[0.96]">
                 Your skills are ready.
                 <br />
                 Your delivery isn't.
@@ -122,14 +128,14 @@ function App() {
                 and direct feedback that makes you clear, calm, and hard to
                 ignore.
               </p>
-              <motion.button
-                className="mt-8 rounded-full bg-[#0a152d] px-6 py-3 text-[13px] font-semibold text-white shadow-[0_14px_30px_rgba(10,21,45,0.2)] outline-none transition-shadow hover:shadow-[0_18px_40px_rgba(10,21,45,0.28)] focus-visible:ring-2 focus-visible:ring-[#0a152d] focus-visible:ring-offset-4"
+              <motion.a
+                className="mt-8 inline-flex rounded-full bg-[#0a152d] px-6 py-3 text-[13px] font-semibold text-white shadow-[0_14px_30px_rgba(10,21,45,0.2)] outline-none transition-shadow hover:shadow-[0_18px_40px_rgba(10,21,45,0.28)] focus-visible:ring-2 focus-visible:ring-[#0a152d] focus-visible:ring-offset-4"
+                href={contactHref}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.98 }}
-                type="button"
               >
                 Talk To An Expert
-              </motion.button>
+              </motion.a>
             </motion.div>
           </div>
 
@@ -152,25 +158,25 @@ function App() {
               >
                 {"\u2726"}
               </a>
-              <button
-                className="px-3 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap sm:px-4"
-                type="button"
+              <a
+                className="hidden px-3 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap min-[380px]:inline-flex sm:px-4"
+                href="/hireable#method"
               >
                 Method
-              </button>
-              <button
-                className="px-3 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap sm:px-4"
-                type="button"
+              </a>
+              <a
+                className="hidden px-3 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors whitespace-nowrap min-[380px]:inline-flex sm:px-4"
+                href="/hireable#practice"
               >
                 Mocks
-              </button>
-              <button
+              </a>
+              <a
                 className="inline-flex items-center gap-1.5 bg-white px-4 py-2 rounded-full text-[12px] font-semibold text-[#0a1b33] border border-slate-200/60 shadow-sm hover:border-slate-300 transition-all whitespace-nowrap sm:px-5"
-                type="button"
+                href={contactHref}
               >
                 Talk To An Expert
                 <ChevronRight className="h-3.5 w-3.5" strokeWidth={2.4} />
-              </button>
+              </a>
             </motion.nav>
           </div>
         </section>

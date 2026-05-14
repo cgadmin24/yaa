@@ -46,7 +46,7 @@ body {
   min-height: 100vh;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   video {
     object-position: 25% center;
   }
