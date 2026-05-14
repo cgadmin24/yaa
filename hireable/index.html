@@ -32,6 +32,24 @@
       --radius: 8px;
       --max: 1180px;
       --pad: 24px;
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+      --stage-x: 0px;
+      --stage-y: 0px;
+      --media-x: 0px;
+      --media-y: 0px;
+      --mock-x: 0px;
+      --mock-y: 0px;
+      --mock-rx: 0deg;
+      --mock-ry: 0deg;
+      --copy-x: 0px;
+      --copy-y: 0px;
+      --thought-a-x: 0px;
+      --thought-a-y: 0px;
+      --thought-b-x: 0px;
+      --thought-b-y: 0px;
+      --thought-c-x: 0px;
+      --thought-c-y: 0px;
     }
 
     * {
@@ -280,6 +298,8 @@
       display: flex;
       align-items: center;
       overflow: hidden;
+      perspective: 1500px;
+      transform-style: preserve-3d;
       background:
         linear-gradient(115deg, rgba(241, 236, 221, 1) 0%, rgba(247, 243, 234, 0.98) 45%, rgba(223, 232, 234, 0.86) 100%);
     }
@@ -297,6 +317,9 @@
       position: relative;
       z-index: 4;
       width: min(650px, 100%);
+      transform: translate3d(var(--copy-x), var(--copy-y), 72px);
+      transition: transform 180ms ease-out;
+      will-change: transform;
     }
 
     .hero-grid {
@@ -306,6 +329,8 @@
       grid-template-columns: minmax(0, 0.9fr) minmax(500px, 1.1fr);
       gap: 68px;
       align-items: center;
+      perspective: 1500px;
+      transform-style: preserve-3d;
     }
 
     .hero-showcase {
@@ -316,6 +341,11 @@
       border-radius: 8px;
       background: var(--black);
       box-shadow: 0 42px 110px rgba(17, 17, 17, 0.2);
+      transform: translate3d(var(--stage-x), var(--stage-y), 0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+      transform-style: preserve-3d;
+      transform-origin: 50% 54%;
+      transition: transform 180ms ease-out, box-shadow 220ms ease;
+      will-change: transform;
     }
 
     .hero-showcase::before,
@@ -345,6 +375,9 @@
       height: 100%;
       object-fit: cover;
       object-position: 46% center;
+      transform: scale(1.055) translate3d(var(--media-x), var(--media-y), 0);
+      transition: transform 220ms ease-out;
+      will-change: transform;
     }
 
     .showcase-caption {
@@ -358,6 +391,7 @@
       justify-content: space-between;
       gap: 16px;
       color: var(--white);
+      transform: translateZ(56px);
     }
 
     .showcase-copy strong {
@@ -378,6 +412,7 @@
     }
 
     .showcase-pill {
+      display: none;
       flex: 0 0 auto;
       min-width: 112px;
       padding: 12px 14px;
@@ -387,6 +422,7 @@
       color: var(--white);
       text-align: center;
       backdrop-filter: blur(18px);
+      transform: translateZ(44px);
     }
 
     .showcase-pill b {
@@ -437,12 +473,14 @@
       inset: 0;
       z-index: 5;
       pointer-events: none;
+      perspective: 1500px;
+      transform-style: preserve-3d;
     }
 
     .thought {
       position: absolute;
       z-index: 1;
-      max-width: 270px;
+      max-width: 245px;
       padding: 15px 17px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.86);
@@ -452,24 +490,27 @@
       color: #2f383d;
       font-size: 13px;
       font-weight: 800;
-      animation: drift 9s ease-in-out infinite;
+      transform-style: preserve-3d;
+      transition: transform 190ms ease-out, box-shadow 220ms ease;
+      will-change: transform;
     }
 
     .thought:nth-child(1) {
       top: 19%;
       right: 32%;
+      transform: translate3d(var(--thought-a-x), var(--thought-a-y), 82px) rotate(-1.5deg);
     }
 
     .thought:nth-child(2) {
       top: 31%;
-      right: 6%;
-      animation-delay: -1.7s;
+      right: 11%;
+      transform: translate3d(var(--thought-b-x), var(--thought-b-y), 110px) rotate(1deg);
     }
 
     .thought:nth-child(3) {
-      bottom: 18%;
-      right: 31%;
-      animation-delay: -3.4s;
+      top: 64%;
+      right: 34%;
+      transform: translate3d(var(--thought-c-x), var(--thought-c-y), 92px) rotate(0.8deg);
     }
 
     .hero-mock {
@@ -484,6 +525,10 @@
       color: var(--white);
       box-shadow: 0 30px 88px rgba(17, 17, 17, 0.28);
       backdrop-filter: blur(20px);
+      transform: translate3d(var(--mock-x), var(--mock-y), 110px) rotateX(var(--mock-rx)) rotateY(var(--mock-ry));
+      transform-origin: 50% 60%;
+      transition: transform 180ms ease-out, box-shadow 220ms ease;
+      will-change: transform;
     }
 
     .mock-top,
@@ -663,6 +708,8 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       align-items: stretch;
       gap: 18px;
+      perspective: 1200px;
+      transform-style: preserve-3d;
     }
 
     .scene-frame {
@@ -674,6 +721,9 @@
       border: 1px solid rgba(255, 255, 255, 0.14);
       background: var(--black);
       box-shadow: 0 32px 84px rgba(0, 0, 0, 0.3);
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      will-change: transform;
     }
 
     .scene-frame:first-child {
@@ -694,6 +744,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 500ms ease;
     }
 
     .scene-frame figcaption {
@@ -788,6 +839,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
+      perspective: 1200px;
     }
 
     .ace-card,
@@ -800,6 +852,9 @@
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.72);
       box-shadow: 0 12px 36px rgba(17, 17, 17, 0.05);
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+      will-change: transform;
     }
 
     .ace-card {
@@ -889,6 +944,7 @@
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 16px;
+      perspective: 1200px;
     }
 
     .feature-card {
@@ -940,6 +996,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 18px;
+      perspective: 1200px;
     }
 
     .difference-card {
@@ -948,6 +1005,9 @@
       background: rgba(255, 255, 255, 0.76);
       border: 1px solid rgba(17, 17, 17, 0.1);
       backdrop-filter: blur(18px);
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      will-change: transform;
     }
 
     .difference-card.dark {
@@ -991,6 +1051,7 @@
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
       gap: 56px;
       align-items: stretch;
+      perspective: 1200px;
     }
 
     .practice-scene {
@@ -1022,6 +1083,9 @@
       backdrop-filter: blur(18px);
       color: var(--white);
       box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      will-change: transform;
     }
 
     .simulator h3,
@@ -1087,6 +1151,9 @@
       background: rgba(142, 163, 174, 0.18);
       border: 1px solid rgba(142, 163, 174, 0.24);
       backdrop-filter: blur(16px);
+      transform-style: preserve-3d;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+      will-change: transform;
     }
 
     .practice-scene .after-feel {
@@ -1108,6 +1175,7 @@
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 16px;
+      perspective: 1200px;
     }
 
     .testimonial {
@@ -1298,16 +1366,34 @@
 
     .reveal {
       opacity: 1;
-      transform: translateY(0);
     }
 
-    @keyframes drift {
-      0%,
-      100% {
-        transform: translate3d(0, 0, 0);
+    @media (hover: hover) and (pointer: fine) {
+      .scene-frame:hover {
+        transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
+        border-color: rgba(255, 255, 255, 0.22);
+        box-shadow: 0 42px 108px rgba(0, 0, 0, 0.38);
       }
-      50% {
-        transform: translate3d(0, -10px, 0);
+
+      .scene-frame:hover img {
+        transform: scale(1.045);
+      }
+
+      .ace-card:hover,
+      .feature-card:hover,
+      .testimonial:hover,
+      .difference-card:hover,
+      .simulator:hover,
+      .practice-card:hover,
+      .after-feel:hover {
+        transform: translateY(-8px) rotateX(1.4deg);
+        border-color: rgba(17, 17, 17, 0.18);
+        box-shadow: 0 28px 72px rgba(17, 17, 17, 0.12);
+      }
+
+      .testimonial.featured:hover,
+      .simulator:hover {
+        box-shadow: 0 34px 88px rgba(17, 17, 17, 0.22);
       }
     }
 
@@ -1340,6 +1426,13 @@
 
       .hero-showcase img {
         object-position: 46% center;
+      }
+
+      .hero-copy,
+      .hero-showcase,
+      .hero-showcase img,
+      .hero-mock {
+        transform: none;
       }
 
       .thought-cloud {
@@ -1481,6 +1574,7 @@
         display: block;
         max-width: none;
         animation: none;
+        transform: none;
       }
 
       .hero-mock {
@@ -1548,6 +1642,22 @@
         animation-duration: 0.001ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
+      }
+
+      .hero-copy,
+      .hero-showcase,
+      .hero-showcase img,
+      .hero-mock,
+      .thought,
+      .scene-frame,
+      .ace-card,
+      .feature-card,
+      .testimonial,
+      .difference-card,
+      .simulator,
+      .practice-card,
+      .after-feel {
+        transform: none !important;
       }
     }
   </style>
@@ -1980,17 +2090,97 @@
   </footer>
 
   <script>
-    const revealItems = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
+    (() => {
+      const revealItems = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
 
-    revealItems.forEach((item) => observer.observe(item));
+        revealItems.forEach((item) => observer.observe(item));
+      }
+
+      const root = document.documentElement;
+      const hero = document.querySelector(".hero");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const desktopMotion = window.matchMedia("(min-width: 1081px)");
+
+      if (!hero || reduceMotion.matches) return;
+
+      const state = { x: 0, y: 0, scroll: 0 };
+      let frame = 0;
+
+      const setDepth = () => {
+        frame = 0;
+        if (!desktopMotion.matches) {
+          state.x = 0;
+          state.y = 0;
+          state.scroll = 0;
+        }
+
+        const x = state.x;
+        const y = state.y;
+        const scroll = state.scroll;
+
+        root.style.setProperty("--tilt-x", `${(-y * 4).toFixed(2)}deg`);
+        root.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+        root.style.setProperty("--stage-x", `${(x * 12).toFixed(1)}px`);
+        root.style.setProperty("--stage-y", `${(y * 8 - scroll * 18).toFixed(1)}px`);
+        root.style.setProperty("--media-x", `${(-x * 10).toFixed(1)}px`);
+        root.style.setProperty("--media-y", `${(-y * 8).toFixed(1)}px`);
+        root.style.setProperty("--copy-x", `${(-x * 6).toFixed(1)}px`);
+        root.style.setProperty("--copy-y", `${(-y * 4 - scroll * 10).toFixed(1)}px`);
+        root.style.setProperty("--mock-x", `${(x * 22).toFixed(1)}px`);
+        root.style.setProperty("--mock-y", `${(y * 14 - scroll * 16).toFixed(1)}px`);
+        root.style.setProperty("--mock-rx", `${(-y * 3).toFixed(2)}deg`);
+        root.style.setProperty("--mock-ry", `${(x * 4).toFixed(2)}deg`);
+        root.style.setProperty("--thought-a-x", `${(x * 28).toFixed(1)}px`);
+        root.style.setProperty("--thought-a-y", `${(y * 18 - scroll * 12).toFixed(1)}px`);
+        root.style.setProperty("--thought-b-x", `${(x * 42).toFixed(1)}px`);
+        root.style.setProperty("--thought-b-y", `${(y * 24 - scroll * 18).toFixed(1)}px`);
+        root.style.setProperty("--thought-c-x", `${(x * 34).toFixed(1)}px`);
+        root.style.setProperty("--thought-c-y", `${(y * 20 - scroll * 14).toFixed(1)}px`);
+      };
+
+      const scheduleDepth = () => {
+        if (!frame) frame = window.requestAnimationFrame(setDepth);
+      };
+
+      hero.addEventListener("pointermove", (event) => {
+        if (!desktopMotion.matches) return;
+        const rect = hero.getBoundingClientRect();
+        state.x = ((event.clientX - rect.left) / rect.width) - 0.5;
+        state.y = ((event.clientY - rect.top) / rect.height) - 0.5;
+        scheduleDepth();
+      }, { passive: true });
+
+      hero.addEventListener("pointerleave", () => {
+        state.x = 0;
+        state.y = 0;
+        scheduleDepth();
+      });
+
+      const trackScroll = () => {
+        if (!desktopMotion.matches) return;
+        const rect = hero.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) {
+          state.x = 0;
+          state.y = 0;
+        }
+        state.scroll = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height)));
+        scheduleDepth();
+      };
+
+      window.addEventListener("scroll", trackScroll, { passive: true });
+      window.addEventListener("resize", trackScroll);
+      desktopMotion.addEventListener("change", scheduleDepth);
+      trackScroll();
+    })();
   </script>
 </body>
 </html>
