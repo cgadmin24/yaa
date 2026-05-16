@@ -44,13 +44,20 @@ const navItems = [
   { label: "Contact", href: "/contact" }
 ];
 
-const trustPoints = ["5000+ students", "Real results", "No theory"];
+const trustPoints = ["5000+ students", "2000+ mock sessions", "No theory"];
 
 const outcomes = [
-  "Career gap",
+  "Career break concerns",
   "Nerves",
   "Communication blocks",
   "Interview pressure"
+];
+
+const audiences = [
+  "Fresh graduates facing their first serious interviews",
+  "Candidates returning after a career break",
+  "Skilled speakers who freeze when the pressure rises",
+  "BPO, IT, and corporate transition candidates"
 ];
 
 const differentiators = [
@@ -106,6 +113,24 @@ const extras = [
     icon: Trophy,
     title: "Certificate of completion",
     text: "Proof that you showed up and did the work."
+  }
+];
+
+const proofStories = [
+  {
+    name: "Anjali",
+    detail: "Fresh graduate",
+    quote: "I knew the answers, but I kept rambling. After the mocks, my answers finally sounded clear."
+  },
+  {
+    name: "Rahul",
+    detail: "IT candidate",
+    quote: "I was rejected for months because my answers had no structure. The feedback made the difference."
+  },
+  {
+    name: "Priya",
+    detail: "BPO candidate",
+    quote: "The simulations felt uncomfortable at first. That is exactly why the real interview felt easier."
   }
 ];
 
@@ -266,7 +291,9 @@ function Hero() {
             </span>
           </h1>
           <p className="mt-6 max-w-[620px] text-[18px] font-semibold leading-8 text-[#4b5563]">
-            Career gap, nerves, communication blocks - we fix all of it.
+            <span className="block">Career break. Interview nerves.</span>
+            <span className="block">Communication blocks.</span>
+            <span className="block">We fix the delivery.</span>
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
             <a
@@ -312,6 +339,32 @@ function OutcomeStrip() {
             <span className="font-bold text-[#111827]">{item}</span>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function AudienceFit() {
+  return (
+    <section className="bg-white py-16">
+      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+        <div>
+          <h2 className="font-display text-[38px] font-extrabold leading-tight text-[#111827] sm:text-[48px]">
+            Built for people who know they can do more.
+          </h2>
+          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
+            Hireable is not for passive watching. It is for candidates ready to
+            practice, get corrected, and show up better.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {audiences.map((item) => (
+            <div className="rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm" key={item}>
+              <CheckCircle2 className="mb-4 h-6 w-6 text-[#7886fb]" />
+              <p className="text-[16px] font-extrabold leading-7 text-[#111827]">{item}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -416,6 +469,49 @@ function Difference() {
   );
 }
 
+function Proof() {
+  return (
+    <section className="bg-[#ffffff] py-20">
+      <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-[760px]">
+          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
+            Real candidates. Real pressure. Better answers.
+          </h2>
+          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
+            Confidence starts sounding real when practice stops being polite.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          {proofStories.map((story) => (
+            <figure
+              className="rounded-[16px] border border-[#e3e6ff] bg-white p-7 shadow-sm"
+              key={story.name}
+            >
+              <blockquote className="text-[18px] font-semibold leading-8 text-[#111827]">
+                "{story.quote}"
+              </blockquote>
+              <figcaption className="mt-7 flex items-center gap-3">
+                <span className="grid h-11 w-11 place-items-center rounded-full bg-[#7886fb] font-display text-[16px] font-extrabold text-white">
+                  {story.name.charAt(0)}
+                </span>
+                <span>
+                  <span className="block font-display text-[18px] font-extrabold text-[#111827]">
+                    {story.name}
+                  </span>
+                  <span className="block text-[13px] font-bold text-[#6b7280]">
+                    {story.detail}
+                  </span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Extras() {
   return (
     <section className="bg-white py-20">
@@ -505,10 +601,10 @@ function FinalCta() {
       <div className="mx-auto max-w-[1120px] px-4 text-center sm:px-6 lg:px-8">
         <Sparkles className="mx-auto mb-6 h-14 w-14 text-[#7886fb]" />
         <h2 className="font-display text-[42px] font-extrabold leading-tight text-[#111827] sm:text-[58px]">
-          The job you want is not waiting for perfect confidence.
+          You do not need perfect confidence. You need a real practice system.
         </h2>
         <p className="mx-auto mt-5 max-w-[680px] text-[19px] font-semibold leading-8 text-[#4b5563]">
-          One call. That is all it takes to start.
+          One call. That is all it takes to start showing up differently.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
@@ -551,7 +647,7 @@ function Footer() {
         <div className="flex flex-col gap-2 text-[14px] font-medium text-white/70 md:items-end">
           <a className="hover:text-white" href={contactHref}>{phoneNumber}</a>
           <a className="hover:text-white" href={websiteHref}>www.theclosinggap.net</a>
-          <span>(c) 2026 YAA</span>
+          <span>© 2026 YAA</span>
         </div>
       </div>
     </footer>
@@ -565,12 +661,13 @@ function App() {
       <main>
         <Hero />
         <OutcomeStrip />
+        <AudienceFit />
         <ProblemSection
           image={communicationImage}
           imageAlt="Candidate feeling unsure while preparing at a desk"
           label="Communication problem"
           problem="You have the skills. But when it counts, the words do not come out right."
-          fix="We train you to speak with clarity, confidence, and corporate fluency - in English and beyond."
+          fix="We train you to speak with clarity, confidence, interview English, corporate communication, and calm delivery."
           tag="Communication is a skill. We teach it like one."
         />
         <ProblemSection
@@ -583,6 +680,7 @@ function App() {
           reverse
         />
         <Difference />
+        <Proof />
         <Extras />
         <Duration />
         <FinalCta />

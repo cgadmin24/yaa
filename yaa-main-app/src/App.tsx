@@ -4,24 +4,26 @@ import {
   BriefcaseBusiness,
   CheckCircle2,
   ChevronDown,
+  GraduationCap,
   Mail,
   Menu,
   MessageCircle,
   Play,
-  Search,
-  Sparkles,
+  Phone,
   Star,
   Target,
   Users,
   X
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
-import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { cn } from "./lib/utils";
 
+const phoneNumber = "+91 90742 94791";
 const contactHref =
   "mailto:info@theclosinggap.net?subject=Talk%20To%20An%20Expert%20-%20YAA";
+const phoneHref = "tel:+919074294791";
 const heroImage =
   "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=980&q=82";
 const mentorImage =
@@ -40,17 +42,17 @@ const programs = [
     title: "Hireable",
     category: "Interview Communication",
     description: "Live mocks, AI pressure practice, and feedback that fixes delivery fast.",
-    lessons: "Live + AI",
+    lessons: "60 days",
     price: "Talk to us",
     href: "/hireable"
   },
   {
     title: "Corporate Readiness",
     category: "Workplace Skills",
-    description: "Meetings, emails, calls, and the everyday language of working teams.",
+    description: "Meetings, emails, calls, and the everyday language of professional teams.",
     lessons: "6 modules",
     price: "Coming soon",
-    href: "/courses"
+    href: "/contact"
   },
   {
     title: "Self Introduction Mastery",
@@ -58,13 +60,38 @@ const programs = [
     description: "Own the first question before it owns the interview.",
     lessons: "3 sessions",
     price: "Coming soon",
-    href: "/courses"
+    href: "/contact"
   }
 ];
 
 const categories = ["Interview Prep", "Communication", "Career", "Corporate"];
 
-function getRoute() {
+const routeMeta = {
+  home: {
+    title: "YAA | Your Added Advantage",
+    description:
+      "YAA helps students and early professionals build interview confidence, corporate communication, and career readiness through real practice."
+  },
+  courses: {
+    title: "Courses | YAA",
+    description:
+      "Explore YAA programs for interview communication, corporate readiness, self introduction mastery, and career confidence."
+  },
+  about: {
+    title: "About | YAA",
+    description:
+      "YAA helps skilled candidates turn interview anxiety and weak delivery into calm, structured, confident communication."
+  },
+  contact: {
+    title: "Contact | YAA",
+    description:
+      "Talk to YAA about Hireable, communication training, mock interviews, corporate readiness, and career confidence."
+  }
+};
+
+type RouteName = keyof typeof routeMeta;
+
+function getRoute(): RouteName {
   const path = window.location.pathname.replace(/^\/main(?=\/|$)/, "") || "/";
 
   if (path === "/courses") return "courses";
@@ -112,19 +139,14 @@ function Header() {
         </nav>
 
         <div className="hidden items-center gap-4 xl:flex">
-          <div className="flex h-12 items-center overflow-hidden rounded-[8px] border border-[#dfe3ff] bg-white shadow-sm">
-            <div className="flex h-full items-center gap-2 border-r border-[#e3e6ff] px-4 text-[14px] font-semibold text-[#111827]">
-              <BookOpen className="h-4 w-4 text-[#7886fb]" />
-              Programs
-              <ChevronDown className="h-4 w-4 text-[#6b7280]" />
-            </div>
-            <div className="flex h-full items-center gap-2 px-4">
-              <Search className="h-4 w-4 text-[#6b7280]" />
-              <span className="w-44 text-[14px] font-medium text-[#6b7280]">
-                Search your goal...
-              </span>
-            </div>
-          </div>
+          <a
+            className="inline-flex h-12 items-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 text-[14px] font-semibold text-[#111827] shadow-sm transition hover:border-[#7886fb] hover:text-[#7886fb]"
+            href="/courses"
+          >
+            <BookOpen className="h-4 w-4 text-[#7886fb]" />
+            Programs
+            <ChevronDown className="h-4 w-4 text-[#6b7280]" />
+          </a>
           <a
             className="rounded-[8px] border border-[#dfe3ff] bg-white px-6 py-3 text-[15px] font-bold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb]"
             href={contactHref}
@@ -191,16 +213,16 @@ function HeroVisual() {
         <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#7886fb] text-white">
           <Users className="h-6 w-6" />
         </div>
-        <p className="text-[13px] font-semibold text-[#4b5563]">Learners coached</p>
-        <p className="font-display text-[32px] font-extrabold text-[#111827]">18K+</p>
+        <p className="text-[13px] font-semibold text-[#4b5563]">Students trained</p>
+        <p className="font-display text-[32px] font-extrabold text-[#111827]">5000+</p>
       </div>
 
       <div className="absolute -right-2 top-1/2 rounded-[16px] bg-white p-5 shadow-[0_24px_60px_rgba(17,24,39,0.16)]">
         <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#ffee0f] text-[#111827]">
           <Target className="h-6 w-6" />
         </div>
-        <p className="text-[13px] font-semibold text-[#4b5563]">Confidence reps</p>
-        <p className="font-display text-[32px] font-extrabold text-[#111827]">34K</p>
+        <p className="text-[13px] font-semibold text-[#4b5563]">Mock sessions</p>
+        <p className="font-display text-[32px] font-extrabold text-[#111827]">2000+</p>
       </div>
     </div>
   );
@@ -226,7 +248,7 @@ function HomePage() {
             </h1>
             <p className="mt-6 max-w-[600px] text-[17px] font-medium leading-8 text-[#4b5563]">
               YAA helps students and early professionals turn interview anxiety,
-              weak delivery, and workplace hesitation into confident execution.
+              weak delivery, and workplace hesitation into calm, confident execution.
             </p>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
@@ -301,8 +323,8 @@ function AboutBand() {
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {[
+              ["5000+", "Students trained"],
               ["2000+", "Mock sessions"],
-              ["12 days", "Average clarity sprint"],
               ["Live + AI", "Practice model"],
               ["1:1", "Feedback loops"]
             ].map(([value, label]) => (
@@ -380,15 +402,31 @@ function CoursesPage() {
   return (
     <PageShell
       label="Courses"
-      title="Lean, practical programs. No bloated lessons."
-      description="These are frontend-ready course pages for now. Backend enrollment, payments, and dashboards can come later."
+      title="Practical programs for the moments that decide your career."
+      description="Start with Hireable today, then build the corporate communication habits that make interviews, calls, emails, and meetings feel less intimidating."
     >
+      <div className="mb-8 grid gap-4 rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm md:grid-cols-3">
+        {[
+          ["Start here", "Hireable is open for interview confidence and delivery training."],
+          ["Coming next", "Corporate readiness and self-introduction tracks are being shaped for focused batches."],
+          ["Talk first", "If you are unsure where to begin, we will map the right route before you join."]
+        ].map(([title, text]) => (
+          <div className="flex gap-3" key={title}>
+            <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#7886fb]" />
+            <div>
+              <p className="font-display text-[18px] font-extrabold text-[#111827]">{title}</p>
+              <p className="mt-1 text-[14px] font-medium leading-6 text-[#4b5563]">{text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <div className="grid gap-6 md:grid-cols-3">
-        {programs.concat(programs.slice(1)).map((program, index) => (
+        {programs.map((program) => (
           <a
             className="rounded-[14px] border border-[#e3e6ff] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]"
             href={program.href}
-            key={`${program.title}-${index}`}
+            key={program.title}
           >
             <div className="mb-5 grid h-12 w-12 place-items-center rounded-[10px] bg-[#f1f3ff] text-[#7886fb]">
               <BriefcaseBusiness className="h-6 w-6" />
@@ -402,6 +440,12 @@ function CoursesPage() {
             <p className="mt-3 text-[15px] font-medium leading-7 text-[#4b5563]">
               {program.description}
             </p>
+            <div className="mt-6 flex items-center justify-between border-t border-[#e3e6ff] pt-5">
+              <span className="text-[13px] font-bold text-[#6b7280]">{program.lessons}</span>
+              <span className="font-display text-[17px] font-extrabold text-[#7886fb]">
+                {program.price}
+              </span>
+            </div>
           </a>
         ))}
       </div>
@@ -414,13 +458,28 @@ function AboutPage() {
     <PageShell
       label="About YAA"
       title="We exist for candidates who can do the job, but cannot yet show it."
-      description="The YAA ecosystem will hold Hireable, courses, corporate readiness, and future career tools under one simple education brand."
+      description="YAA brings together Hireable, communication training, and career readiness for students and early professionals who need real practice before real opportunities."
     >
+      <div className="mb-8 grid gap-8 rounded-[18px] border border-[#e3e6ff] bg-[#ffffff] p-7 shadow-sm lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <GraduationCap className="mb-6 h-10 w-10 text-[#7886fb]" />
+          <h2 className="font-display text-[32px] font-extrabold leading-tight text-[#111827]">
+            The gap is rarely talent. It is delivery under pressure.
+          </h2>
+        </div>
+        <p className="text-[16px] font-medium leading-8 text-[#4b5563]">
+          A candidate can know the answer, have the degree, and still lose the
+          room when the interviewer asks a follow-up. YAA trains the missing
+          layer: structure, calm, professional language, and repeated practice
+          with feedback that is honest enough to be useful.
+        </p>
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-3">
         {[
           ["Pressure first", "We train for the real moment, not the quiet room."],
           ["Feedback fast", "Students need clear correction, not polite encouragement."],
-          ["Outcome focused", "Every module must move someone closer to confidence."]
+          ["Outcome focused", "Every module must move someone closer to a clearer answer, stronger voice, and better interview."]
         ].map(([title, text]) => (
           <div className="rounded-[14px] border border-[#e3e6ff] bg-white p-7" key={title}>
             <CheckCircle2 className="mb-5 h-8 w-8 text-[#7886fb]" />
@@ -434,40 +493,96 @@ function AboutPage() {
 }
 
 function ContactPage() {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const name = String(data.get("name") || "");
+    const email = String(data.get("email") || "");
+    const challenge = String(data.get("challenge") || "");
+    const body = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Interested in / struggling with: ${challenge}`
+    ].join("\n");
+
+    window.location.href =
+      "mailto:info@theclosinggap.net?subject=Talk%20To%20YAA&body=" +
+      encodeURIComponent(body);
+  }
+
   return (
     <PageShell
       label="Contact"
       title="Tell us where candidates are getting stuck."
-      description="This is a frontend contact screen for now. The action opens email until backend forms are added."
+      description="Tell us what is blocking you: interview nerves, communication confidence, career break concerns, or corporate readiness. We will help you choose the right next step."
     >
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-[16px] bg-[#7886fb] p-8 text-white">
           <Mail className="mb-8 h-10 w-10" />
           <h3 className="font-display text-[32px] font-extrabold">Talk to YAA</h3>
           <p className="mt-4 text-[16px] leading-8 text-white/80">
-            We can map the route: main YAA site, Hireable landing, courses,
-            and later backend flows.
+            One conversation is enough to understand where you are freezing,
+            what you need to practice, and whether Hireable is the right fit.
           </p>
-          <a
-            className="mt-8 inline-flex items-center gap-2 rounded-[8px] bg-white px-6 py-4 text-[15px] font-extrabold text-[#7886fb]"
-            href={contactHref}
-          >
-            Send email
-            <ArrowRight className="h-4 w-4" />
-          </a>
-        </div>
-        <div className="rounded-[16px] border border-[#e3e6ff] bg-white p-8">
-          <div className="grid gap-4">
-            {["Name", "Email", "What do you want to build next?"].map((label) => (
-              <label className="grid gap-2" key={label}>
-                <span className="text-[13px] font-extrabold text-[#4b5563]">{label}</span>
-                <span className="rounded-[8px] border border-[#e3e6ff] bg-[#ffffff] px-4 py-4 text-[#6b7280]">
-                  {label}
-                </span>
-              </label>
-            ))}
+          <div className="mt-8 grid gap-3">
+            <a
+              className="inline-flex items-center gap-2 rounded-[8px] bg-white px-6 py-4 text-[15px] font-extrabold text-[#7886fb]"
+              href={phoneHref}
+            >
+              <Phone className="h-4 w-4" />
+              {phoneNumber}
+            </a>
+            <a
+              className="inline-flex items-center gap-2 rounded-[8px] border border-white/30 px-6 py-4 text-[15px] font-extrabold text-white transition hover:bg-white/10"
+              href={contactHref}
+            >
+              Send email
+              <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
         </div>
+        <form className="rounded-[16px] border border-[#e3e6ff] bg-white p-8" onSubmit={handleSubmit}>
+          <div className="grid gap-4">
+            <label className="grid gap-2">
+              <span className="text-[13px] font-extrabold text-[#4b5563]">Name</span>
+              <input
+                className="rounded-[8px] border border-[#e3e6ff] bg-[#ffffff] px-4 py-4 text-[#111827] outline-none transition focus:border-[#7886fb]"
+                name="name"
+                placeholder="Your name"
+                required
+                type="text"
+              />
+            </label>
+            <label className="grid gap-2">
+              <span className="text-[13px] font-extrabold text-[#4b5563]">Email</span>
+              <input
+                className="rounded-[8px] border border-[#e3e6ff] bg-[#ffffff] px-4 py-4 text-[#111827] outline-none transition focus:border-[#7886fb]"
+                name="email"
+                placeholder="you@example.com"
+                required
+                type="email"
+              />
+            </label>
+            <label className="grid gap-2">
+              <span className="text-[13px] font-extrabold text-[#4b5563]">
+                What are you struggling with?
+              </span>
+              <textarea
+                className="min-h-28 rounded-[8px] border border-[#e3e6ff] bg-[#ffffff] px-4 py-4 text-[#111827] outline-none transition focus:border-[#7886fb]"
+                name="challenge"
+                placeholder="Interview fear, communication confidence, career break, self introduction..."
+                required
+              />
+            </label>
+            <button
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-6 py-4 text-[15px] font-extrabold text-white shadow-[0_14px_32px_rgba(120,134,251,0.22)] transition hover:bg-[#6978f7]"
+              type="submit"
+            >
+              Send enquiry
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </form>
       </div>
     </PageShell>
   );
@@ -521,9 +636,12 @@ function Footer() {
             </span>
           </span>
         </a>
-        <p className="text-[14px] font-medium text-white/65">
-          Your skills are ready. Now let us fix your delivery.
-        </p>
+        <div className="flex flex-col gap-2 text-[14px] font-medium text-white/70 md:items-end">
+          <a className="hover:text-white" href={phoneHref}>{phoneNumber}</a>
+          <a className="hover:text-white" href={contactHref}>info@theclosinggap.net</a>
+          <span>Your skills are ready. Now let us fix your delivery.</span>
+          <span>© 2026 YAA</span>
+        </div>
       </div>
     </footer>
   );
@@ -531,9 +649,18 @@ function Footer() {
 
 function App() {
   const route = getRoute();
+  const meta = routeMeta[route];
+
+  useEffect(() => {
+    document.title = meta.title;
+    const description = document.querySelector<HTMLMetaElement>("meta[name='description']");
+    if (description) {
+      description.content = meta.description;
+    }
+  }, [meta.description, meta.title]);
 
   return (
-    <div className="min-h-screen bg-[#ffffff]">
+    <div className="min-h-screen bg-[#ffffff]" id="top">
       <Header />
       <main>
         {route === "home" && <HomePage />}
@@ -547,7 +674,7 @@ function App() {
           "fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center rounded-[8px]",
           "bg-[#7886fb] text-white shadow-[0_18px_38px_rgba(120,134,251,0.28)]"
         )}
-        href="/"
+        href="#top"
         aria-label="Back to top"
       >
         <Play className="h-4 w-4 -rotate-90 fill-current" />
