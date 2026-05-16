@@ -134,17 +134,17 @@ function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#dbe7ff]/85 bg-white/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-[#e3e6ff]/85 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex h-[82px] max-w-[1320px] items-center justify-between px-4 sm:px-6 lg:px-8">
         <a className="flex items-center gap-3" href="/" aria-label="YAA home">
-          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-[#0b57e3] text-lg font-black text-white shadow-[0_14px_30px_rgba(11,87,227,0.22)]">
+          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-[#7886fb] text-lg font-black text-white shadow-[0_14px_30px_rgba(120,134,251,0.22)]">
             Y
           </span>
           <span className="leading-none">
-            <span className="block font-display text-[26px] font-extrabold tracking-tight text-[#08265c]">
+            <span className="block font-display text-[26px] font-extrabold tracking-tight text-[#111827]">
               YAA
             </span>
-            <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-[#6580aa]">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-[#7886fb]">
               Hireable
             </span>
           </span>
@@ -153,7 +153,7 @@ function Header() {
         <nav className="hidden items-center gap-9 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
             <a
-              className="text-[15px] font-semibold text-[#08265c] transition-colors hover:text-[#0b57e3]"
+              className="text-[15px] font-semibold text-[#111827] transition-colors hover:text-[#7886fb]"
               href={item.href}
               key={item.label}
             >
@@ -164,14 +164,14 @@ function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a
-            className="inline-flex items-center gap-2 rounded-[8px] border border-[#cfe0fb] bg-white px-5 py-3 text-[14px] font-extrabold text-[#08265c] transition hover:border-[#0b57e3] hover:text-[#0b57e3]"
+            className="inline-flex items-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 py-3 text-[14px] font-extrabold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb]"
             href={websiteHref}
           >
             <Building2 className="h-4 w-4" />
             Closing Gap
           </a>
           <a
-            className="inline-flex items-center gap-2 rounded-[8px] bg-[#0b57e3] px-6 py-3 text-[14px] font-extrabold text-white shadow-[0_14px_32px_rgba(11,87,227,0.24)] transition hover:bg-[#0848be]"
+            className="inline-flex items-center gap-2 rounded-[8px] bg-[#7886fb] px-6 py-3 text-[14px] font-extrabold text-white shadow-[0_14px_32px_rgba(120,134,251,0.24)] transition hover:bg-[#7886fb]"
             href={contactHref}
           >
             <Phone className="h-4 w-4" />
@@ -180,7 +180,7 @@ function Header() {
         </div>
 
         <button
-          className="grid h-11 w-11 place-items-center rounded-[8px] border border-[#cfe0fb] text-[#0b57e3] lg:hidden"
+          className="grid h-11 w-11 place-items-center rounded-[8px] border border-[#dfe3ff] text-[#7886fb] lg:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-label="Toggle menu"
           type="button"
@@ -190,14 +190,14 @@ function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-[#dbe7ff] bg-white px-4 py-4 lg:hidden" aria-label="Mobile navigation">
+        <nav className="border-t border-[#e3e6ff] bg-white px-4 py-4 lg:hidden" aria-label="Mobile navigation">
           <div className="mx-auto grid max-w-[1320px] gap-2">
             {navItems.map((item) => (
-              <a className="rounded-[8px] px-3 py-3 font-bold text-[#08265c] hover:bg-[#f5f9ff]" href={item.href} key={item.label}>
+              <a className="rounded-[8px] px-3 py-3 font-bold text-[#111827] hover:bg-[#ffffff]" href={item.href} key={item.label}>
                 {item.label}
               </a>
             ))}
-            <a className="rounded-[8px] bg-[#0b57e3] px-3 py-3 text-center font-extrabold text-white" href={contactHref}>
+            <a className="rounded-[8px] bg-[#7886fb] px-3 py-3 text-center font-extrabold text-white" href={contactHref}>
               Talk to Expert
             </a>
           </div>
@@ -210,15 +210,15 @@ function Header() {
 function HeroVisual() {
   return (
     <div className="relative mx-auto w-full max-w-[590px] lg:mr-0">
-      <div className="absolute -left-8 top-16 hidden h-52 w-28 rounded-r-full bg-[#90ead7] lg:block" />
-      <div className="absolute -right-3 top-8 h-20 w-20 rotate-12 rounded-[20px] border-2 border-[#ad6bff] opacity-70" />
-      <div className="absolute -top-3 left-12 grid grid-cols-4 gap-2 text-[#ff786f]">
+      <div className="absolute -left-8 top-16 hidden h-52 w-28 rounded-r-full bg-[#ffee0f] lg:block" />
+      <div className="absolute -right-3 top-8 h-20 w-20 rotate-12 rounded-[20px] border-2 border-[#7886fb] opacity-70" />
+      <div className="absolute -top-3 left-12 grid grid-cols-4 gap-2 text-[#ffee0f]">
         {Array.from({ length: 16 }).map((_, index) => (
           <span className="h-3 w-1.5 rounded-full bg-current" key={index} />
         ))}
       </div>
 
-      <div className="relative overflow-hidden rounded-[30px] bg-[#eaf3ff] shadow-[0_35px_90px_rgba(8,38,92,0.13)]">
+      <div className="relative overflow-hidden rounded-[30px] bg-[#ffffff] shadow-[0_35px_90px_rgba(17,24,39,0.13)]">
         <img
           className="h-[440px] w-full object-cover object-center sm:h-[510px]"
           src={heroImage}
@@ -226,20 +226,20 @@ function HeroVisual() {
         />
       </div>
 
-      <div className="absolute -left-1 bottom-8 w-[210px] rounded-[18px] bg-white p-5 shadow-[0_24px_60px_rgba(8,38,92,0.16)] sm:left-8">
-        <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#12c879] text-white">
+      <div className="absolute -left-1 bottom-8 w-[210px] rounded-[18px] bg-white p-5 shadow-[0_24px_60px_rgba(17,24,39,0.16)] sm:left-8">
+        <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#7886fb] text-white">
           <GraduationCap className="h-6 w-6" />
         </div>
-        <p className="text-[13px] font-semibold text-[#45618c]">Students trained</p>
-        <p className="font-display text-[34px] font-extrabold text-[#08265c]">5000+</p>
+        <p className="text-[13px] font-semibold text-[#4b5563]">Students trained</p>
+        <p className="font-display text-[34px] font-extrabold text-[#111827]">5000+</p>
       </div>
 
-      <div className="absolute -right-1 top-1/2 w-[188px] rounded-[18px] bg-white p-5 shadow-[0_24px_60px_rgba(8,38,92,0.16)]">
-        <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#7d2cff] text-white">
+      <div className="absolute -right-1 top-1/2 w-[188px] rounded-[18px] bg-white p-5 shadow-[0_24px_60px_rgba(17,24,39,0.16)]">
+        <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#ffee0f] text-[#111827]">
           <Target className="h-6 w-6" />
         </div>
-        <p className="text-[13px] font-semibold text-[#45618c]">Built for</p>
-        <p className="font-display text-[30px] font-extrabold text-[#08265c]">Real panels</p>
+        <p className="text-[13px] font-semibold text-[#4b5563]">Built for</p>
+        <p className="font-display text-[30px] font-extrabold text-[#111827]">Real panels</p>
       </div>
     </div>
   );
@@ -247,7 +247,7 @@ function HeroVisual() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(120deg,#f7fbff_0%,#f4f8ff_54%,#fff7fb_100%)]">
+    <section className="relative overflow-hidden bg-[linear-gradient(120deg,#ffffff_0%,#ffffff_62%,#ffee0f_155%)]">
       <div className="mx-auto grid min-h-[700px] max-w-[1320px] items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[0.96fr_1.04fr] lg:px-8 lg:py-20">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -255,9 +255,9 @@ function Hero() {
           transition={{ duration: 0.65 }}
           className="relative z-10"
         >
-          <h1 className="max-w-full font-display text-[35px] font-extrabold leading-[1.09] tracking-tight text-[#08265c] min-[420px]:text-[42px] sm:max-w-[720px] sm:text-[58px] lg:text-[68px]">
+          <h1 className="max-w-full font-display text-[35px] font-extrabold leading-[1.09] tracking-tight text-[#111827] min-[420px]:text-[42px] sm:max-w-[720px] sm:text-[58px] lg:text-[68px]">
             <span className="block">You&apos;re not failing interviews.</span>
-            <span className="block text-[#0b57e3]">
+            <span className="block text-[#7886fb]">
               <span className="block sm:inline">You were never</span>
               <span className="hidden sm:inline"> </span>
               <span className="block sm:inline">taught how to</span>
@@ -265,19 +265,19 @@ function Hero() {
               <span className="block sm:inline">pass them.</span>
             </span>
           </h1>
-          <p className="mt-6 max-w-[620px] text-[18px] font-semibold leading-8 text-[#365783]">
+          <p className="mt-6 max-w-[620px] text-[18px] font-semibold leading-8 text-[#4b5563]">
             Career gap, nerves, communication blocks - we fix all of it.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
             <a
-              className="inline-flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#0b57e3] px-5 py-4 text-[13px] font-extrabold uppercase text-white shadow-[0_18px_44px_rgba(11,87,227,0.26)] transition hover:bg-[#0848be] min-[420px]:text-[14px] sm:w-auto sm:px-7 sm:text-[15px]"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-5 py-4 text-[13px] font-extrabold uppercase text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] min-[420px]:text-[14px] sm:w-auto sm:px-7 sm:text-[15px]"
               href={contactHref}
             >
               Yes, I want to be Hireable
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              className="inline-flex w-full items-center justify-center gap-2 rounded-[8px] border border-[#cfe0fb] bg-white px-5 py-4 text-[14px] font-extrabold text-[#08265c] transition hover:border-[#0b57e3] hover:text-[#0b57e3] sm:w-auto sm:px-7 sm:text-[15px]"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 py-4 text-[14px] font-extrabold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb] sm:w-auto sm:px-7 sm:text-[15px]"
               href={contactHref}
             >
               <Phone className="h-4 w-4" />
@@ -286,8 +286,8 @@ function Hero() {
           </div>
           <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
             {trustPoints.map((point) => (
-              <span className="inline-flex w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-extrabold text-[#45618c] shadow-sm sm:w-auto" key={point}>
-                <CheckCircle2 className="h-4 w-4 text-[#12c879]" />
+              <span className="inline-flex w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-extrabold text-[#4b5563] shadow-sm sm:w-auto" key={point}>
+                <CheckCircle2 className="h-4 w-4 text-[#7886fb]" />
                 {point}
               </span>
             ))}
@@ -301,15 +301,15 @@ function Hero() {
 
 function OutcomeStrip() {
   return (
-    <section className="border-y border-[#dbe7ff] bg-white">
+    <section className="border-y border-[#e3e6ff] bg-white">
       <div className="mx-auto grid max-w-[1320px] gap-4 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
         {outcomes.map((item) => (
           <div
-            className="flex items-center gap-3 rounded-[10px] border border-[#dbe7ff] bg-white px-5 py-4 shadow-sm"
+            className="flex items-center gap-3 rounded-[10px] border border-[#e3e6ff] bg-white px-5 py-4 shadow-sm"
             key={item}
           >
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-[#12c879]" />
-            <span className="font-bold text-[#08265c]">{item}</span>
+            <CheckCircle2 className="h-5 w-5 shrink-0 text-[#7886fb]" />
+            <span className="font-bold text-[#111827]">{item}</span>
           </div>
         ))}
       </div>
@@ -335,8 +335,8 @@ function ProblemSection({ image, imageAlt, label, problem, fix, tag, reverse }: 
         reverse && "lg:[&>div:first-child]:order-2"
       )}>
         <div className="relative">
-          <div className="absolute -left-5 top-9 h-40 w-24 rounded-r-full bg-[#90ead7]" />
-          <div className="relative overflow-hidden rounded-[26px] bg-[#eaf3ff] shadow-[0_30px_80px_rgba(8,38,92,0.12)]">
+          <div className="absolute -left-5 top-9 h-40 w-24 rounded-r-full bg-[#ffee0f]" />
+          <div className="relative overflow-hidden rounded-[26px] bg-[#ffffff] shadow-[0_30px_80px_rgba(17,24,39,0.12)]">
             <img
               className="h-[420px] w-full object-cover object-center"
               src={image}
@@ -346,28 +346,28 @@ function ProblemSection({ image, imageAlt, label, problem, fix, tag, reverse }: 
         </div>
 
         <div>
-          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#0b57e3]">
+          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
             {label}
           </p>
           <div className="grid gap-5">
-            <div className="rounded-[16px] border border-[#dbe7ff] bg-[#f8fbff] p-6">
-              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7890b2]">
+            <div className="rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-6">
+              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
                 The problem
               </p>
-              <h2 className="font-display text-[34px] font-extrabold leading-tight text-[#08265c] sm:text-[44px]">
+              <h2 className="font-display text-[34px] font-extrabold leading-tight text-[#111827] sm:text-[44px]">
                 {problem}
               </h2>
             </div>
-            <div className="rounded-[16px] border border-[#dbe7ff] bg-white p-6 shadow-sm">
-              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#0b57e3]">
+            <div className="rounded-[16px] border border-[#e3e6ff] bg-white p-6 shadow-sm">
+              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
                 What we do
               </p>
-              <p className="text-[18px] font-semibold leading-8 text-[#365783]">
+              <p className="text-[18px] font-semibold leading-8 text-[#4b5563]">
                 {fix}
               </p>
             </div>
           </div>
-          <p className="mt-6 inline-flex max-w-full rounded-[8px] bg-[#08265c] px-5 py-3 text-[15px] font-extrabold leading-6 text-white">
+          <p className="mt-6 inline-flex max-w-full rounded-[8px] bg-[#111827] px-5 py-3 text-[15px] font-extrabold leading-6 text-white">
             {tag}
           </p>
         </div>
@@ -378,13 +378,13 @@ function ProblemSection({ image, imageAlt, label, problem, fix, tag, reverse }: 
 
 function Difference() {
   return (
-    <section className="bg-[#f5f9ff] py-20">
+    <section className="bg-[#ffffff] py-20">
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
         <div className="mb-11 max-w-[760px]">
-          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#08265c] sm:text-[54px]">
+          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[54px]">
             Not your typical online course.
           </h2>
-          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#45618c]">
+          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
             Hireable is built around pressure, fluency, and feedback - the three things candidates rarely get before the real interview.
           </p>
         </div>
@@ -395,16 +395,16 @@ function Difference() {
 
             return (
               <div
-                className="rounded-[16px] border border-[#dbe7ff] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(8,38,92,0.1)]"
+                className="rounded-[16px] border border-[#e3e6ff] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]"
                 key={item.title}
               >
-                <div className="mb-6 grid h-14 w-14 place-items-center rounded-[14px] bg-[#e9f1ff] text-[#0b57e3]">
+                <div className="mb-6 grid h-14 w-14 place-items-center rounded-[14px] bg-[#f1f3ff] text-[#7886fb]">
                   <Icon className="h-7 w-7" />
                 </div>
-                <h3 className="font-display text-[25px] font-extrabold text-[#08265c]">
+                <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-[15px] font-medium leading-7 text-[#45618c]">
+                <p className="mt-4 text-[15px] font-medium leading-7 text-[#4b5563]">
                   {item.text}
                 </p>
               </div>
@@ -422,14 +422,14 @@ function Extras() {
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
         <div className="mb-11 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
-            <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#08265c] sm:text-[52px]">
+            <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
               More than just interview prep.
             </h2>
-            <p className="mt-4 max-w-[680px] text-[17px] font-semibold leading-8 text-[#45618c]">
+            <p className="mt-4 max-w-[680px] text-[17px] font-semibold leading-8 text-[#4b5563]">
               The small corporate skills that quietly decide whether you get noticed, shortlisted, and trusted.
             </p>
           </div>
-          <a className="inline-flex items-center gap-2 text-[15px] font-extrabold text-[#0b57e3]" href={contactHref}>
+          <a className="inline-flex items-center gap-2 text-[15px] font-extrabold text-[#7886fb]" href={contactHref}>
             Start with one call
             <ArrowRight className="h-4 w-4" />
           </a>
@@ -440,14 +440,14 @@ function Extras() {
             const Icon = item.icon;
 
             return (
-              <div className="min-h-[170px] rounded-[14px] border border-[#dbe7ff] bg-[#f8fbff] p-6" key={item.title}>
-                <div className="mb-5 grid h-11 w-11 place-items-center rounded-[10px] bg-white text-[#0b57e3] shadow-sm">
+              <div className="min-h-[170px] rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-6" key={item.title}>
+                <div className="mb-5 grid h-11 w-11 place-items-center rounded-[10px] bg-white text-[#7886fb] shadow-sm">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-display text-[20px] font-extrabold leading-snug text-[#08265c]">
+                <h3 className="font-display text-[20px] font-extrabold leading-snug text-[#111827]">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[14px] font-medium leading-6 text-[#45618c]">
+                <p className="mt-2 text-[14px] font-medium leading-6 text-[#4b5563]">
                   {item.text}
                 </p>
               </div>
@@ -461,13 +461,13 @@ function Extras() {
 
 function Duration() {
   return (
-    <section className="bg-[#f5f9ff] py-20">
+    <section className="bg-[#ffffff] py-20">
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-[760px] text-center">
-          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#08265c] sm:text-[54px]">
+          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[54px]">
             60 days to change your career story.
           </h2>
-          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#45618c]">
+          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
             Small commitment. Life-changing outcome.
           </p>
         </div>
@@ -477,17 +477,17 @@ function Duration() {
             const Icon = item.icon;
 
             return (
-              <div className="rounded-[16px] border border-[#dbe7ff] bg-white p-7 text-center shadow-sm" key={item.label}>
-                <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-[#e9f1ff] text-[#0b57e3]">
+              <div className="rounded-[16px] border border-[#e3e6ff] bg-white p-7 text-center shadow-sm" key={item.label}>
+                <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
                   <Icon className="h-8 w-8" />
                 </div>
-                <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7890b2]">
+                <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
                   {item.label}
                 </p>
-                <h3 className="mt-3 font-display text-[30px] font-extrabold leading-tight text-[#08265c]">
+                <h3 className="mt-3 font-display text-[30px] font-extrabold leading-tight text-[#111827]">
                   {item.value}
                 </h3>
-                <p className="mt-3 text-[15px] font-semibold leading-7 text-[#45618c]">
+                <p className="mt-3 text-[15px] font-semibold leading-7 text-[#4b5563]">
                   {item.note}
                 </p>
               </div>
@@ -503,23 +503,23 @@ function FinalCta() {
   return (
     <section className="bg-white py-20">
       <div className="mx-auto max-w-[1120px] px-4 text-center sm:px-6 lg:px-8">
-        <Sparkles className="mx-auto mb-6 h-14 w-14 text-[#0b57e3]" />
-        <h2 className="font-display text-[42px] font-extrabold leading-tight text-[#08265c] sm:text-[58px]">
+        <Sparkles className="mx-auto mb-6 h-14 w-14 text-[#7886fb]" />
+        <h2 className="font-display text-[42px] font-extrabold leading-tight text-[#111827] sm:text-[58px]">
           The job you want is not waiting for perfect confidence.
         </h2>
-        <p className="mx-auto mt-5 max-w-[680px] text-[19px] font-semibold leading-8 text-[#365783]">
+        <p className="mx-auto mt-5 max-w-[680px] text-[19px] font-semibold leading-8 text-[#4b5563]">
           One call. That is all it takes to start.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            className="inline-flex w-full max-w-[430px] flex-wrap items-center justify-center gap-2 rounded-[8px] bg-[#0b57e3] px-5 py-4 text-[14px] font-extrabold uppercase text-white shadow-[0_18px_44px_rgba(11,87,227,0.26)] transition hover:bg-[#0848be] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
+            className="inline-flex w-full max-w-[430px] flex-wrap items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-5 py-4 text-[14px] font-extrabold uppercase text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
             href={contactHref}
           >
             Talk to Our Expert
             <span className="font-black">{phoneNumber}</span>
           </a>
           <a
-            className="inline-flex w-full max-w-[430px] items-center justify-center gap-2 rounded-[8px] border border-[#cfe0fb] bg-white px-5 py-4 text-[14px] font-extrabold text-[#08265c] transition hover:border-[#0b57e3] hover:text-[#0b57e3] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
+            className="inline-flex w-full max-w-[430px] items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 py-4 text-[14px] font-extrabold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
             href={websiteHref}
           >
             Visit www.theclosinggap.net
@@ -533,10 +533,10 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="bg-[#071c42] py-10 text-white">
+    <footer className="bg-[#7886fb] py-10 text-white">
       <div className="mx-auto flex max-w-[1320px] flex-col justify-between gap-7 px-4 sm:px-6 md:flex-row md:items-center lg:px-8">
         <a className="flex items-center gap-3" href="/">
-          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-white text-lg font-black text-[#0b57e3]">
+          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-white text-lg font-black text-[#7886fb]">
             Y
           </span>
           <span>
@@ -551,7 +551,7 @@ function Footer() {
         <div className="flex flex-col gap-2 text-[14px] font-medium text-white/70 md:items-end">
           <a className="hover:text-white" href={contactHref}>{phoneNumber}</a>
           <a className="hover:text-white" href={websiteHref}>www.theclosinggap.net</a>
-          <span>© 2026 YAA</span>
+          <span>(c) 2026 YAA</span>
         </div>
       </div>
     </footer>
@@ -560,7 +560,7 @@ function Footer() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#f5f9ff] text-[#08265c]">
+    <div className="min-h-screen bg-[#ffffff] text-[#111827]">
       <Header />
       <main>
         <Hero />
@@ -591,7 +591,7 @@ function App() {
       <a
         className={cn(
           "fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center rounded-[8px]",
-          "bg-[#0b57e3] text-white shadow-[0_18px_38px_rgba(11,87,227,0.28)]"
+          "bg-[#7886fb] text-white shadow-[0_18px_38px_rgba(120,134,251,0.28)]"
         )}
         href="#"
         aria-label="Back to top"
