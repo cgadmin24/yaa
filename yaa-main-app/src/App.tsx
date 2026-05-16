@@ -29,7 +29,7 @@ const mentorImage =
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Hireable", href: "/hirable2" },
+  { label: "Hireable", href: "/hireable" },
   { label: "Courses", href: "/courses" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" }
@@ -42,7 +42,7 @@ const programs = [
     description: "Live mocks, AI pressure practice, and feedback that fixes delivery fast.",
     lessons: "Live + AI",
     price: "Talk to us",
-    href: "/hirable2"
+    href: "/hireable"
   },
   {
     title: "Corporate Readiness",
@@ -231,7 +231,7 @@ function HomePage() {
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
                 className="inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-7 py-4 text-[15px] font-extrabold uppercase text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb]"
-                href="/hirable2"
+                href="/hireable"
               >
                 Explore Hireable
                 <ArrowRight className="h-4 w-4" />
@@ -254,7 +254,7 @@ function HomePage() {
           {categories.map((category) => (
             <a
               className="group flex items-center justify-between rounded-[10px] border border-[#e3e6ff] bg-white px-5 py-4 shadow-sm transition hover:-translate-y-1 hover:border-[#7886fb] hover:shadow-[0_18px_44px_rgba(17,24,39,0.08)]"
-              href={category === "Interview Prep" ? "/hirable2" : "/courses"}
+              href={category === "Interview Prep" ? "/hireable" : "/courses"}
               key={category}
             >
               <span className="font-bold text-[#111827]">{category}</span>

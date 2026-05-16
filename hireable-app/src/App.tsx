@@ -39,7 +39,7 @@ const interviewImage =
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Hireable", href: "/hirable2" },
+  { label: "Hireable", href: "/hireable" },
   { label: "Courses", href: "/courses" },
   { label: "Contact", href: "/contact" }
 ];

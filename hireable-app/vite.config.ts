@@ -3,11 +3,10 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/hireable2/",
+  base: "/hireable/",
   plugins: [react(), tailwindcss()],
   build: {
-    outDir: "../hireable2",
+    outDir: "../hireable",
     emptyOutDir: true
   }
 });
-

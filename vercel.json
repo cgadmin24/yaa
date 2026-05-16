@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/main",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/",
@@ -21,14 +28,6 @@
     {
       "source": "/hireable",
       "destination": "/hireable"
-    },
-    {
-      "source": "/hireable2",
-      "destination": "/hireable2"
-    },
-    {
-      "source": "/hirable2",
-      "destination": "/hireable2"
     }
   ]
 }
