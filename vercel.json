@@ -1,20 +1,33 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
+  "rewrites": [
     {
       "source": "/",
-      "destination": "/hireable",
-      "permanent": false
-    }
-  ],
-  "rewrites": [
+      "destination": "/main/index.html"
+    },
+    {
+      "source": "/courses",
+      "destination": "/main/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/main/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/main/index.html"
+    },
     {
       "source": "/hireable",
       "destination": "/hireable/index.html"
     },
     {
       "source": "/hireable2",
+      "destination": "/hireable2/index.html"
+    },
+    {
+      "source": "/hirable2",
       "destination": "/hireable2/index.html"
     }
   ]

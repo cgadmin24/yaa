@@ -6,24 +6,6 @@
   --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 28s linear infinite;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -36,7 +18,9 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
   background: #f5f9ff;
+  color: #08265c;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,12 +28,6 @@ body {
 
 #root {
   min-height: 100vh;
-}
-
-@media (max-width: 1023px) {
-  video {
-    object-position: 25% center;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -62,3 +40,4 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
