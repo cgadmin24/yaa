@@ -4,31 +4,31 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/main/index.html"
+      "destination": "/main"
     },
     {
       "source": "/courses",
-      "destination": "/main/index.html"
+      "destination": "/main"
     },
     {
       "source": "/about",
-      "destination": "/main/index.html"
+      "destination": "/main"
     },
     {
       "source": "/contact",
-      "destination": "/main/index.html"
+      "destination": "/main"
     },
     {
       "source": "/hireable",
-      "destination": "/hireable/index.html"
+      "destination": "/hireable"
     },
     {
       "source": "/hireable2",
-      "destination": "/hireable2/index.html"
+      "destination": "/hireable2"
     },
     {
       "source": "/hirable2",
-      "destination": "/hireable2/index.html"
+      "destination": "/hireable2"
     }
   ]
 }
