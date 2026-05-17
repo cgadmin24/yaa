@@ -25,6 +25,7 @@ import {
 import { motion } from "motion/react";
 import { useState } from "react";
 import { cn } from "./lib/utils";
+import yaaLogoMark from "./assets/yaa-logo-mark.png";
 
 const phoneNumber = "+91 90742 94791";
 const contactHref = "tel:+919074294791";
@@ -162,8 +163,8 @@ function Header() {
     <header className="sticky top-0 z-50 border-b border-[#e3e6ff]/85 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex h-[82px] max-w-[1320px] items-center justify-between px-4 sm:px-6 lg:px-8">
         <a className="flex items-center gap-3" href="/" aria-label="YAA home">
-          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-[#7886fb] text-lg font-black text-white shadow-[0_14px_30px_rgba(120,134,251,0.22)]">
-            Y
+          <span className="grid h-12 w-12 place-items-center rounded-[14px] border border-[#e3e6ff] bg-white p-1.5 shadow-[0_14px_30px_rgba(120,134,251,0.16)]">
+            <img className="h-full w-full object-contain" src={yaaLogoMark} alt="" aria-hidden="true" />
           </span>
           <span className="leading-none">
             <span className="block font-display text-[26px] font-extrabold tracking-tight text-[#111827]">
@@ -632,8 +633,8 @@ function Footer() {
     <footer className="bg-[#7886fb] py-10 text-white">
       <div className="mx-auto flex max-w-[1320px] flex-col justify-between gap-7 px-4 sm:px-6 md:flex-row md:items-center lg:px-8">
         <a className="flex items-center gap-3" href="/">
-          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-white text-lg font-black text-[#7886fb]">
-            Y
+          <span className="grid h-12 w-12 place-items-center rounded-[14px] bg-white p-1.5">
+            <img className="h-full w-full object-contain" src={yaaLogoMark} alt="" aria-hidden="true" />
           </span>
           <span>
             <span className="block font-display text-[26px] font-extrabold tracking-tight">
