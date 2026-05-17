@@ -1,4 +1,4 @@
-import {
+﻿import {
   ArrowRight,
   Bot,
   BookOpen,
@@ -76,7 +76,7 @@ const companyLogoSlots = [
 const trustPoints = [
   { key: "students", end: 5000, suffix: "+ students" },
   { key: "mocks", end: 2000, suffix: "+ mock sessions" },
-  { key: "theory", text: "No theory" }
+  { key: "practice", end: 100, suffix: "% live practice" }
 ];
 
 const audiences = [
@@ -90,17 +90,17 @@ const differentiators = [
   {
     icon: Mic2,
     title: "Communication-first, always",
-    text: "Every session prioritizes how you say it — structure, pacing, clarity — not just what you say. Designed by trainers with 25+ years coaching corporate communication."
+    text: "Every session focuses on how you say it - structure, pacing, clarity - not just what you say."
   },
   {
     icon: BriefcaseBusiness,
     title: "Coached by people who hire",
-    text: "Your mentors are MNC leaders with 12+ years of hiring experience. They know what panels actually look for — because they've sat on them."
+    text: "Your mentors have 12+ years of MNC experience and have sat on the hiring panels you'll face."
   },
   {
     icon: Repeat2,
     title: "Always current",
-    text: "Interview trends shift fast. Our content updates with them — no recycled decks, no outdated frameworks."
+    text: "Interview trends shift fast. Our content updates with them - no recycled decks, no outdated frameworks."
   }
 ];
 
@@ -108,22 +108,22 @@ const extras = [
   {
     icon: Bot,
     title: "AI & digital tools training",
-    text: "Hands-on with the tools your future team is already using."
+    text: "Hands-on training with the tools your future team is already using."
   },
   {
     icon: MailCheck,
     title: "Email & corporate etiquette",
-    text: "Write messages that get read, not deleted. Tone, structure, subject lines, follow-ups."
+    text: "Write the message that gets read, not deleted."
   },
   {
     icon: Users,
     title: "Walk-in interview simulation",
-    text: "Unscripted mocks with real-time pressure, body language coaching, and panel-style questioning."
+    text: "The closest thing to the real room."
   },
   {
     icon: Search,
     title: "Live question bank",
-    text: "Role-specific questions across IT, BPO, finance, and sales — updated monthly from real interviews."
+    text: "Role-specific questions across IT, BPO, finance, and sales - updated monthly from real interviews."
   },
   {
     icon: FileText,
@@ -133,12 +133,12 @@ const extras = [
   {
     icon: Linkedin,
     title: "LinkedIn optimisation",
-    text: "Headline, summary, and keyword strategy so recruiters find you before you find them."
+    text: "Your profile is your first interview."
   },
   {
     icon: Trophy,
     title: "Certificate of completion",
-    text: "A shareable certificate to add to LinkedIn and resumes once you complete the program."
+    text: "A shareable certificate for LinkedIn and resumes once you complete the program."
   }
 ];
 
@@ -173,13 +173,13 @@ const format = [
     icon: CalendarDays,
     label: "Schedule",
     value: "Weekdays + Weekends",
-    note: "Flexible batches for real lives."
+    note: "Pick what fits your schedule."
   },
   {
     icon: MonitorSmartphone,
     label: "Mode",
     value: "Online & Offline",
-    note: "Choose what works for you."
+    note: "Same coaches, same outcomes."
   }
 ];
 
@@ -374,7 +374,7 @@ function Header() {
             className="rounded-[8px] border border-[#dfe3ff] bg-white px-6 py-3 text-[15px] font-bold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb]"
             href={talkHref}
           >
-            Talk to Us
+            Book intro call
           </a>
         </div>
 
@@ -382,7 +382,7 @@ function Header() {
           className="hidden rounded-[8px] bg-[#7886fb] px-5 py-3 text-[14px] font-bold text-white shadow-[0_14px_32px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] sm:inline-flex xl:hidden"
           href={talkHref}
         >
-          Talk to Us
+          Book intro call
         </a>
 
         <button
@@ -407,7 +407,7 @@ function Header() {
               Programs
             </a>
             <a className="rounded-[8px] bg-[#7886fb] px-3 py-3 text-center font-extrabold text-white" href={talkHref}>
-              Talk to Us
+              Book intro call
             </a>
           </div>
         </nav>
@@ -448,7 +448,8 @@ function HeroVisual() {
         <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#ffee0f] text-[#111827]">
           <Target className="h-6 w-6 stroke-[1.5]" />
         </div>
-        <p className="font-display text-[26px] font-extrabold leading-tight text-[#111827]">Real interview panels</p>
+        <p className="text-[13px] font-semibold text-[#4b5563]">Built for</p>
+        <p className="font-display text-[26px] font-extrabold leading-tight text-[#111827]">real interview panels</p>
       </div>
     </div>
   );
@@ -464,6 +465,9 @@ function Hero() {
           transition={{ duration: 0.65 }}
           className="relative z-10 min-w-0"
         >
+          <p className="mb-5 inline-flex rounded-full border border-[#dfe3ff] bg-white px-4 py-2 text-[13px] font-extrabold text-[#7886fb] shadow-sm">
+            Next cohort: May 2026 <span className="px-2 text-[#9ca3af]">&middot;</span> 18 seats remaining
+          </p>
           <h1 className="max-w-full break-words font-display text-[36px] font-extrabold leading-[1.09] tracking-tight text-[#111827] min-[420px]:text-[42px] sm:max-w-[720px] sm:text-[58px] lg:text-[68px]">
             <span className="block">You&apos;re not failing interviews.</span>
             <span className="block text-[#7886fb]">
@@ -475,9 +479,8 @@ function Hero() {
             </span>
           </h1>
           <p className="mt-6 max-w-[620px] break-words text-[18px] font-semibold leading-8 text-[#4b5563]">
-            If you&apos;ve stumbled in interviews &mdash; through nerves, a career break,
-            or losing the words when it counts &mdash; Hireable is built to fix the
-            delivery, not the resume.
+            For career-break returners, nervous freshers, and skilled speakers
+            who freeze on the panel &mdash; we don&apos;t fix your resume. We fix the delivery.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
             <a
@@ -492,16 +495,14 @@ function Hero() {
               href={phoneHref}
             >
               <Phone className="h-4 w-4 stroke-[1.5]" />
-              Talk to an Expert
+              Talk to a coach
             </a>
           </div>
           <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
             {trustPoints.map((point) => (
               <span className="inline-flex w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-extrabold text-[#4b5563] shadow-sm sm:w-auto" key={point.key}>
                 <CheckCircle2 className="h-4 w-4 stroke-[1.5] text-[#7886fb]" />
-                {"text" in point ? point.text : (
-                  <CountUpStat end={point.end} suffix={point.suffix} />
-                )}
+                <CountUpStat end={point.end} suffix={point.suffix} />
               </span>
             ))}
           </div>
@@ -540,12 +541,25 @@ function TrustStrip() {
 }
 
 function OutcomeStrip() {
+  const outcomes = [
+    "Career break gaps",
+    "Interview nerves",
+    "Communication blocks",
+    "Panel pressure"
+  ];
+
   return (
     <section className="bg-[#f9fafb]">
       <div className="mx-auto max-w-[1320px] px-4 py-8 sm:px-6 lg:px-8">
-        <p className="rounded-[14px] border border-[#e3e6ff] bg-white px-5 py-5 text-center text-[15px] font-extrabold leading-7 text-[#111827] shadow-sm">
-          We address: career-break gaps <span className="text-[#7886fb]">&middot;</span> interview nerves <span className="text-[#7886fb]">&middot;</span> communication blocks <span className="text-[#7886fb]">&middot;</span> panel pressure
-        </p>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {outcomes.map((outcome, index) => (
+            <Reveal className="h-full" delay={index * 80} key={outcome}>
+              <div className="flex h-full items-center justify-center rounded-full border border-[#e3e6ff] bg-white px-5 py-4 text-center text-[15px] font-extrabold text-[#111827] shadow-sm">
+                {outcome}
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -560,7 +574,7 @@ function AudienceFit() {
             Built for people who know they can do more.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            Hireable is not for passive watching. It is for candidates ready to
+            Hireable isn&apos;t for passive watching. It is for candidates ready to
             practice, get corrected, and show up better.
           </p>
         </div>
@@ -618,9 +632,6 @@ function ProblemSection({ image, imageAlt, label, problem, fix, tag, reverse }: 
           <div className="grid gap-5">
             <Reveal>
               <div className="rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-6">
-                <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
-                  The problem
-                </p>
                 <h2 className="font-display text-[34px] font-extrabold leading-tight text-[#111827] sm:text-[44px]">
                   {problem}
                 </h2>
@@ -762,6 +773,57 @@ function Proof() {
   );
 }
 
+function Pricing() {
+  return (
+    <section className="bg-[#f9fafb] py-20">
+      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+        <div>
+          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+            PRICING
+          </p>
+          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
+            Simple pricing. No hidden fees.
+          </h2>
+          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
+            We&apos;ll share the cohort fee, batch options, and what is included before you decide.
+          </p>
+        </div>
+
+        <Reveal>
+          <div className="rounded-[18px] border border-[#e3e6ff] bg-white p-7 shadow-[0_24px_70px_rgba(17,24,39,0.08)]">
+            <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
+              Hireable cohort
+            </p>
+            <h3 className="mt-3 font-display text-[38px] font-extrabold text-[#111827]">
+              Talk to us for pricing
+            </h3>
+            <div className="mt-6 grid gap-3 text-[15px] font-bold text-[#4b5563] sm:grid-cols-2">
+              {[
+                "60-day interview practice",
+                "Live mock interviews",
+                "AI practice access",
+                "Mentor feedback"
+              ].map((item) => (
+                <span className="flex items-center gap-2" key={item}>
+                  <CheckCircle2 className="h-4 w-4 shrink-0 stroke-[1.5] text-[#7886fb]" />
+                  {item}
+                </span>
+              ))}
+            </div>
+            <a
+              className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-6 py-4 text-[15px] font-extrabold text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] sm:w-auto"
+              href={talkHref}
+            >
+              Book a free intro call
+              <ArrowRight className="h-4 w-4 stroke-[1.5]" />
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Extras() {
   return (
     <section className="bg-white py-20">
@@ -779,7 +841,7 @@ function Extras() {
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 text-[15px] font-extrabold text-[#7886fb] transition hover:border-[#7886fb] md:w-auto md:border-transparent"
             href={talkHref}
           >
-            Start with one call
+            Book a free intro call
             <ArrowRight className="h-4 w-4 stroke-[1.5]" />
           </a>
         </div>
@@ -819,7 +881,7 @@ function Duration() {
             <CountUpStat end={60} suffix=" days" /> to change your career story.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            Small commitment. Life-changing outcome.
+            Short program. Long-term impact.
           </p>
         </div>
 
@@ -856,6 +918,45 @@ function Duration() {
   );
 }
 
+function FounderNote() {
+  return (
+    <section className="bg-[#f9fafb] py-20">
+      <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+        <Reveal>
+          <div className="grid min-h-[360px] place-items-center rounded-[24px] border border-[#e3e6ff] bg-white p-8 text-center shadow-[0_24px_70px_rgba(17,24,39,0.08)]">
+            <span className="grid h-28 w-28 place-items-center rounded-full bg-[#f1f3ff] p-4">
+              <img className="h-full w-full object-contain" src={yaaLogoMark} alt="" aria-hidden="true" />
+            </span>
+            <p className="mt-5 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#9ca3af]">
+              Founder photo pending
+            </p>
+          </div>
+        </Reveal>
+
+        <div>
+          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+            FOUNDER NOTE
+          </p>
+          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
+            Why we built Hireable
+          </h2>
+          <p className="mt-5 text-[17px] font-semibold leading-8 text-[#4b5563]">
+            We built Hireable because too many good candidates were losing interviews they were qualified for. Not because they lacked skill. Because nobody trained them to speak when the pressure hit. A quiet room is easy. A panel is different. Your voice shakes. Your answer runs long. Your strongest point gets buried. Hireable brings that pressure into practice, before the interview does. We coach the answer, the pause, the tone, and the recovery after a bad start. The goal is simple: help you sound like the person your resume already says you are. So panels hear the candidate, not the panic.
+          </p>
+          <div className="mt-6 rounded-[14px] border border-[#e3e6ff] bg-white p-5">
+            <p className="font-display text-[22px] font-extrabold text-[#111827]">
+              YAA Founder
+            </p>
+            <p className="mt-1 text-[14px] font-bold text-[#6b7280]">
+              Name and credentials pending approval
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta() {
   return (
     <section className="bg-white py-20">
@@ -864,24 +965,24 @@ function FinalCta() {
           <Sparkles className="h-8 w-8 stroke-[1.5]" />
         </span>
         <h2 className="font-display text-[42px] font-extrabold leading-tight text-[#111827] sm:text-[58px]">
-          You do not need perfect confidence. You need a real practice system.
+          You don&apos;t need perfect confidence. You need a real practice system.
         </h2>
         <p className="mx-auto mt-5 max-w-[680px] text-[19px] font-semibold leading-8 text-[#4b5563]">
-          One call. That is all it takes to start showing up differently.
+          One call. That&apos;s all it takes to start sounding like the person on your resume.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             className="inline-flex min-h-12 w-full max-w-[430px] flex-wrap items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-5 py-4 text-[14px] font-extrabold text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
-            href={talkHref}
+            href={phoneHref}
           >
-            Book a free intro call
-            <ArrowRight className="h-4 w-4 stroke-[1.5]" />
+            Talk to a coach <span className="text-white/70">&middot;</span> {phoneNumber}
           </a>
           <a
             className="inline-flex min-h-12 w-full max-w-[430px] items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 py-4 text-[14px] font-extrabold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
-            href={phoneHref}
+            href={talkHref}
           >
-            Talk to an expert: {phoneNumber}
+            Book a free 15-min intro call
+            <ArrowRight className="h-4 w-4 stroke-[1.5]" />
           </a>
         </div>
       </div>
@@ -998,8 +1099,8 @@ function App() {
           image={communicationImage}
           imageAlt="Candidate feeling unsure while preparing at a desk"
           label="THE COMMUNICATION GAP"
-          problem="You have the skills. But when it counts, the words do not come out right."
-          fix="We train you to speak with clarity, confidence, and corporate fluency — in English and beyond."
+          problem="You have the skills. But when it counts, the words don't come out right."
+          fix="We coach how you sound under pressure - your clarity, your structure, your tone, and the words you reach for when it counts."
           tag="Communication is a skill. We teach it like one."
         />
         <ProblemSection
@@ -1008,14 +1109,16 @@ function App() {
           label="THE PRESSURE GAP"
           problem="You blank out. You over-explain. You walk out knowing you had the answer."
           fix="Live mock interviews. Real panels. Feedback that actually sticks."
-          tag="We simulate the pressure so the real thing feels easy."
+          tag="We simulate the pressure so the real thing feels easier."
           reverse
         />
         <HireableBreak />
         <Difference />
         <Proof />
+        <Pricing />
         <Extras />
         <Duration />
+        <FounderNote />
         <FinalCta />
       </main>
       <Footer />
@@ -1034,3 +1137,4 @@ function App() {
 }
 
 export default App;
+

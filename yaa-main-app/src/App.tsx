@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  Bell,
   BookOpen,
   BriefcaseBusiness,
   CheckCircle2,
@@ -46,16 +47,16 @@ const programs = [
     category: "Interview Communication",
     description: "Live mocks, AI pressure practice, and feedback that fixes delivery fast.",
     lessons: "60 days",
-    price: "Talk to us",
+    price: "View program",
     href: "/hireable",
     status: "Open now"
   },
   {
     title: "Corporate Readiness",
     category: "Workplace Skills",
-    description: "Meetings, emails, calls, and the everyday language of professional teams.",
+    description: "Meetings, emails, calls, and the corporate fluency nobody teaches you.",
     lessons: "6 modules",
-    price: "Coming soon",
+    price: "Notify me",
     href: "/contact",
     status: "Coming Soon"
   },
@@ -64,7 +65,7 @@ const programs = [
     category: "Career Confidence",
     description: "Own the first question before it owns the interview.",
     lessons: "3 sessions",
-    price: "Coming soon",
+    price: "Notify me",
     href: "/contact",
     status: "Coming Soon"
   }
@@ -106,7 +107,7 @@ const routeMeta = {
   courses: {
     title: "Courses | YAA",
     description:
-      "Explore YAA programs for interview communication, corporate readiness, self introduction mastery, and career confidence."
+      "See YAA programs for interview communication, corporate readiness, self introduction mastery, and career confidence."
   },
   about: {
     title: "About | YAA",
@@ -342,7 +343,7 @@ function Header() {
             className="rounded-[8px] border border-[#dfe3ff] bg-white px-6 py-3 text-[15px] font-bold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb]"
             href={talkHref}
           >
-            Talk to Us
+            Book intro call
           </a>
         </div>
 
@@ -350,7 +351,7 @@ function Header() {
           className="hidden rounded-[8px] bg-[#7886fb] px-5 py-3 text-[14px] font-bold text-white shadow-[0_14px_32px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] sm:inline-flex xl:hidden"
           href={talkHref}
         >
-          Talk to Us
+          Book intro call
         </a>
 
         <button
@@ -375,7 +376,7 @@ function Header() {
               Programs
             </a>
             <a className="rounded-[8px] bg-[#7886fb] px-3 py-3 text-center font-extrabold text-white" href={talkHref}>
-              Talk to Us
+              Book intro call
             </a>
           </div>
         </nav>
@@ -438,15 +439,15 @@ function HomePage() {
             className="relative z-10 min-w-0"
           >
             <div className="mb-6 inline-flex rounded-[6px] bg-[#f1f3ff] px-4 py-2 text-[14px] font-bold text-[#7886fb]">
-              Build the communication advantage
+              For students &amp; early-career professionals
             </div>
             <h1 className="max-w-full break-words font-display text-[36px] font-extrabold leading-[1.08] tracking-tight text-[#111827] sm:max-w-[690px] sm:text-[60px] lg:text-[68px]">
               Skills get you shortlisted.{" "}
               <span className="text-[#7886fb]">Delivery</span> gets you hired.
             </h1>
             <p className="mt-6 max-w-[600px] break-words text-[17px] font-medium leading-8 text-[#4b5563]">
-              YAA trains students and early-career professionals to speak with structure,
-              confidence, and clarity &mdash; in interviews and at work.
+              YAA trains students and early-career professionals to interview,
+              speak, and show up at work with structure and confidence.
             </p>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
@@ -461,7 +462,7 @@ function HomePage() {
                 href={talkHref}
               >
                 <MessageCircle className="h-6 w-6 stroke-[1.5] text-[#7886fb]" />
-                Have a question? Talk to YAA
+                Book a free intro call
               </a>
             </div>
           </motion.div>
@@ -508,7 +509,7 @@ function TrustStrip() {
 function AboutBand() {
   const stats = [
     { end: 5000, suffix: "+", label: "Students trained" },
-    { end: 2000, suffix: "+", label: "Mock sessions" },
+    { end: 2000, suffix: "+", label: "Mock sessions completed" },
     { end: 60, suffix: " days", label: "Average program length" },
     { end: 4.9, suffix: " / 5", decimals: 1, label: "Candidate rating" }
   ];
@@ -529,7 +530,7 @@ function AboutBand() {
                 <CountUpStat end={3} suffix="x" />
               </p>
               <p className="max-w-[210px] text-[13px] font-bold leading-5 text-[#4b5563]">
-                more speaking time than a typical online course
+                more speaking time than self-paced courses
               </p>
             </div>
           </div>
@@ -537,10 +538,10 @@ function AboutBand() {
 
         <div>
           <div className="mb-5 inline-flex rounded-[6px] bg-[#f1f3ff] px-4 py-2 text-[14px] font-bold text-[#7886fb]">
-            Get to know YAA
+            OUR APPROACH
           </div>
           <h2 className="font-display text-[38px] font-extrabold leading-tight text-[#111827] sm:text-[48px]">
-            We do not teach confidence as a quote. We build it as a skill.
+            We don&apos;t teach confidence as a quote. We build it as a skill.
           </h2>
           <p className="mt-5 max-w-[650px] text-[16px] font-medium leading-8 text-[#4b5563]">
             YAA is built for candidates who know the answer but lose the room.
@@ -578,7 +579,7 @@ function HomepageBreak() {
             Practice beats panic
           </p>
           <h2 className="max-w-[760px] font-display text-[34px] font-extrabold leading-tight sm:text-[48px]">
-            Confidence is not a mood. It is what happens after enough real reps.
+            Confidence isn&apos;t a mood. It comes after enough real reps.
           </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
@@ -603,6 +604,23 @@ function HomepageBreak() {
 }
 
 function FeaturedPrograms() {
+  const [notifyProgram, setNotifyProgram] = useState<string | null>(null);
+  const [notifySubmitted, setNotifySubmitted] = useState(false);
+
+  function handleNotifySubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = String(data.get("email") || "").trim();
+
+    if (!email || !notifyProgram) return;
+
+    const stored = window.localStorage.getItem("yaa_notify_requests");
+    const requests = stored ? JSON.parse(stored) as Array<{ email: string; program: string }> : [];
+    requests.push({ email, program: notifyProgram });
+    window.localStorage.setItem("yaa_notify_requests", JSON.stringify(requests));
+    setNotifySubmitted(true);
+  }
+
   return (
     <section className="bg-[#ffffff] py-20">
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
@@ -627,12 +645,11 @@ function FeaturedPrograms() {
         <div className="grid gap-6 md:grid-cols-3">
           {programs.map((program, index) => (
             <Reveal className="h-full" delay={index * 80} key={program.title}>
-              <a
+              <div
                 className={cn(
                   "group flex h-full flex-col rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]",
                   program.status === "Coming Soon" && "bg-[#f9fafb] opacity-75"
                 )}
-                href={program.href}
               >
                 <div className="mb-5 flex items-center justify-between">
                   <span className="rounded-[6px] bg-[#f1f3ff] px-3 py-1.5 text-[12px] font-extrabold text-[#7886fb]">
@@ -641,14 +658,14 @@ function FeaturedPrograms() {
                   <span
                     className={cn(
                       "rounded-full px-3 py-1.5 text-[12px] font-extrabold",
-                      program.status === "Coming Soon"
-                        ? "bg-white text-[#6b7280]"
-                        : "bg-[#ffee0f] text-[#111827]"
-                    )}
-                  >
-                    {program.status}
-                  </span>
-                </div>
+                    program.status === "Coming Soon"
+                      ? "bg-white text-[#6b7280]"
+                      : "bg-[#ffee0f] text-[#111827]"
+                  )}
+                >
+                  {program.status === "Coming Soon" ? program.status : "★ 4.9"}
+                </span>
+              </div>
                 <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
                   {program.title}
                 </h3>
@@ -659,15 +676,83 @@ function FeaturedPrograms() {
                   <span className="text-[13px] font-bold text-[#6b7280]">
                     <StatText text={program.lessons} />
                   </span>
-                  <span className="font-display text-[18px] font-extrabold text-[#7886fb]">
-                    {program.price}
-                  </span>
+                  {program.status === "Coming Soon" ? (
+                    <button
+                      className="inline-flex items-center gap-1.5 rounded-[8px] border border-[#7886fb] px-3 py-2 text-[13px] font-extrabold text-[#7886fb] transition hover:bg-[#f1f3ff]"
+                      onClick={() => {
+                        setNotifyProgram(program.title);
+                        setNotifySubmitted(false);
+                      }}
+                      type="button"
+                    >
+                      <Bell className="h-4 w-4 stroke-[1.5]" />
+                      Notify me
+                    </button>
+                  ) : (
+                    <a
+                      className="inline-flex items-center gap-1.5 font-display text-[18px] font-extrabold text-[#7886fb]"
+                      href={program.href}
+                    >
+                      View program
+                      <ArrowRight className="h-4 w-4 stroke-[1.5]" />
+                    </a>
+                  )}
                 </div>
-              </a>
+              </div>
             </Reveal>
           ))}
         </div>
       </div>
+
+      {notifyProgram && (
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-[#0a1b33]/40 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-[440px] rounded-[18px] border border-[#e3e6ff] bg-white p-6 shadow-[0_30px_90px_rgba(17,24,39,0.22)]">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+                  Launch alert
+                </p>
+                <h3 className="mt-2 font-display text-[28px] font-extrabold text-[#111827]">
+                  {notifyProgram}
+                </h3>
+              </div>
+              <button
+                className="grid h-10 w-10 place-items-center rounded-[8px] border border-[#dfe3ff] text-[#111827]"
+                onClick={() => setNotifyProgram(null)}
+                type="button"
+                aria-label="Close notification form"
+              >
+                <X className="h-5 w-5 stroke-[1.5]" />
+              </button>
+            </div>
+
+            {notifySubmitted ? (
+              <p className="mt-5 rounded-[12px] bg-[#f1f3ff] p-4 text-[15px] font-bold text-[#111827]">
+                You&apos;re on the list. We&apos;ll email you when this program opens.
+              </p>
+            ) : (
+              <form className="mt-5 grid gap-3" onSubmit={handleNotifySubmit}>
+                <label className="grid gap-2">
+                  <span className="text-[13px] font-extrabold text-[#4b5563]">Email</span>
+                  <input
+                    className="rounded-[8px] border border-[#dfe3ff] px-4 py-3 text-[#111827] outline-none transition focus:border-[#7886fb]"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                    type="email"
+                  />
+                </label>
+                <button
+                  className="rounded-[8px] bg-[#7886fb] px-5 py-3 text-[15px] font-extrabold text-white"
+                  type="submit"
+                >
+                  Notify me
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
