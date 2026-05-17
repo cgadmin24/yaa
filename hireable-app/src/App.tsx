@@ -26,7 +26,8 @@ import {
   X
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { cn } from "./lib/utils";
 import yaaLogoMark from "./assets/yaa-logo-mark.png";
 
@@ -72,7 +73,11 @@ const companyLogoSlots = [
   "Logo pending"
 ];
 
-const trustPoints = ["5000+ students", "2000+ mock sessions", "No theory"];
+const trustPoints = [
+  { key: "students", end: 5000, suffix: "+ students" },
+  { key: "mocks", end: 2000, suffix: "+ mock sessions" },
+  { key: "theory", text: "No theory" }
+];
 
 const audiences = [
   "Fresh graduates facing their first serious interviews",
@@ -160,6 +165,8 @@ const format = [
     icon: Clock3,
     label: "Duration",
     value: "2 months",
+    countEnd: 2,
+    countSuffix: " months",
     note: "Built around working hours."
   },
   {
@@ -175,6 +182,152 @@ const format = [
     note: "Choose what works for you."
   }
 ];
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    Boolean(
+      typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    )
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+function useInViewOnce<T extends HTMLElement = HTMLDivElement>(threshold = 0.2) {
+  const ref = useRef<T | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [canAnimate, setCanAnimate] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setCanAnimate(false);
+      setHasEntered(true);
+      return;
+    }
+
+    setCanAnimate(true);
+
+    const node = ref.current;
+    if (typeof window === "undefined" || !node || !("IntersectionObserver" in window)) {
+      setHasEntered(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEntered(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [prefersReducedMotion, threshold]);
+
+  return {
+    ref,
+    isInView: hasEntered || prefersReducedMotion,
+    canAnimate: canAnimate && !prefersReducedMotion
+  };
+}
+
+function easeOutCubic(progress: number) {
+  return 1 - Math.pow(1 - progress, 3);
+}
+
+type CountUpStatProps = {
+  end: number;
+  suffix?: string;
+  decimals?: number;
+  className?: string;
+};
+
+function CountUpStat({ end, suffix = "", decimals = 0, className }: CountUpStatProps) {
+  const { ref, isInView, canAnimate } = useInViewOnce<HTMLSpanElement>(0.5);
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    if (!canAnimate) {
+      setDisplayValue(end);
+      return;
+    }
+
+    let frameId = 0;
+    const startedAt = performance.now();
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / 1500, 1);
+      setDisplayValue(end * easeOutCubic(progress));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      } else {
+        setDisplayValue(end);
+      }
+    };
+
+    frameId = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(frameId);
+  }, [canAnimate, end, isInView]);
+
+  const value = decimals > 0 ? displayValue.toFixed(decimals) : String(Math.round(displayValue));
+
+  return (
+    <span ref={ref} className={cn("tabular-nums", className)}>
+      {value}
+      {suffix}
+    </span>
+  );
+}
+
+type RevealProps = {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+};
+
+function Reveal({ children, className, delay = 0 }: RevealProps) {
+  const { ref, isInView, canAnimate } = useInViewOnce<HTMLDivElement>(0.18);
+  const isVisible = !canAnimate || isInView;
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translate3d(0, 0, 0)" : "translate3d(0, 24px, 0)",
+        transition: canAnimate
+          ? `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`
+          : undefined,
+        willChange: canAnimate && !isVisible ? "opacity, transform" : undefined
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -286,7 +439,9 @@ function HeroVisual() {
           <GraduationCap className="h-6 w-6 stroke-[1.5]" />
         </div>
         <p className="text-[13px] font-semibold text-[#4b5563]">Students trained</p>
-        <p className="font-display text-[34px] font-extrabold text-[#111827]">5000+</p>
+        <p className="font-display text-[34px] font-extrabold text-[#111827]">
+          <CountUpStat end={5000} suffix="+" />
+        </p>
       </div>
 
       <div className="mt-3 rounded-[18px] bg-white p-5 shadow-[0_24px_60px_rgba(17,24,39,0.16)] sm:absolute sm:-right-1 sm:top-1/2 sm:mt-0 sm:w-[205px]">
@@ -342,14 +497,18 @@ function Hero() {
           </div>
           <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
             {trustPoints.map((point) => (
-              <span className="inline-flex w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-extrabold text-[#4b5563] shadow-sm sm:w-auto" key={point}>
+              <span className="inline-flex w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-extrabold text-[#4b5563] shadow-sm sm:w-auto" key={point.key}>
                 <CheckCircle2 className="h-4 w-4 stroke-[1.5] text-[#7886fb]" />
-                {point}
+                {"text" in point ? point.text : (
+                  <CountUpStat end={point.end} suffix={point.suffix} />
+                )}
               </span>
             ))}
           </div>
         </motion.div>
-        <HeroVisual />
+        <Reveal className="min-w-0" delay={120}>
+          <HeroVisual />
+        </Reveal>
       </div>
     </section>
   );
@@ -364,12 +523,15 @@ function TrustStrip() {
         </p>
         <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {companyLogoSlots.map((slot, index) => (
-            <div
-              className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-[#f9fafb] px-5 text-center text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#9ca3af] grayscale"
+            <Reveal
+              className="shrink-0"
+              delay={index * 80}
               key={`${slot}-${index}`}
             >
-              {slot}
-            </div>
+              <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-[#f9fafb] px-5 text-center text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#9ca3af] grayscale">
+                {slot}
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -403,13 +565,15 @@ function AudienceFit() {
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {audiences.map((item) => (
-            <div className="rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm" key={item}>
-              <span className="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-                <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
-              </span>
-              <p className="text-[16px] font-extrabold leading-7 text-[#111827]">{item}</p>
-            </div>
+          {audiences.map((item, index) => (
+            <Reveal className="h-full" delay={index * 80} key={item}>
+              <div className="h-full rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm">
+                <span className="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                  <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
+                </span>
+                <p className="text-[16px] font-extrabold leading-7 text-[#111827]">{item}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -434,38 +598,44 @@ function ProblemSection({ image, imageAlt, label, problem, fix, tag, reverse }: 
         "mx-auto grid max-w-[1320px] items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8",
         reverse && "lg:[&>div:first-child]:order-2"
       )}>
-        <div className="relative">
-          <div className="absolute -left-5 top-9 h-40 w-24 rounded-r-full bg-[#ffee0f]" />
-          <div className="relative overflow-hidden rounded-[26px] bg-[#ffffff] shadow-[0_30px_80px_rgba(17,24,39,0.12)]">
-            <img
-              className="h-[420px] w-full object-cover object-center"
-              src={image}
-              alt={imageAlt}
-            />
+        <Reveal className="min-w-0">
+          <div className="relative">
+            <div className="absolute -left-5 top-9 h-40 w-24 rounded-r-full bg-[#ffee0f]" />
+            <div className="relative overflow-hidden rounded-[26px] bg-[#ffffff] shadow-[0_30px_80px_rgba(17,24,39,0.12)]">
+              <img
+                className="h-[420px] w-full object-cover object-center"
+                src={image}
+                alt={imageAlt}
+              />
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         <div>
           <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
             {label}
           </p>
           <div className="grid gap-5">
-            <div className="rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-6">
-              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
-                The problem
-              </p>
-              <h2 className="font-display text-[34px] font-extrabold leading-tight text-[#111827] sm:text-[44px]">
-                {problem}
-              </h2>
-            </div>
-            <div className="rounded-[16px] border border-[#e3e6ff] bg-white p-6 shadow-sm">
-              <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
-                What we do
-              </p>
-              <p className="text-[18px] font-semibold leading-8 text-[#4b5563]">
-                {fix}
-              </p>
-            </div>
+            <Reveal>
+              <div className="rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-6">
+                <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
+                  The problem
+                </p>
+                <h2 className="font-display text-[34px] font-extrabold leading-tight text-[#111827] sm:text-[44px]">
+                  {problem}
+                </h2>
+              </div>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="rounded-[16px] border border-[#e3e6ff] bg-white p-6 shadow-sm">
+                <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+                  What we do
+                </p>
+                <p className="text-[18px] font-semibold leading-8 text-[#4b5563]">
+                  {fix}
+                </p>
+              </div>
+            </Reveal>
           </div>
           <p className="mt-6 inline-flex max-w-full rounded-[8px] bg-[#111827] px-5 py-3 text-[15px] font-extrabold leading-6 text-white">
             {tag}
@@ -488,13 +658,15 @@ function HireableBreak() {
             ["Before", "Guessing what might happen."],
             ["During", "Live panels, interruptions, follow-ups."],
             ["After", "Clear feedback and better reps."]
-          ].map(([label, text]) => (
-            <div className="rounded-[16px] border border-white/15 bg-white/[0.08] p-5" key={label}>
-              <p className="text-[13px] font-extrabold uppercase tracking-[0.16em] text-[#ffee0f]">
-                {label}
-              </p>
-              <p className="mt-3 text-[17px] font-bold leading-7 text-white/85">{text}</p>
-            </div>
+          ].map(([label, text], index) => (
+            <Reveal className="h-full" delay={index * 80} key={label}>
+              <div className="h-full rounded-[16px] border border-white/15 bg-white/[0.08] p-5">
+                <p className="text-[13px] font-extrabold uppercase tracking-[0.16em] text-[#ffee0f]">
+                  {label}
+                </p>
+                <p className="mt-3 text-[17px] font-bold leading-7 text-white/85">{text}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -516,24 +688,23 @@ function Difference() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {differentiators.map((item) => {
+          {differentiators.map((item, index) => {
             const Icon = item.icon;
 
             return (
-              <div
-                className="rounded-[16px] border border-[#e3e6ff] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]"
-                key={item.title}
-              >
-                <div className="mb-6 grid h-14 w-14 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-                  <Icon className="h-7 w-7 stroke-[1.5]" />
+              <Reveal className="h-full" delay={index * 80} key={item.title}>
+                <div className="h-full rounded-[16px] border border-[#e3e6ff] bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]">
+                  <div className="mb-6 grid h-14 w-14 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                    <Icon className="h-7 w-7 stroke-[1.5]" />
+                  </div>
+                  <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 text-[15px] font-medium leading-7 text-[#4b5563]">
+                    {item.text}
+                  </p>
                 </div>
-                <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-[15px] font-medium leading-7 text-[#4b5563]">
-                  {item.text}
-                </p>
-              </div>
+              </Reveal>
             );
           })}
         </div>
@@ -556,35 +727,34 @@ function Proof() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {proofStories.map((story) => (
-            <figure
-              className="rounded-[16px] border border-[#e3e6ff] bg-white p-7 shadow-sm"
-              key={story.name}
-            >
-              <blockquote className="text-[18px] font-semibold leading-8 text-[#111827]">
-                "{story.quote}"
-              </blockquote>
-              <figcaption className="mt-7 flex items-center gap-3">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#dfe3ff] bg-[#f1f3ff] text-[#7886fb]">
-                  <Users className="h-5 w-5 stroke-[1.5]" />
-                </span>
-                <span>
-                  <span className="block font-display text-[18px] font-extrabold text-[#111827]">
-                    {story.name}
+          {proofStories.map((story, index) => (
+            <Reveal className="h-full" delay={index * 80} key={story.name}>
+              <figure className="h-full rounded-[16px] border border-[#e3e6ff] bg-white p-7 shadow-sm">
+                <blockquote className="text-[18px] font-semibold leading-8 text-[#111827]">
+                  "{story.quote}"
+                </blockquote>
+                <figcaption className="mt-7 flex items-center gap-3">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#dfe3ff] bg-[#f1f3ff] text-[#7886fb]">
+                    <Users className="h-5 w-5 stroke-[1.5]" />
                   </span>
-                  <span className="block text-[13px] font-bold text-[#6b7280]">
-                    {story.detail}
+                  <span>
+                    <span className="block font-display text-[18px] font-extrabold text-[#111827]">
+                      {story.name}
+                    </span>
+                    <span className="block text-[13px] font-bold text-[#6b7280]">
+                      {story.detail}
+                    </span>
+                    <span className="block text-[11px] font-bold uppercase tracking-[0.08em] text-[#9ca3af]">
+                      Photo pending
+                    </span>
+                    <span className="mt-1 inline-flex items-center gap-1 text-[12px] font-extrabold text-[#7886fb]">
+                      <Linkedin className="h-3.5 w-3.5 stroke-[1.5]" />
+                      LinkedIn pending
+                    </span>
                   </span>
-                  <span className="block text-[11px] font-bold uppercase tracking-[0.08em] text-[#9ca3af]">
-                    Photo pending
-                  </span>
-                  <span className="mt-1 inline-flex items-center gap-1 text-[12px] font-extrabold text-[#7886fb]">
-                    <Linkedin className="h-3.5 w-3.5 stroke-[1.5]" />
-                    LinkedIn pending
-                  </span>
-                </span>
-              </figcaption>
-            </figure>
+                </figcaption>
+              </figure>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -615,21 +785,23 @@ function Extras() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {extras.map((item) => {
+          {extras.map((item, index) => {
             const Icon = item.icon;
 
             return (
-              <div className="min-h-[170px] rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-6" key={item.title}>
-                <div className="mb-5 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb] shadow-sm">
-                  <Icon className="h-5 w-5 stroke-[1.5]" />
+              <Reveal className="h-full" delay={index * 80} key={item.title}>
+                <div className="min-h-[170px] rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-6">
+                  <div className="mb-5 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb] shadow-sm">
+                    <Icon className="h-5 w-5 stroke-[1.5]" />
+                  </div>
+                  <h3 className="font-display text-[20px] font-extrabold leading-snug text-[#111827]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-[14px] font-medium leading-6 text-[#4b5563]">
+                    {item.text}
+                  </p>
                 </div>
-                <h3 className="font-display text-[20px] font-extrabold leading-snug text-[#111827]">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-[14px] font-medium leading-6 text-[#4b5563]">
-                  {item.text}
-                </p>
-              </div>
+              </Reveal>
             );
           })}
         </div>
@@ -644,7 +816,7 @@ function Duration() {
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-10 max-w-[760px] text-center">
           <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[54px]">
-            60 days to change your career story.
+            <CountUpStat end={60} suffix=" days" /> to change your career story.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
             Small commitment. Life-changing outcome.
@@ -652,24 +824,30 @@ function Duration() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {format.map((item) => {
+          {format.map((item, index) => {
             const Icon = item.icon;
 
             return (
-              <div className="rounded-[16px] border border-[#e3e6ff] bg-white p-7 text-center shadow-sm" key={item.label}>
-                <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-                  <Icon className="h-8 w-8 stroke-[1.5]" />
+              <Reveal className="h-full" delay={index * 80} key={item.label}>
+                <div className="h-full rounded-[16px] border border-[#e3e6ff] bg-white p-7 text-center shadow-sm">
+                  <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                    <Icon className="h-8 w-8 stroke-[1.5]" />
+                  </div>
+                  <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
+                    {item.label}
+                  </p>
+                  <h3 className="mt-3 font-display text-[30px] font-extrabold leading-tight text-[#111827]">
+                    {typeof item.countEnd === "number" ? (
+                      <CountUpStat end={item.countEnd} suffix={item.countSuffix} />
+                    ) : (
+                      item.value
+                    )}
+                  </h3>
+                  <p className="mt-3 text-[15px] font-semibold leading-7 text-[#4b5563]">
+                    {item.note}
+                  </p>
                 </div>
-                <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
-                  {item.label}
-                </p>
-                <h3 className="mt-3 font-display text-[30px] font-extrabold leading-tight text-[#111827]">
-                  {item.value}
-                </h3>
-                <p className="mt-3 text-[15px] font-semibold leading-7 text-[#4b5563]">
-                  {item.note}
-                </p>
-              </div>
+              </Reveal>
             );
           })}
         </div>

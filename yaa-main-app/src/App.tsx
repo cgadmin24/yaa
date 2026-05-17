@@ -17,7 +17,7 @@ import {
   X
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { cn } from "./lib/utils";
 import yaaLogoMark from "./assets/yaa-logo-mark.png";
@@ -129,6 +129,166 @@ function getRoute(): RouteName {
   if (path === "/about") return "about";
   if (path === "/contact") return "contact";
   return "home";
+}
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    Boolean(
+      typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    )
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+function useInViewOnce<T extends HTMLElement = HTMLDivElement>(threshold = 0.2) {
+  const ref = useRef<T | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [canAnimate, setCanAnimate] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setCanAnimate(false);
+      setHasEntered(true);
+      return;
+    }
+
+    setCanAnimate(true);
+
+    const node = ref.current;
+    if (typeof window === "undefined" || !node || !("IntersectionObserver" in window)) {
+      setHasEntered(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEntered(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [prefersReducedMotion, threshold]);
+
+  return {
+    ref,
+    isInView: hasEntered || prefersReducedMotion,
+    canAnimate: canAnimate && !prefersReducedMotion
+  };
+}
+
+function easeOutCubic(progress: number) {
+  return 1 - Math.pow(1 - progress, 3);
+}
+
+type CountUpStatProps = {
+  end: number;
+  suffix?: string;
+  decimals?: number;
+  className?: string;
+};
+
+function CountUpStat({ end, suffix = "", decimals = 0, className }: CountUpStatProps) {
+  const { ref, isInView, canAnimate } = useInViewOnce<HTMLSpanElement>(0.5);
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    if (!canAnimate) {
+      setDisplayValue(end);
+      return;
+    }
+
+    let frameId = 0;
+    const startedAt = performance.now();
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / 1500, 1);
+      setDisplayValue(end * easeOutCubic(progress));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      } else {
+        setDisplayValue(end);
+      }
+    };
+
+    frameId = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(frameId);
+  }, [canAnimate, end, isInView]);
+
+  const value = decimals > 0 ? displayValue.toFixed(decimals) : String(Math.round(displayValue));
+
+  return (
+    <span ref={ref} className={cn("tabular-nums", className)}>
+      {value}
+      {suffix}
+    </span>
+  );
+}
+
+function StatText({ text }: { text: string }) {
+  const match = text.match(/^(\d+(?:\.\d+)?)(.*)$/);
+
+  if (!match) return <>{text}</>;
+
+  return (
+    <CountUpStat
+      decimals={match[1].includes(".") ? 1 : 0}
+      end={Number(match[1])}
+      suffix={match[2]}
+    />
+  );
+}
+
+type RevealProps = {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+};
+
+function Reveal({ children, className, delay = 0 }: RevealProps) {
+  const { ref, isInView, canAnimate } = useInViewOnce<HTMLDivElement>(0.18);
+  const isVisible = !canAnimate || isInView;
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translate3d(0, 0, 0)" : "translate3d(0, 24px, 0)",
+        transition: canAnimate
+          ? `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`
+          : undefined,
+        willChange: canAnimate && !isVisible ? "opacity, transform" : undefined
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 function Logo() {
@@ -248,7 +408,9 @@ function HeroVisual() {
           <Users className="h-6 w-6 stroke-[1.5]" />
         </div>
         <p className="text-[13px] font-semibold text-[#4b5563]">Students trained</p>
-        <p className="font-display text-[32px] font-extrabold text-[#111827]">5000+</p>
+        <p className="font-display text-[32px] font-extrabold text-[#111827]">
+          <CountUpStat end={5000} suffix="+" />
+        </p>
       </div>
 
       <div className="mt-3 rounded-[16px] bg-white p-5 shadow-[0_24px_60px_rgba(17,24,39,0.16)] sm:absolute sm:-right-2 sm:top-1/2 sm:mt-0">
@@ -256,7 +418,9 @@ function HeroVisual() {
           <Target className="h-6 w-6 stroke-[1.5]" />
         </div>
         <p className="text-[13px] font-semibold text-[#4b5563]">Mock sessions</p>
-        <p className="font-display text-[32px] font-extrabold text-[#111827]">2000+</p>
+        <p className="font-display text-[32px] font-extrabold text-[#111827]">
+          <CountUpStat end={2000} suffix="+" />
+        </p>
       </div>
     </div>
   );
@@ -301,7 +465,9 @@ function HomePage() {
               </a>
             </div>
           </motion.div>
-          <HeroVisual />
+          <Reveal className="min-w-0" delay={120}>
+            <HeroVisual />
+          </Reveal>
         </div>
       </section>
 
@@ -323,12 +489,15 @@ function TrustStrip() {
         </p>
         <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {companyLogoSlots.map((slot, index) => (
-            <div
-              className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-[#f9fafb] px-5 text-center text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#9ca3af] grayscale"
+            <Reveal
+              className="shrink-0"
+              delay={index * 80}
               key={`${slot}-${index}`}
             >
-              {slot}
-            </div>
+              <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-[#f9fafb] px-5 text-center text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#9ca3af] grayscale">
+                {slot}
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -337,23 +506,34 @@ function TrustStrip() {
 }
 
 function AboutBand() {
+  const stats = [
+    { end: 5000, suffix: "+", label: "Students trained" },
+    { end: 2000, suffix: "+", label: "Mock sessions" },
+    { end: 60, suffix: " days", label: "Average program length" },
+    { end: 4.9, suffix: " / 5", decimals: 1, label: "Candidate rating" }
+  ];
+
   return (
     <section className="bg-white py-20">
       <div className="mx-auto grid max-w-[1320px] items-center gap-14 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-        <div className="relative">
-          <div className="absolute -left-6 top-10 h-40 w-28 rounded-r-full bg-[#ffee0f]" />
-          <img
-            className="relative h-[430px] w-full rounded-[24px] object-cover shadow-[0_30px_80px_rgba(17,24,39,0.12)]"
-            src={mentorImage}
-            alt="Career mentor coaching a learner"
-          />
-          <div className="absolute -bottom-7 right-8 rounded-[16px] bg-white px-6 py-5 shadow-[0_24px_60px_rgba(17,24,39,0.14)]">
-            <p className="font-display text-[34px] font-extrabold text-[#7886fb]">3x</p>
-            <p className="max-w-[210px] text-[13px] font-bold leading-5 text-[#4b5563]">
-              more speaking time than a typical online course
-            </p>
+        <Reveal className="min-w-0">
+          <div className="relative">
+            <div className="absolute -left-6 top-10 h-40 w-28 rounded-r-full bg-[#ffee0f]" />
+            <img
+              className="relative h-[430px] w-full rounded-[24px] object-cover shadow-[0_30px_80px_rgba(17,24,39,0.12)]"
+              src={mentorImage}
+              alt="Career mentor coaching a learner"
+            />
+            <div className="absolute -bottom-7 right-8 rounded-[16px] bg-white px-6 py-5 shadow-[0_24px_60px_rgba(17,24,39,0.14)]">
+              <p className="font-display text-[34px] font-extrabold text-[#7886fb]">
+                <CountUpStat end={3} suffix="x" />
+              </p>
+              <p className="max-w-[210px] text-[13px] font-bold leading-5 text-[#4b5563]">
+                more speaking time than a typical online course
+              </p>
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         <div>
           <div className="mb-5 inline-flex rounded-[6px] bg-[#f1f3ff] px-4 py-2 text-[14px] font-bold text-[#7886fb]">
@@ -368,16 +548,19 @@ function AboutBand() {
             feedback, and repetition.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {[
-              ["5000+", "Students trained"],
-              ["2000+", "Mock sessions"],
-              ["60 days", "Average program length"],
-              ["4.9 / 5", "Candidate rating"]
-            ].map(([value, label]) => (
-              <div className="rounded-[12px] border border-[#e3e6ff] bg-[#ffffff] p-5" key={label}>
-                <p className="font-display text-[30px] font-extrabold text-[#111827]">{value}</p>
-                <p className="mt-1 text-[14px] font-bold text-[#6b7280]">{label}</p>
-              </div>
+            {stats.map((stat, index) => (
+              <Reveal className="h-full" delay={index * 80} key={stat.label}>
+                <div className="h-full rounded-[12px] border border-[#e3e6ff] bg-[#ffffff] p-5">
+                  <p className="font-display text-[30px] font-extrabold text-[#111827]">
+                    <CountUpStat
+                      decimals={stat.decimals}
+                      end={stat.end}
+                      suffix={stat.suffix}
+                    />
+                  </p>
+                  <p className="mt-1 text-[14px] font-bold text-[#6b7280]">{stat.label}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -403,13 +586,15 @@ function HomepageBreak() {
             "Mock pressure before real pressure",
             "Clear answer structure before the panel",
             "Feedback that is honest enough to help"
-          ].map((item) => (
-            <div className="flex items-center gap-3 rounded-[14px] border border-white/15 bg-white/[0.08] p-4" key={item}>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-                <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
-              </span>
-              <span className="text-[15px] font-bold leading-6 text-white/85">{item}</span>
-            </div>
+          ].map((item, index) => (
+            <Reveal delay={index * 80} key={item}>
+              <div className="flex items-center gap-3 rounded-[14px] border border-white/15 bg-white/[0.08] p-4">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                  <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
+                </span>
+                <span className="text-[15px] font-bold leading-6 text-white/85">{item}</span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -440,43 +625,46 @@ function FeaturedPrograms() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {programs.map((program) => (
-            <a
-              className={cn(
-                "group rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]",
-                program.status === "Coming Soon" && "bg-[#f9fafb] opacity-75"
-              )}
-              href={program.href}
-              key={program.title}
-            >
-              <div className="mb-5 flex items-center justify-between">
-                <span className="rounded-[6px] bg-[#f1f3ff] px-3 py-1.5 text-[12px] font-extrabold text-[#7886fb]">
-                  {program.category}
-                </span>
-                <span
-                  className={cn(
-                    "rounded-full px-3 py-1.5 text-[12px] font-extrabold",
-                    program.status === "Coming Soon"
-                      ? "bg-white text-[#6b7280]"
-                      : "bg-[#ffee0f] text-[#111827]"
-                  )}
-                >
-                  {program.status}
-                </span>
-              </div>
-              <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
-                {program.title}
-              </h3>
-              <p className="mt-3 min-h-[78px] text-[15px] font-medium leading-7 text-[#4b5563]">
-                {program.description}
-              </p>
-              <div className="mt-5 flex items-center justify-between border-t border-[#e3e6ff] pt-5">
-                <span className="text-[13px] font-bold text-[#6b7280]">{program.lessons}</span>
-                <span className="font-display text-[18px] font-extrabold text-[#7886fb]">
-                  {program.price}
-                </span>
-              </div>
-            </a>
+          {programs.map((program, index) => (
+            <Reveal className="h-full" delay={index * 80} key={program.title}>
+              <a
+                className={cn(
+                  "group flex h-full flex-col rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]",
+                  program.status === "Coming Soon" && "bg-[#f9fafb] opacity-75"
+                )}
+                href={program.href}
+              >
+                <div className="mb-5 flex items-center justify-between">
+                  <span className="rounded-[6px] bg-[#f1f3ff] px-3 py-1.5 text-[12px] font-extrabold text-[#7886fb]">
+                    {program.category}
+                  </span>
+                  <span
+                    className={cn(
+                      "rounded-full px-3 py-1.5 text-[12px] font-extrabold",
+                      program.status === "Coming Soon"
+                        ? "bg-white text-[#6b7280]"
+                        : "bg-[#ffee0f] text-[#111827]"
+                    )}
+                  >
+                    {program.status}
+                  </span>
+                </div>
+                <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
+                  {program.title}
+                </h3>
+                <p className="mt-3 min-h-[78px] text-[15px] font-medium leading-7 text-[#4b5563]">
+                  {program.description}
+                </p>
+                <div className="mt-auto flex items-center justify-between border-t border-[#e3e6ff] pt-5">
+                  <span className="text-[13px] font-bold text-[#6b7280]">
+                    <StatText text={program.lessons} />
+                  </span>
+                  <span className="font-display text-[18px] font-extrabold text-[#7886fb]">
+                    {program.price}
+                  </span>
+                </div>
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -529,7 +717,9 @@ function CoursesPage() {
               {program.description}
             </p>
             <div className="mt-6 flex items-center justify-between border-t border-[#e3e6ff] pt-5">
-              <span className="text-[13px] font-bold text-[#6b7280]">{program.lessons}</span>
+              <span className="text-[13px] font-bold text-[#6b7280]">
+                <StatText text={program.lessons} />
+              </span>
               <span className="font-display text-[17px] font-extrabold text-[#7886fb]">
                 {program.price}
               </span>
