@@ -22,6 +22,14 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { cn } from "./lib/utils";
 import yaaLogoMark from "./assets/yaa-logo-mark.png";
+import accentureLogo from "./assets/client-logos/accenture.svg";
+import htiLogo from "./assets/client-logos/hti.webp";
+import myShoppLogo from "./assets/client-logos/my-shopp.webp";
+import purpleHealthLogo from "./assets/client-logos/purple-health.webp";
+import rukCabsLogo from "./assets/client-logos/ruk-cabs.webp";
+import sarensNassLogo from "./assets/client-logos/sarens-nass.webp";
+import toskaLogo from "./assets/client-logos/toska.webp";
+import ustLogo from "./assets/client-logos/ust.webp";
 
 const phoneNumber = "+91 90742 94791";
 const emailHref =
@@ -71,17 +79,15 @@ const programs = [
   }
 ];
 
-const companyLogoSlots = [
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending"
+const companyLogos = [
+  { alt: "Accenture", src: accentureLogo },
+  { alt: "UST", src: ustLogo },
+  { alt: "Toska", src: toskaLogo },
+  { alt: "HTI", src: htiLogo },
+  { alt: "Purple Health", src: purpleHealthLogo },
+  { alt: "My Shopp", src: myShoppLogo },
+  { alt: "RUK Cabs", src: rukCabsLogo },
+  { alt: "Sarens NASS", src: sarensNassLogo }
 ];
 
 const quickLinks = [
@@ -489,14 +495,20 @@ function TrustStrip() {
           Our students have been hired at
         </p>
         <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {companyLogoSlots.map((slot, index) => (
+          {companyLogos.map((logo, index) => (
             <Reveal
               className="shrink-0"
               delay={index * 80}
-              key={`${slot}-${index}`}
+              key={logo.alt}
             >
-              <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-[#f9fafb] px-5 text-center text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#9ca3af] grayscale">
-                {slot}
+              <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-white px-5 grayscale transition duration-300 hover:grayscale-0">
+                <img
+                  alt={logo.alt}
+                  className="h-8 w-full object-contain opacity-75 transition duration-300 hover:opacity-100"
+                  decoding="async"
+                  loading="lazy"
+                  src={logo.src}
+                />
               </div>
             </Reveal>
           ))}

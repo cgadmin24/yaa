@@ -30,6 +30,15 @@ import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { cn } from "./lib/utils";
 import yaaLogoMark from "./assets/yaa-logo-mark.png";
+import accentureLogo from "./assets/client-logos/accenture.svg";
+import htiLogo from "./assets/client-logos/hti.webp";
+import myShoppLogo from "./assets/client-logos/my-shopp.webp";
+import purpleHealthLogo from "./assets/client-logos/purple-health.webp";
+import rukCabsLogo from "./assets/client-logos/ruk-cabs.webp";
+import sarensNassLogo from "./assets/client-logos/sarens-nass.webp";
+import toskaLogo from "./assets/client-logos/toska.webp";
+import ustLogo from "./assets/client-logos/ust.webp";
+import founderImage from "./assets/founder-yaa.webp";
 
 const phoneNumber = "+91 90742 94791";
 const phoneHref = "tel:+919074294791";
@@ -60,18 +69,28 @@ const footerPrograms = [
   { label: "Self Introduction", href: "/courses" }
 ];
 
-const companyLogoSlots = [
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending",
-  "Logo pending"
+const companyLogos = [
+  { alt: "Accenture", src: accentureLogo },
+  { alt: "UST", src: ustLogo },
+  { alt: "Toska", src: toskaLogo },
+  { alt: "HTI", src: htiLogo },
+  { alt: "Purple Health", src: purpleHealthLogo },
+  { alt: "My Shopp", src: myShoppLogo },
+  { alt: "RUK Cabs", src: rukCabsLogo },
+  { alt: "Sarens NASS", src: sarensNassLogo }
 ];
+
+function getNextCohortLabel() {
+  const today = new Date();
+  const nextCohort = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+  return nextCohort.toLocaleString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+}
+
+const nextCohortLabel = getNextCohortLabel();
 
 const trustPoints = [
   { key: "students", end: 5000, suffix: "+ students" },
@@ -466,7 +485,7 @@ function Hero() {
           className="relative z-10 min-w-0"
         >
           <p className="mb-5 inline-flex rounded-full border border-[#dfe3ff] bg-white px-4 py-2 text-[13px] font-extrabold text-[#7886fb] shadow-sm">
-            Next cohort: May 2026 <span className="px-2 text-[#9ca3af]">&middot;</span> 18 seats remaining
+            Next cohort: {nextCohortLabel} <span className="px-2 text-[#9ca3af]">&middot;</span> 18 seats remaining
           </p>
           <h1 className="max-w-full break-words font-display text-[36px] font-extrabold leading-[1.09] tracking-tight text-[#111827] min-[420px]:text-[42px] sm:max-w-[720px] sm:text-[58px] lg:text-[68px]">
             <span className="block">You&apos;re not failing interviews.</span>
@@ -523,14 +542,20 @@ function TrustStrip() {
           Our students have been hired at
         </p>
         <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {companyLogoSlots.map((slot, index) => (
+          {companyLogos.map((logo, index) => (
             <Reveal
               className="shrink-0"
               delay={index * 80}
-              key={`${slot}-${index}`}
+              key={logo.alt}
             >
-              <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-[#f9fafb] px-5 text-center text-[12px] font-extrabold uppercase tracking-[0.16em] text-[#9ca3af] grayscale">
-                {slot}
+              <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-white px-5 grayscale transition duration-300 hover:grayscale-0">
+                <img
+                  alt={logo.alt}
+                  className="h-8 w-full object-contain opacity-75 transition duration-300 hover:opacity-100"
+                  decoding="async"
+                  loading="lazy"
+                  src={logo.src}
+                />
               </div>
             </Reveal>
           ))}
@@ -923,13 +948,14 @@ function FounderNote() {
     <section className="bg-[#f9fafb] py-20">
       <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
         <Reveal>
-          <div className="grid min-h-[360px] place-items-center rounded-[24px] border border-[#e3e6ff] bg-white p-8 text-center shadow-[0_24px_70px_rgba(17,24,39,0.08)]">
-            <span className="grid h-28 w-28 place-items-center rounded-full bg-[#f1f3ff] p-4">
-              <img className="h-full w-full object-contain" src={yaaLogoMark} alt="" aria-hidden="true" />
-            </span>
-            <p className="mt-5 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#9ca3af]">
-              Founder photo pending
-            </p>
+          <div className="overflow-hidden rounded-[24px] border border-[#e3e6ff] bg-white shadow-[0_24px_70px_rgba(17,24,39,0.08)]">
+            <img
+              alt="Founder of YAA"
+              className="aspect-square h-full w-full object-cover"
+              decoding="async"
+              loading="lazy"
+              src={founderImage}
+            />
           </div>
         </Reveal>
 
