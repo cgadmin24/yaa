@@ -82,7 +82,7 @@ const programs = [
 const companyLogos = [
   { alt: "Accenture", src: accentureLogo },
   { alt: "UST", src: ustLogo },
-  { alt: "Toska", src: toskaLogo },
+  { alt: "Toska", className: "scale-[1.45]", src: toskaLogo },
   { alt: "HTI", src: htiLogo },
   { alt: "Purple Health", src: purpleHealthLogo },
   { alt: "My Shopp", src: myShoppLogo },
@@ -504,7 +504,7 @@ function TrustStrip() {
               <div className="grid h-16 min-w-[150px] place-items-center rounded-[12px] border border-[#e5e7eb] bg-white px-5 grayscale transition duration-300 hover:grayscale-0">
                 <img
                   alt={logo.alt}
-                  className="h-8 w-full object-contain opacity-75 transition duration-300 hover:opacity-100"
+                  className={cn("h-8 w-full object-contain opacity-75 transition duration-300 hover:opacity-100", logo.className)}
                   decoding="async"
                   loading="lazy"
                   src={logo.src}
