@@ -70,14 +70,14 @@ const footerPrograms = [
 ];
 
 const companyLogos = [
-  { alt: "Accenture", src: accentureLogo },
-  { alt: "UST", src: ustLogo },
+  { alt: "Accenture", className: "scale-[1]", src: accentureLogo },
+  { alt: "UST", className: "scale-[1.18]", src: ustLogo },
   { alt: "Toska", className: "scale-[1.45]", src: toskaLogo },
-  { alt: "HTI", src: htiLogo },
-  { alt: "Purple Health", src: purpleHealthLogo },
-  { alt: "My Shopp", src: myShoppLogo },
-  { alt: "RUK Cabs", src: rukCabsLogo },
-  { alt: "Sarens NASS", src: sarensNassLogo }
+  { alt: "HTI", className: "scale-[1.08]", src: htiLogo },
+  { alt: "Purple Health", className: "scale-[1.05]", src: purpleHealthLogo },
+  { alt: "My Shopp", className: "scale-[1.35]", src: myShoppLogo },
+  { alt: "RUK Cabs", className: "scale-[1.24]", src: rukCabsLogo },
+  { alt: "Sarens NASS", className: "scale-[1.25]", src: sarensNassLogo }
 ];
 
 function getNextCohortLabel() {
