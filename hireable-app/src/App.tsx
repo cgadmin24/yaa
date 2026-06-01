@@ -971,10 +971,10 @@ function FounderNote() {
           </p>
           <div className="mt-6 rounded-[14px] border border-[#e3e6ff] bg-white p-5">
             <p className="font-display text-[22px] font-extrabold text-[#111827]">
-              YAA Founder
+              Naveen K Abraham
             </p>
             <p className="mt-1 text-[14px] font-bold text-[#6b7280]">
-              Name and credentials pending approval
+              YAA Founder
             </p>
           </div>
         </div>
