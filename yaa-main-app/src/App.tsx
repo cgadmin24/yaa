@@ -79,6 +79,51 @@ const programs = [
   }
 ];
 
+const homeProgrammes = [
+  {
+    title: "HireAble Programme",
+    category: "Interview Communication",
+    description:
+      "Become interview-ready and workplace-ready through our flagship career acceleration programme.",
+    highlights: ["Express", "Boost", "Plus", "Elite"],
+    href: "/hireable",
+    cta: "Explore HireAble",
+    status: "Primary"
+  },
+  {
+    title: "Leadership Upskill",
+    category: "Leadership",
+    description:
+      "Designed for emerging and experienced professionals looking to lead with confidence, solve business problems, and work smarter using modern workplace tools.",
+    highlights: [
+      "AI for Leaders",
+      "Business Case Studies",
+      "Corporate Problem Solving",
+      "Decision Making",
+      "Productivity & Workplace Excellence"
+    ],
+    href: "/contact",
+    cta: "Get in Touch",
+    status: "Coming Soon"
+  },
+  {
+    title: "Excel & Power BI Essentials",
+    category: "Analytics",
+    description:
+      "Build practical analytical skills through hands-on Excel and Power BI training designed for today's workplace.",
+    highlights: [
+      "Excel Fundamentals",
+      "Dashboards & Reporting",
+      "Power BI Basics",
+      "Business Analytics",
+      "Real-World Projects"
+    ],
+    href: "/contact",
+    cta: "Notify Me",
+    status: "Coming Soon"
+  }
+];
+
 const companyLogos = [
   { alt: "Accenture", className: "scale-[1]", src: accentureLogo },
   { alt: "UST", className: "scale-[1.18]", src: ustLogo },
@@ -108,7 +153,7 @@ const routeMeta = {
   home: {
     title: "YAA | Your Added Advantage",
     description:
-      "YAA helps students and early professionals build interview confidence, corporate communication, and career readiness through real practice."
+      "YAA is the EdTech wing of The Closing Gap, helping students and early-career professionals build communication, interview, and workplace skills."
   },
   courses: {
     title: "Courses | YAA",
@@ -416,7 +461,7 @@ function HeroVisual() {
         </div>
         <p className="text-[13px] font-semibold text-[#4b5563]">Students trained</p>
         <p className="font-display text-[32px] font-extrabold text-[#111827]">
-          <CountUpStat end={5000} suffix="+" />
+          <CountUpStat end={150} suffix="+" />
         </p>
       </div>
 
@@ -445,22 +490,25 @@ function HomePage() {
             className="relative z-10 min-w-0"
           >
             <div className="mb-6 inline-flex rounded-[6px] bg-[#f1f3ff] px-4 py-2 text-[14px] font-bold text-[#7886fb]">
-              For students &amp; early-career professionals
+              For Students, Freshers &amp; Early-Career Professionals
             </div>
             <h1 className="max-w-full break-words font-display text-[36px] font-extrabold leading-[1.08] tracking-tight text-[#111827] sm:max-w-[690px] sm:text-[60px] lg:text-[68px]">
-              Skills get you shortlisted.{" "}
-              <span className="text-[#7886fb]">Delivery</span> gets you hired.
+              Performance gets you hired.
             </h1>
             <p className="mt-6 max-w-[600px] break-words text-[17px] font-medium leading-8 text-[#4b5563]">
-              YAA trains students and early-career professionals to interview,
-              speak, and show up at work with structure and confidence.
+              YAA (Your Added Advantage) is the EdTech wing of The Closing Gap,
+              helping students and early-career professionals build the
+              communication, interview, and workplace skills employers truly
+              value. Through our HireAble Career Acceleration Programmes, we
+              prepare you to confidently step into interviews, workplaces, and
+              your career.
             </p>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
                 className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-7 py-4 text-[15px] font-extrabold text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] sm:w-auto"
                 href="/hireable"
               >
-                See how Hireable works
+                Explore HireAble
                 <ArrowRight className="h-4 w-4 stroke-[1.5]" />
               </a>
               <a
@@ -468,7 +516,7 @@ function HomePage() {
                 href={talkHref}
               >
                 <MessageCircle className="h-6 w-6 stroke-[1.5] text-[#7886fb]" />
-                Book a free intro call
+                Book a Free Career Consultation
               </a>
             </div>
           </motion.div>
@@ -479,10 +527,11 @@ function HomePage() {
       </section>
 
       <TrustStrip />
+      <TrustIntro />
 
       <AboutBand />
       <HomepageBreak />
-      <FeaturedPrograms />
+      <FeaturedProgrammes />
     </>
   );
 }
@@ -491,8 +540,8 @@ function TrustStrip() {
   return (
     <section className="border-y border-[#e3e6ff] bg-white">
       <div className="mx-auto max-w-[1320px] px-4 py-8 sm:px-6 lg:px-8">
-        <p className="mb-5 text-center text-[13px] font-extrabold uppercase tracking-[0.16em] text-[#6b7280]">
-          Our students have been hired at
+        <p className="mb-5 text-center font-display text-[22px] font-extrabold leading-tight text-[#111827] sm:text-[28px]">
+          YAA learners have gone on to work with organizations such as
         </p>
         <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {companyLogos.map((logo, index) => (
@@ -518,17 +567,100 @@ function TrustStrip() {
   );
 }
 
+function TrustIntro() {
+  const trustCards = [
+    {
+      icon: CheckCircle2,
+      title: "Backed by an ISO-Certified Organization"
+    },
+    {
+      icon: Target,
+      title: "Interview-Focused Career Programmes"
+    },
+    {
+      icon: BriefcaseBusiness,
+      title: "Mentors with 10+ Years of Corporate Experience"
+    },
+    {
+      icon: GraduationCap,
+      title: "Industry-Relevant Practical Learning"
+    }
+  ];
+
+  return (
+    <section className="bg-[#f9fafb] py-16">
+      <div className="mx-auto grid max-w-[1320px] gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+        <Reveal>
+          <div>
+            <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+              Why YAA
+            </p>
+            <p className="max-w-[720px] font-display text-[28px] font-extrabold leading-tight text-[#111827] sm:text-[36px]">
+              YAA is the EdTech wing of The Closing Gap, built to bridge
+              the gap between education and employability.
+            </p>
+            <p className="mt-5 max-w-[760px] text-[17px] font-semibold leading-8 text-[#4b5563]">
+              Our programmes are designed and delivered by professionals with
+              corporate experience, helping students become interview-ready and
+              workplace-ready through practical learning - not just theory.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {trustCards.map((card, index) => {
+            const Icon = card.icon;
+
+            return (
+              <Reveal className="h-full" delay={index * 80} key={card.title}>
+                <div className="h-full rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm">
+                  <span className="mb-5 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                    <Icon className="h-5 w-5 stroke-[1.5]" />
+                  </span>
+                  <p className="font-display text-[19px] font-extrabold leading-snug text-[#111827]">
+                    {card.title}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AboutBand() {
   const stats = [
-    { end: 5000, suffix: "+", label: "Students trained" },
+    { end: 150, suffix: "+", label: "Students trained" },
+    { end: 100, suffix: "+", label: "Hours of live learning delivered" },
     { end: 2000, suffix: "+", label: "Mock sessions completed" },
-    { end: 60, suffix: " days", label: "Average program length" },
-    { end: 4.9, suffix: " / 5", decimals: 1, label: "Candidate rating" }
+    { end: 4.9, suffix: "/5", decimals: 1, label: "Learner rating" }
   ];
 
   return (
     <section className="bg-white py-20">
-      <div className="mx-auto grid max-w-[1320px] items-center gap-14 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+      <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="mb-14 max-w-[920px]">
+            <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+              OUR APPROACH
+            </p>
+            <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[54px]">
+              More Than an EdTech Platform. A Career Partner.
+            </h2>
+            <p className="mt-5 text-[17px] font-semibold leading-8 text-[#4b5563]">
+              YAA (Your Added Advantage) is the EdTech wing of The Closing Gap,
+              created to bridge the gap between academic learning and real-world
+              employability. Through our HireAble Career Acceleration
+              Programmes, we help students build the confidence, communication,
+              interview skills, and workplace readiness needed to succeed in
+              today&apos;s competitive job market.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
         <Reveal className="min-w-0">
           <div className="relative">
             <div className="absolute -left-6 top-10 h-40 w-28 rounded-r-full bg-[#ffee0f]" />
@@ -539,10 +671,10 @@ function AboutBand() {
             />
             <div className="absolute -bottom-7 right-8 rounded-[16px] bg-white px-6 py-5 shadow-[0_24px_60px_rgba(17,24,39,0.14)]">
               <p className="font-display text-[34px] font-extrabold text-[#7886fb]">
-                <CountUpStat end={3} suffix="x" />
+                <CountUpStat end={100} suffix="+" />
               </p>
               <p className="max-w-[210px] text-[13px] font-bold leading-5 text-[#4b5563]">
-                more speaking time than self-paced courses
+                Hours of live learning delivered
               </p>
             </div>
           </div>
@@ -550,7 +682,7 @@ function AboutBand() {
 
         <div>
           <div className="mb-5 inline-flex rounded-[6px] bg-[#f1f3ff] px-4 py-2 text-[14px] font-bold text-[#7886fb]">
-            OUR APPROACH
+            PRACTICAL CONFIDENCE
           </div>
           <h2 className="font-display text-[38px] font-extrabold leading-tight text-[#111827] sm:text-[48px]">
             We don&apos;t teach confidence as a quote. We build it as a skill.
@@ -577,45 +709,76 @@ function AboutBand() {
             ))}
           </div>
         </div>
+        </div>
       </div>
     </section>
   );
 }
 
 function HomepageBreak() {
+  const approachSteps = [
+    {
+      icon: Target,
+      title: "Assess",
+      text: "Understand where you stand through expert evaluation and personalised guidance."
+    },
+    {
+      icon: GraduationCap,
+      title: "Accelerate",
+      text: "Build confidence through practical learning, real-world exposure, and mentor support."
+    },
+    {
+      icon: CheckCircle2,
+      title: "Achieve",
+      text: "Apply your skills with confidence and become truly HireAble."
+    }
+  ];
+
   return (
     <section className="bg-[#0a1b33] py-16 text-white">
       <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8">
         <div>
           <p className="mb-4 text-[13px] font-extrabold uppercase tracking-[0.16em] text-[#ffee0f]">
-            Practice beats panic
+            THE HIREABLE APPROACH
           </p>
           <h2 className="max-w-[760px] font-display text-[34px] font-extrabold leading-tight sm:text-[48px]">
             Confidence isn&apos;t a mood. It comes after enough real reps.
           </h2>
+          <p className="mt-6 max-w-[680px] text-[17px] font-semibold leading-8 text-white/78">
+            Every HireAble programme is designed around practical learning,
+            guided mentorship, and real-world application - helping you build
+            the confidence employers notice.
+          </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {[
-            "Mock pressure before real pressure",
-            "Clear answer structure before the panel",
-            "Feedback that is honest enough to help"
-          ].map((item, index) => (
-            <Reveal delay={index * 80} key={item}>
+          {approachSteps.map((step, index) => {
+            const Icon = step.icon;
+
+            return (
+            <Reveal delay={index * 80} key={step.title}>
               <div className="flex items-center gap-3 rounded-[14px] border border-white/15 bg-white/[0.08] p-4">
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-                  <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
+                  <Icon className="h-5 w-5 stroke-[1.5]" />
                 </span>
-                <span className="text-[15px] font-bold leading-6 text-white/85">{item}</span>
+                <span>
+                  <span className="block font-display text-[20px] font-extrabold text-white">
+                    {step.title}
+                  </span>
+                  <span className="mt-1 block text-[14px] font-semibold leading-6 text-white/72">
+                    {step.text}
+                  </span>
+                </span>
               </div>
             </Reveal>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function FeaturedPrograms() {
+function FeaturedProgrammes() {
   const [notifyProgram, setNotifyProgram] = useState<string | null>(null);
   const [notifySubmitted, setNotifySubmitted] = useState(false);
 
@@ -639,11 +802,16 @@ function FeaturedPrograms() {
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="mb-3 text-[15px] font-extrabold text-[#7886fb]">
-              Focused programs
+              Our Programmes
             </p>
-            <h2 className="font-display text-[40px] font-extrabold text-[#111827]">
-              Built for real career moments.
+            <h2 className="max-w-[760px] font-display text-[40px] font-extrabold leading-tight text-[#111827]">
+              Career-Focused Programmes. Built for Every Stage of Your Journey.
             </h2>
+            <p className="mt-4 max-w-[760px] text-[16px] font-semibold leading-7 text-[#4b5563]">
+              Whether you&apos;re preparing for interviews, developing workplace
+              skills, or advancing your career, YAA offers practical programmes
+              designed to help you stay ahead.
+            </p>
           </div>
           <a
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 text-[15px] font-extrabold text-[#7886fb] transition hover:border-[#7886fb] md:w-auto md:border-transparent"
@@ -655,40 +823,53 @@ function FeaturedPrograms() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {programs.map((program, index) => (
+          {homeProgrammes.map((program, index) => (
             <Reveal className="h-full" delay={index * 80} key={program.title}>
               <div
                 className={cn(
                   "group flex h-full flex-col rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]",
-                  program.status === "Coming Soon" && "bg-[#f9fafb] opacity-75"
+                  program.status === "Coming Soon" && "bg-[#f9fafb]"
                 )}
               >
-                <div className="mb-5 flex items-center justify-between">
+                <div className="mb-5 flex items-center justify-between gap-3">
                   <span className="rounded-[6px] bg-[#f1f3ff] px-3 py-1.5 text-[12px] font-extrabold text-[#7886fb]">
                     {program.category}
                   </span>
                   <span
                     className={cn(
                       "rounded-full px-3 py-1.5 text-[12px] font-extrabold",
-                    program.status === "Coming Soon"
-                      ? "bg-white text-[#6b7280]"
-                      : "bg-[#ffee0f] text-[#111827]"
-                  )}
-                >
-                  {program.status === "Coming Soon" ? program.status : "★ 4.9"}
-                </span>
-              </div>
+                      program.status === "Coming Soon"
+                        ? "bg-white text-[#6b7280]"
+                        : "bg-[#ffee0f] text-[#111827]"
+                    )}
+                  >
+                    {program.status === "Coming Soon" ? program.status : "Flagship"}
+                  </span>
+                </div>
                 <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
                   {program.title}
                 </h3>
-                <p className="mt-3 min-h-[78px] text-[15px] font-medium leading-7 text-[#4b5563]">
+                <p className="mt-3 text-[15px] font-medium leading-7 text-[#4b5563]">
                   {program.description}
                 </p>
-                <div className="mt-auto flex items-center justify-between border-t border-[#e3e6ff] pt-5">
-                  <span className="text-[13px] font-bold text-[#6b7280]">
-                    <StatText text={program.lessons} />
-                  </span>
-                  {program.status === "Coming Soon" ? (
+                <div className="mt-5 rounded-[12px] bg-[#f9fafb] p-4">
+                  <p className="mb-3 text-[12px] font-extrabold uppercase tracking-[0.12em] text-[#6b7280]">
+                    Highlights
+                  </p>
+                  <div className="grid gap-2">
+                    {program.highlights.map((highlight) => (
+                      <span
+                        className="flex items-center gap-2 text-[14px] font-bold text-[#4b5563]"
+                        key={highlight}
+                      >
+                        <CheckCircle2 className="h-4 w-4 shrink-0 stroke-[1.5] text-[#7886fb]" />
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-auto flex items-center justify-end border-t border-[#e3e6ff] pt-5">
+                  {program.cta === "Notify Me" ? (
                     <button
                       className="inline-flex items-center gap-1.5 rounded-[8px] border border-[#7886fb] px-3 py-2 text-[13px] font-extrabold text-[#7886fb] transition hover:bg-[#f1f3ff]"
                       onClick={() => {
@@ -698,14 +879,14 @@ function FeaturedPrograms() {
                       type="button"
                     >
                       <Bell className="h-4 w-4 stroke-[1.5]" />
-                      Notify me
+                      Notify Me
                     </button>
                   ) : (
                     <a
                       className="inline-flex items-center gap-1.5 font-display text-[18px] font-extrabold text-[#7886fb]"
                       href={program.href}
                     >
-                      View program
+                      {program.cta}
                       <ArrowRight className="h-4 w-4 stroke-[1.5]" />
                     </a>
                   )}
@@ -758,7 +939,7 @@ function FeaturedPrograms() {
                   className="rounded-[8px] bg-[#7886fb] px-5 py-3 text-[15px] font-extrabold text-white"
                   type="submit"
                 >
-                  Notify me
+                  Notify Me
                 </button>
               </form>
             )}
@@ -1000,13 +1181,13 @@ function PageShell({
   );
 }
 
-function Footer() {
+function Footer({ route }: { route: RouteName }) {
   return (
     <footer className="bg-[#0a1b33] text-white">
       <div className="bg-[#7886fb]">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-5 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <h2 className="font-display text-[30px] font-extrabold leading-tight sm:text-[40px]">
-            Ready to fix your delivery?
+            {route === "home" ? "Ready to Build Your Added Advantage?" : "Ready to fix your delivery?"}
           </h2>
           <a
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-white px-6 py-4 text-[15px] font-extrabold text-[#111827] shadow-[0_18px_44px_rgba(17,24,39,0.14)] transition hover:-translate-y-0.5 md:w-auto"
@@ -1117,7 +1298,7 @@ function App() {
         {route === "about" && <AboutPage />}
         {route === "contact" && <ContactPage />}
       </main>
-      <Footer />
+      <Footer route={route} />
       <a
         className={cn(
           "fixed bottom-6 right-6 z-50 hidden h-12 w-12 place-items-center rounded-[8px] lg:grid",
