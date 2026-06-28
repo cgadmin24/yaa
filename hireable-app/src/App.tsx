@@ -1,4 +1,4 @@
-﻿import {
+import {
   ArrowRight,
   Bot,
   BookOpen,
@@ -93,71 +93,80 @@ function getNextCohortLabel() {
 const nextCohortLabel = getNextCohortLabel();
 
 const trustPoints = [
-  { key: "students", end: 5000, suffix: "+ students" },
-  { key: "mocks", end: 2000, suffix: "+ mock sessions" },
-  { key: "practice", end: 100, suffix: "% live practice" }
+  { key: "mentors", label: "Mentors with 10+ Years of Corporate Experience" },
+  { key: "wing", label: "The EdTech Wing of The Closing Gap" },
+  { key: "learners", end: 150, suffix: "+" }
 ];
 
 const audiences = [
-  "Fresh graduates facing their first serious interviews",
-  "Candidates returning after a career break",
-  "Skilled speakers who freeze when the pressure rises",
-  "BPO, IT, and professionals switching industries"
+  {
+    title: "Fresh Graduates",
+    text: "Preparing for placements and first job opportunities."
+  },
+  {
+    title: "Job Seekers",
+    text: "Looking to improve interview performance and increase hiring chances."
+  },
+  {
+    title: "Career Returners",
+    text: "Restarting your career after a break with renewed confidence."
+  },
+  {
+    title: "Working Professionals",
+    text: "Building communication, workplace, and career advancement skills."
+  }
 ];
 
 const differentiators = [
   {
     icon: Mic2,
-    title: "Communication-first, always",
-    text: "Every session focuses on how you say it - structure, pacing, clarity - not just what you say."
+    title: "Practical Learning",
+    text: "Learn by doing through live sessions, activities, mock interviews, and real-world scenarios."
   },
   {
     icon: BriefcaseBusiness,
-    title: "Coached by people who hire",
-    text: "Your mentors have 12+ years of MNC experience and have sat on the hiring panels you'll face."
+    title: "Industry Mentors",
+    text: "Learn from professionals with 10+ years of real corporate experience."
   },
   {
-    icon: Repeat2,
-    title: "Always current",
-    text: "Interview trends shift fast. Our content updates with them - no recycled decks, no outdated frameworks."
+    icon: Target,
+    title: "Career-Focused",
+    text: "Every module is designed around the skills employers actually expect today."
   }
 ];
 
 const extras = [
   {
-    icon: Bot,
-    title: "AI & digital tools training",
-    text: "Hands-on training with the tools your future team is already using."
-  },
-  {
-    icon: MailCheck,
-    title: "Email & corporate etiquette",
-    text: "Write the message that gets read, not deleted."
+    icon: BriefcaseBusiness,
+    title: "Industry Mentorship"
   },
   {
     icon: Users,
-    title: "Walk-in interview simulation",
-    text: "The closest thing to the real room."
-  },
-  {
-    icon: Search,
-    title: "Live question bank",
-    text: "Role-specific questions across IT, BPO, finance, and sales - updated monthly from real interviews."
+    title: "Mock Interviews"
   },
   {
     icon: FileText,
-    title: "ATS resume building",
-    text: "Get past the bots, reach the humans."
+    title: "Personalised Feedback"
   },
   {
-    icon: Linkedin,
-    title: "LinkedIn optimisation",
-    text: "Your profile is your first interview."
+    icon: BookOpen,
+    title: "Practical Learning"
+  },
+  {
+    icon: Target,
+    title: "Career Guidance"
+  },
+  {
+    icon: GraduationCap,
+    title: "Professional Development"
+  },
+  {
+    icon: MonitorSmartphone,
+    title: "Workplace Readiness"
   },
   {
     icon: Trophy,
-    title: "Certificate of completion",
-    text: "A shareable certificate for LinkedIn and resumes once you complete the program."
+    title: "Certificate of Completion"
   }
 ];
 
@@ -181,24 +190,42 @@ const proofStories = [
 
 const format = [
   {
-    icon: Clock3,
-    label: "Duration",
-    value: "2 months",
-    countEnd: 2,
-    countSuffix: " months",
-    note: "Built around working hours."
-  },
-  {
-    icon: CalendarDays,
-    label: "Schedule",
-    value: "Weekdays + Weekends",
-    note: "Pick what fits your schedule."
+    icon: Repeat2,
+    label: "4 Learning Paths",
+    value: "Express, Boost, Plus, Elite"
   },
   {
     icon: MonitorSmartphone,
-    label: "Mode",
-    value: "Online & Offline",
-    note: "Same coaches, same outcomes."
+    label: "Learning Mode",
+    value: "Online | Offline | Hybrid"
+  },
+  {
+    icon: CalendarDays,
+    label: "Flexible Batches",
+    value: "Weekday & Weekend Options"
+  }
+];
+
+const hireableProgrammes = [
+  {
+    title: "HireAble Express",
+    subtitle: "Quick Interview Tune-Up",
+    description: "Fast support before an upcoming interview: guidance, resume review, and confidence sharpening."
+  },
+  {
+    title: "HireAble Boost",
+    subtitle: "Interview Success Programme",
+    description: "A focused 2-3 week programme for freshers and job seekers who need structure and stronger delivery."
+  },
+  {
+    title: "HireAble Plus",
+    subtitle: "Career Acceleration Programme",
+    description: "A complete 2-month journey covering communication, workplace readiness, interviews, and professional growth."
+  },
+  {
+    title: "HireAble Elite",
+    subtitle: "Premium Career Transformation",
+    description: "Personalized mentoring, unlimited mocks, career strategy, placement support, and long-term guidance."
   }
 ];
 
@@ -253,7 +280,7 @@ function useInViewOnce<T extends HTMLElement = HTMLDivElement>(threshold = 0.2) 
           observer.disconnect();
         }
       },
-      { rootMargin: "0px 0px -10% 0px", threshold }
+      { rootMargin: "0px", threshold }
     );
 
     observer.observe(node);
@@ -280,7 +307,7 @@ type CountUpStatProps = {
 };
 
 function CountUpStat({ end, suffix = "", decimals = 0, className }: CountUpStatProps) {
-  const { ref, isInView, canAnimate } = useInViewOnce<HTMLSpanElement>(0.5);
+  const { ref, isInView, canAnimate } = useInViewOnce<HTMLSpanElement>(0.1);
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -488,40 +515,40 @@ function Hero() {
             Next cohort: {nextCohortLabel} <span className="px-2 text-[#9ca3af]">&middot;</span> 18 seats remaining
           </p>
           <h1 className="max-w-full break-words font-display text-[36px] font-extrabold leading-[1.09] tracking-tight text-[#111827] min-[420px]:text-[42px] sm:max-w-[720px] sm:text-[58px] lg:text-[68px]">
-            <span className="block">You&apos;re not failing interviews.</span>
-            <span className="block text-[#7886fb]">
-              <span className="block sm:inline">You were never</span>
-              <span className="hidden sm:inline"> </span>
-              <span className="block sm:inline">taught how to</span>
-              <span className="hidden sm:inline"> </span>
-              <span className="block sm:inline">pass them.</span>
-            </span>
+            <span className="block">Become HireAble.</span>
+            <span className="block text-[#7886fb]">Build the skills employers actually hire for.</span>
           </h1>
           <p className="mt-6 max-w-[620px] break-words text-[18px] font-semibold leading-8 text-[#4b5563]">
-            For career-break returners, nervous freshers, and skilled speakers
-            who freeze on the panel &mdash; we don&apos;t fix your resume. We fix the delivery.
+            Whether you&apos;re preparing for your first interview, returning after
+            a career break, or looking to gain confidence in the workplace,
+            HireAble helps you build the communication, interview, and
+            workplace skills needed to succeed.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
             <a
               className="inline-flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-5 py-4 text-[13px] font-extrabold uppercase text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] min-[420px]:text-[14px] sm:w-auto sm:px-7 sm:text-[15px]"
-              href={talkHref}
+              href="#programmes"
             >
-              Yes, I want to be Hireable
+              Explore HireAble
               <ArrowRight className="h-4 w-4 stroke-[1.5]" />
             </a>
             <a
               className="inline-flex w-full items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 py-4 text-[14px] font-extrabold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb] sm:w-auto sm:px-7 sm:text-[15px]"
-              href={phoneHref}
+              href={talkHref}
             >
               <Phone className="h-4 w-4 stroke-[1.5]" />
-              Talk to a coach
+              Book a Career Consultation
             </a>
           </div>
           <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
             {trustPoints.map((point) => (
               <span className="inline-flex w-full items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-extrabold text-[#4b5563] shadow-sm sm:w-auto" key={point.key}>
                 <CheckCircle2 className="h-4 w-4 stroke-[1.5] text-[#7886fb]" />
-                <CountUpStat end={point.end} suffix={point.suffix} />
+                {typeof point.end === "number" ? (
+                  <CountUpStat end={point.end} suffix={point.suffix} />
+                ) : (
+                  point.label
+                )}
               </span>
             ))}
           </div>
@@ -539,7 +566,7 @@ function TrustStrip() {
     <section className="border-y border-[#e3e6ff] bg-white">
       <div className="mx-auto max-w-[1320px] px-4 py-8 sm:px-6 lg:px-8">
         <p className="mb-5 text-center text-[13px] font-extrabold uppercase tracking-[0.16em] text-[#6b7280]">
-          Our students have been hired at
+          Our learners are building careers with organizations such as
         </p>
         <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {companyLogos.map((logo, index) => (
@@ -566,25 +593,35 @@ function TrustStrip() {
 }
 
 function OutcomeStrip() {
-  const outcomes = [
-    "Career break gaps",
-    "Interview nerves",
-    "Communication blocks",
-    "Panel pressure"
-  ];
-
   return (
-    <section className="bg-[#f9fafb]">
-      <div className="mx-auto max-w-[1320px] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {outcomes.map((outcome, index) => (
-            <Reveal className="h-full" delay={index * 80} key={outcome}>
-              <div className="flex h-full items-center justify-center rounded-full border border-[#e3e6ff] bg-white px-5 py-4 text-center text-[15px] font-extrabold text-[#111827] shadow-sm">
-                {outcome}
-              </div>
-            </Reveal>
-          ))}
-        </div>
+    <section className="bg-[#f9fafb] py-16">
+      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+        <Reveal>
+          <div>
+            <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+              WHO IS HIREABLE FOR?
+            </p>
+            <h2 className="font-display text-[38px] font-extrabold leading-tight text-[#111827] sm:text-[48px]">
+              You already have the potential. We help you unlock it.
+            </h2>
+          </div>
+        </Reveal>
+        <Reveal delay={80}>
+          <div className="rounded-[18px] border border-[#e3e6ff] bg-white p-7 shadow-sm">
+            <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+              WHAT MAKES HIREABLE DIFFERENT
+            </p>
+            <h3 className="font-display text-[32px] font-extrabold leading-tight text-[#111827]">
+              Learn. Practice. Become HireAble.
+            </h3>
+            <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
+              HireAble goes beyond theory. Through practical learning, industry
+              mentorship, mock interviews, and real-world workplace
+              preparation, we help you build the confidence and skills
+              employers genuinely value.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -595,22 +632,32 @@ function AudienceFit() {
     <section className="bg-white py-16">
       <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
         <div>
+          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+            WHO IS HIREABLE FOR?
+          </p>
           <h2 className="font-display text-[38px] font-extrabold leading-tight text-[#111827] sm:text-[48px]">
-            Built for people who know they can do more.
+            Built for people ready to grow, not just graduate.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            Hireable isn&apos;t for passive watching. It is for candidates ready to
-            practice, get corrected, and show up better.
+            Whether you&apos;re preparing for your first interview, returning after
+            a career break, or looking to build confidence for your next
+            opportunity, HireAble is designed to help you become career-ready
+            through practical learning and expert guidance.
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {audiences.map((item, index) => (
-            <Reveal className="h-full" delay={index * 80} key={item}>
+            <Reveal className="h-full" delay={index * 80} key={item.title}>
               <div className="h-full rounded-[14px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm">
                 <span className="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
                   <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
                 </span>
-                <p className="text-[16px] font-extrabold leading-7 text-[#111827]">{item}</p>
+                <h3 className="font-display text-[22px] font-extrabold text-[#111827]">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-[15px] font-semibold leading-7 text-[#4b5563]">
+                  {item.text}
+                </p>
               </div>
             </Reveal>
           ))}
@@ -686,14 +733,24 @@ function HireableBreak() {
   return (
     <section className="bg-[#0a1b33] py-16 text-white">
       <div className="mx-auto grid max-w-[1320px] items-center gap-8 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-        <h2 className="font-display text-[34px] font-extrabold leading-tight sm:text-[48px]">
-          The real interview should not be your first real pressure.
-        </h2>
+        <div>
+          <p className="mb-4 text-[13px] font-extrabold uppercase tracking-[0.16em] text-[#ffee0f]">
+            THE PRACTICE LOOP
+          </p>
+          <h2 className="font-display text-[34px] font-extrabold leading-tight sm:text-[48px]">
+            Confidence isn&apos;t built overnight. It&apos;s built through practice.
+          </h2>
+          <p className="mt-5 max-w-[680px] text-[17px] font-semibold leading-8 text-white/78">
+            HireAble combines practical learning, industry mentorship, mock
+            interviews, and personalised feedback to help you become
+            interview-ready, workplace-ready, and future-ready.
+          </p>
+        </div>
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["Before", "Guessing what might happen."],
-            ["During", "Live panels, interruptions, follow-ups."],
-            ["After", "Clear feedback and better reps."]
+            ["LEARN", "Understand what employers expect and where you need to improve."],
+            ["PRACTICE", "Experience realistic mock interviews, practical exercises, and mentor guidance."],
+            ["SUCCEED", "Walk into interviews with confidence, clarity, and workplace-ready skills."]
           ].map(([label, text], index) => (
             <Reveal className="h-full" delay={index * 80} key={label}>
               <div className="h-full rounded-[16px] border border-white/15 bg-white/[0.08] p-5">
@@ -716,10 +773,11 @@ function Difference() {
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
         <div className="mb-11 max-w-[760px]">
           <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[54px]">
-            Not your typical online course.
+            More than a course. A complete career acceleration programme.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            Hireable is built around pressure, fluency, and feedback - the three things candidates rarely get before the real interview.
+            Practical learning, industry mentorship, and career-focused support
+            built around what employers actually expect today.
           </p>
         </div>
 
@@ -755,10 +813,11 @@ function Proof() {
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
         <div className="mb-10 max-w-[760px]">
           <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
-            Real candidates. Real pressure. Better answers.
+            Success Stories That Speak for Themselves.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            Confidence starts sounding real when practice stops being polite.
+            Hear how YAA learners built confidence, improved their interview
+            performance, and took the next step in their careers.
           </p>
         </div>
 
@@ -800,50 +859,76 @@ function Proof() {
 
 function Pricing() {
   return (
-    <section className="bg-[#f9fafb] py-20">
-      <div className="mx-auto grid max-w-[1320px] gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
-        <div>
-          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
-            PRICING
-          </p>
-          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
-            Simple pricing. No hidden fees.
-          </h2>
-          <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            We&apos;ll share the cohort fee, batch options, and what is included before you decide.
-          </p>
+    <section className="bg-[#f9fafb] py-20" id="programmes">
+      <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+              PRICING
+            </p>
+            <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
+              Talk to us for pricing.
+            </h2>
+            <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
+              From quick interview preparation to complete career
+              transformation, choose the HireAble programme that matches your
+              goals and the level of support you need.
+            </p>
+          </div>
+
+          <Reveal>
+            <div className="rounded-[18px] border border-[#e3e6ff] bg-white p-7 shadow-[0_24px_70px_rgba(17,24,39,0.08)]">
+              <h3 className="font-display text-[34px] font-extrabold leading-tight text-[#111827]">
+                Need help deciding?
+              </h3>
+              <p className="mt-3 text-[16px] font-semibold leading-7 text-[#4b5563]">
+                Book a FREE Career Consultation and we&apos;ll help you pick the
+                right path before you join.
+              </p>
+              <a
+                className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-6 py-4 text-[15px] font-extrabold text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] sm:w-auto"
+                href={talkHref}
+              >
+                Book a Career Consultation
+                <ArrowRight className="h-4 w-4 stroke-[1.5]" />
+              </a>
+            </div>
+          </Reveal>
         </div>
 
-        <Reveal>
-          <div className="rounded-[18px] border border-[#e3e6ff] bg-white p-7 shadow-[0_24px_70px_rgba(17,24,39,0.08)]">
-            <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#6b7280]">
-              Hireable cohort
-            </p>
-            <h3 className="mt-3 font-display text-[38px] font-extrabold text-[#111827]">
-              Talk to us for pricing
-            </h3>
-            <div className="mt-6 grid gap-3 text-[15px] font-bold text-[#4b5563] sm:grid-cols-2">
-              {[
-                "60-day interview practice",
-                "Live mock interviews",
-                "AI practice access",
-                "Mentor feedback"
-              ].map((item) => (
-                <span className="flex items-center gap-2" key={item}>
-                  <CheckCircle2 className="h-4 w-4 shrink-0 stroke-[1.5] text-[#7886fb]" />
-                  {item}
-                </span>
-              ))}
-            </div>
-            <a
-              className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-6 py-4 text-[15px] font-extrabold text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] sm:w-auto"
-              href={talkHref}
-            >
-              Book a free intro call
-              <ArrowRight className="h-4 w-4 stroke-[1.5]" />
-            </a>
-          </div>
-        </Reveal>
+        <div className="mb-6">
+          <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+            PROGRAMME OPTIONS
+          </p>
+          <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
+            Choose the Right HireAble Programme.
+          </h2>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {hireableProgrammes.map((program, index) => (
+            <Reveal className="h-full" delay={index * 80} key={program.title}>
+              <article className="flex h-full flex-col rounded-[16px] border border-[#e3e6ff] bg-white p-6 shadow-sm">
+                <h3 className="font-display text-[24px] font-extrabold text-[#111827]">
+                  {program.title}
+                </h3>
+                <p className="mt-2 text-[14px] font-extrabold text-[#7886fb]">
+                  {program.subtitle}
+                </p>
+                <p className="mt-4 text-[15px] font-semibold leading-7 text-[#4b5563]">
+                  {program.description}
+                </p>
+                <a
+                  className="mt-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] px-5 py-3 text-[14px] font-extrabold text-[#7886fb] transition hover:border-[#7886fb]"
+                  href={talkHref}
+                >
+                  Ask about this
+                  <ArrowRight className="h-4 w-4 stroke-[1.5]" />
+                </a>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -856,17 +941,19 @@ function Extras() {
         <div className="mb-11 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
-              More than just interview prep.
+              More Than a Programme. A Complete Career Advantage.
             </h2>
             <p className="mt-4 max-w-[680px] text-[17px] font-semibold leading-8 text-[#4b5563]">
-              The small corporate skills that quietly decide whether you get noticed, shortlisted, and trusted.
+              Every HireAble package is designed to help you build practical
+              skills that employers value - from interviews and communication
+              to workplace confidence and professional growth.
             </p>
           </div>
           <a
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 text-[15px] font-extrabold text-[#7886fb] transition hover:border-[#7886fb] md:w-auto md:border-transparent"
             href={talkHref}
           >
-            Book a free intro call
+            Book a Career Consultation
             <ArrowRight className="h-4 w-4 stroke-[1.5]" />
           </a>
         </div>
@@ -884,9 +971,6 @@ function Extras() {
                   <h3 className="font-display text-[20px] font-extrabold leading-snug text-[#111827]">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-[14px] font-medium leading-6 text-[#4b5563]">
-                    {item.text}
-                  </p>
                 </div>
               </Reveal>
             );
@@ -901,12 +985,14 @@ function Duration() {
   return (
     <section className="bg-[#ffffff] py-20">
       <div className="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-10 max-w-[760px] text-center">
+        <div className="mx-auto mb-10 max-w-[820px] text-center">
           <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[54px]">
-            <CountUpStat end={60} suffix=" days" /> to change your career story.
+            Choose the Journey That Fits Your Goals.
           </h2>
           <p className="mt-4 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            Short program. Long-term impact.
+            From quick interview preparation to complete career transformation,
+            HireAble offers four levels of support designed around your career
+            stage and goals.
           </p>
         </div>
 
@@ -924,15 +1010,8 @@ function Duration() {
                     {item.label}
                   </p>
                   <h3 className="mt-3 font-display text-[30px] font-extrabold leading-tight text-[#111827]">
-                    {typeof item.countEnd === "number" ? (
-                      <CountUpStat end={item.countEnd} suffix={item.countSuffix} />
-                    ) : (
-                      item.value
-                    )}
+                    {item.value}
                   </h3>
-                  <p className="mt-3 text-[15px] font-semibold leading-7 text-[#4b5563]">
-                    {item.note}
-                  </p>
                 </div>
               </Reveal>
             );
@@ -961,20 +1040,23 @@ function FounderNote() {
 
         <div>
           <p className="mb-4 text-[15px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
-            FOUNDER NOTE
+            A MESSAGE FROM OUR FOUNDER
           </p>
           <h2 className="font-display text-[40px] font-extrabold leading-tight text-[#111827] sm:text-[52px]">
-            Why we built Hireable
+            Why We Started HireAble
           </h2>
           <p className="mt-5 text-[17px] font-semibold leading-8 text-[#4b5563]">
-            We built Hireable because too many good candidates were losing interviews they were qualified for. Not because they lacked skill. Because nobody trained them to speak when the pressure hit. A quiet room is easy. A panel is different. Your voice shakes. Your answer runs long. Your strongest point gets buried. Hireable brings that pressure into practice, before the interview does. We coach the answer, the pause, the tone, and the recovery after a bad start. The goal is simple: help you sound like the person your resume already says you are. So panels hear the candidate, not the panic.
+            HireAble was created with one simple belief: talent alone isn&apos;t
+            enough. Every year, thousands of capable students and professionals
+            miss opportunities, not because they lack knowledge, but because
+            they haven&apos;t been taught how to communicate, perform under
+            pressure, and navigate interviews. That&apos;s why we built HireAble:
+            to bridge the gap between education and employability through
+            practical learning, industry mentorship, and workplace preparation.
           </p>
           <div className="mt-6 rounded-[14px] border border-[#e3e6ff] bg-white p-5">
             <p className="font-display text-[22px] font-extrabold text-[#111827]">
               Naveen K Abraham
-            </p>
-            <p className="mt-1 text-[14px] font-bold text-[#6b7280]">
-              YAA Founder
             </p>
           </div>
         </div>
@@ -991,23 +1073,25 @@ function FinalCta() {
           <Sparkles className="h-8 w-8 stroke-[1.5]" />
         </span>
         <h2 className="font-display text-[42px] font-extrabold leading-tight text-[#111827] sm:text-[58px]">
-          You don&apos;t need perfect confidence. You need a real practice system.
+          Your Career Deserves More Than Just Qualifications.
         </h2>
         <p className="mx-auto mt-5 max-w-[680px] text-[19px] font-semibold leading-8 text-[#4b5563]">
-          One call. That&apos;s all it takes to start sounding like the person on your resume.
+          Join YAA and build the confidence, skills, and practical experience
+          to become truly HireAble.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             className="inline-flex min-h-12 w-full max-w-[430px] flex-wrap items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-5 py-4 text-[14px] font-extrabold text-white shadow-[0_18px_44px_rgba(120,134,251,0.26)] transition hover:bg-[#7886fb] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
-            href={phoneHref}
+            href="#programmes"
           >
-            Talk to a coach <span className="text-white/70">&middot;</span> {phoneNumber}
+            Explore HireAble
+            <ArrowRight className="h-4 w-4 stroke-[1.5]" />
           </a>
           <a
             className="inline-flex min-h-12 w-full max-w-[430px] items-center justify-center gap-2 rounded-[8px] border border-[#dfe3ff] bg-white px-5 py-4 text-[14px] font-extrabold text-[#111827] transition hover:border-[#7886fb] hover:text-[#7886fb] sm:w-auto sm:max-w-none sm:px-8 sm:text-[15px]"
             href={talkHref}
           >
-            Book a free 15-min intro call
+            Book a Career Consultation
             <ArrowRight className="h-4 w-4 stroke-[1.5]" />
           </a>
         </div>
@@ -1022,7 +1106,7 @@ function Footer() {
       <div className="bg-[#7886fb]">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-5 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <h2 className="font-display text-[30px] font-extrabold leading-tight sm:text-[40px]">
-            Ready to fix your delivery?
+            Ready to Build Your Added Advantage?
           </h2>
           <a
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-white px-6 py-4 text-[15px] font-extrabold text-[#111827] shadow-[0_18px_44px_rgba(17,24,39,0.14)] transition hover:-translate-y-0.5 md:w-auto"
@@ -1119,23 +1203,23 @@ function App() {
       <main>
         <Hero />
         <TrustStrip />
-        <OutcomeStrip />
         <AudienceFit />
+        <OutcomeStrip />
         <ProblemSection
           image={communicationImage}
-          imageAlt="Candidate feeling unsure while preparing at a desk"
-          label="THE COMMUNICATION GAP"
-          problem="You have the skills. But when it counts, the words don't come out right."
-          fix="We coach how you sound under pressure - your clarity, your structure, your tone, and the words you reach for when it counts."
-          tag="Communication is a skill. We teach it like one."
+          imageAlt="Candidate preparing for an interview on a laptop"
+          label="INTERVIEWS ARE A SKILL"
+          problem="Interviews don't test what you know. They test how well you communicate what you know."
+          fix="We train the structure, clarity, and confidence behind a good answer, so your knowledge can actually land."
+          tag="You don't need more memorised answers. You need better delivery."
         />
         <ProblemSection
           image={interviewImage}
           imageAlt="Candidate practicing a formal interview conversation"
-          label="THE PRESSURE GAP"
-          problem="You blank out. You over-explain. You walk out knowing you had the answer."
-          fix="Live mock interviews. Real panels. Feedback that actually sticks."
-          tag="We simulate the pressure so the real thing feels easier."
+          label="HOW HIREABLE PREPARES YOU"
+          problem="Practice with purpose. Perform with confidence."
+          fix="Experience realistic interview scenarios, receive personalised feedback from industry mentors, and improve with every mock until you're ready for the opportunity."
+          tag="Confidence is built through practice."
           reverse
         />
         <HireableBreak />

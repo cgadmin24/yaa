@@ -49,33 +49,82 @@ const navItems = [
   { label: "Contact", href: "/contact" }
 ];
 
-const programs = [
+const courseProgrammes = [
   {
-    title: "Hireable",
-    category: "Interview Communication",
-    description: "Live mocks, AI pressure practice, and feedback that fixes delivery fast.",
-    lessons: "60 days",
-    price: "View program",
-    href: "/hireable",
-    status: "Open now"
+    title: "HireAble Express",
+    subtitle: "Quick Interview Tune-Up",
+    description:
+      "Perfect for students with an upcoming interview who need expert guidance, resume review, and a confidence boost.",
+    duration: "2 Sessions",
+    price: "Starting From: \u20b91,999",
+    cta: "Explore Programme",
+    href: "/hireable"
   },
   {
-    title: "Corporate Readiness",
-    category: "Workplace Skills",
-    description: "Meetings, emails, calls, and the corporate fluency nobody teaches you.",
-    lessons: "6 modules",
-    price: "Notify me",
-    href: "/contact",
-    status: "Coming Soon"
+    title: "HireAble Boost",
+    badge: "Most Popular",
+    subtitle: "Interview Success Programme",
+    description:
+      "A structured programme for freshers and job seekers to strengthen communication, interview skills, and career readiness.",
+    duration: "2-3 Weeks",
+    price: "Starting From: \u20b97,999",
+    cta: "Explore Programme",
+    href: "/hireable"
   },
   {
-    title: "Self Introduction Mastery",
-    category: "Career Confidence",
-    description: "Own the first question before it owns the interview.",
-    lessons: "3 sessions",
-    price: "Notify me",
-    href: "/contact",
-    status: "Coming Soon"
+    title: "HireAble Plus",
+    badge: "Flagship Programme",
+    subtitle: "Career Acceleration Programme",
+    description:
+      "A comprehensive learning journey covering communication, workplace readiness, interview mastery, and professional development.",
+    duration: "2 Months",
+    price: "Starting From: \u20b919,999",
+    cta: "Explore Programme",
+    href: "/hireable"
+  },
+  {
+    title: "HireAble Elite",
+    subtitle: "Premium Career Transformation",
+    description:
+      "Personalized mentoring, unlimited mock interviews, career strategy, placement support, and long-term professional guidance.",
+    duration: "3+ Months",
+    price: "Starting From: \u20b949,999",
+    cta: "Talk to a Mentor",
+    href: "/contact"
+  },
+  {
+    title: "Leadership Upskill",
+    badge: "Coming Soon",
+    subtitle: "For Emerging Leaders & Working Professionals",
+    description:
+      "Strengthen leadership, strategic thinking, business communication, AI productivity, and real-world problem-solving through practical corporate scenarios and case studies.",
+    highlights: [
+      "Leadership & Decision Making",
+      "AI Tools for Professionals",
+      "Business Case Studies",
+      "Corporate Problem Solving",
+      "Workplace Productivity",
+      "Strategic Thinking"
+    ],
+    cta: "Notify Me",
+    href: "/contact"
+  },
+  {
+    title: "Excel & Power BI Essentials",
+    badge: "Coming Soon",
+    subtitle: "Data & Business Analytics Programme",
+    description:
+      "Master Excel and Power BI through practical business scenarios, dashboards, reporting, and hands-on projects designed for the modern workplace.",
+    highlights: [
+      "Advanced Excel",
+      "Power BI Fundamentals",
+      "Dashboard Development",
+      "Business Reporting",
+      "Data Analysis",
+      "Real-World Projects"
+    ],
+    cta: "Notify Me",
+    href: "/contact"
   }
 ];
 
@@ -156,9 +205,9 @@ const routeMeta = {
       "YAA is the EdTech wing of The Closing Gap, helping students and early-career professionals build communication, interview, and workplace skills."
   },
   courses: {
-    title: "Courses | YAA",
+    title: "Programs | YAA",
     description:
-      "See YAA programs for interview communication, corporate readiness, self introduction mastery, and career confidence."
+      "See YAA programmes for interview communication, workplace skills, and career acceleration."
   },
   about: {
     title: "About | YAA",
@@ -234,7 +283,7 @@ function useInViewOnce<T extends HTMLElement = HTMLDivElement>(threshold = 0.2) 
           observer.disconnect();
         }
       },
-      { rootMargin: "0px 0px -10% 0px", threshold }
+      { rootMargin: "0px", threshold }
     );
 
     observer.observe(node);
@@ -261,7 +310,7 @@ type CountUpStatProps = {
 };
 
 function CountUpStat({ end, suffix = "", decimals = 0, className }: CountUpStatProps) {
-  const { ref, isInView, canAnimate } = useInViewOnce<HTMLSpanElement>(0.5);
+  const { ref, isInView, canAnimate } = useInViewOnce<HTMLSpanElement>(0.1);
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -951,61 +1000,203 @@ function FeaturedProgrammes() {
 }
 
 function CoursesPage() {
-  return (
-    <PageShell
-      label="Courses"
-      title="Practical programs for the moments that decide your career."
-      description="Start with Hireable today, then build the corporate communication habits that make interviews, calls, emails, and meetings feel less intimidating."
-    >
-      <div className="mb-8 grid gap-4 rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm md:grid-cols-3">
-        {[
-          ["Start here", "Hireable is open for interview confidence and delivery training."],
-          ["Coming next", "Corporate readiness and self-introduction tracks are being shaped for focused batches."],
-          ["Talk first", "If you are unsure where to begin, we will map the right route before you join."]
-        ].map(([title, text]) => (
-          <div className="flex gap-3" key={title}>
-            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-              <CheckCircle2 className="h-[18px] w-[18px] stroke-[1.5]" />
-            </span>
-            <div>
-              <p className="font-display text-[18px] font-extrabold text-[#111827]">{title}</p>
-              <p className="mt-1 text-[14px] font-medium leading-6 text-[#4b5563]">{text}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+  const [notifyProgram, setNotifyProgram] = useState<string | null>(null);
+  const [notifySubmitted, setNotifySubmitted] = useState(false);
 
-      <div className="grid gap-6 md:grid-cols-3">
-        {programs.map((program) => (
+  function handleNotifySubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = String(data.get("email") || "").trim();
+
+    if (!email || !notifyProgram) return;
+
+    const stored = window.localStorage.getItem("yaa_notify_requests");
+    const requests = stored ? JSON.parse(stored) as Array<{ email: string; program: string }> : [];
+    requests.push({ email, program: notifyProgram });
+    window.localStorage.setItem("yaa_notify_requests", JSON.stringify(requests));
+    setNotifySubmitted(true);
+  }
+
+  return (
+    <>
+      <PageShell
+        label="Programs"
+        title="Practical Programmes. Real Career Outcomes."
+        description="Whether you're preparing for your first interview, developing workplace skills, or advancing your career, YAA offers practical, mentor-led programmes designed for every stage of your professional journey."
+      >
+        <div className="mb-8 grid gap-4 rounded-[16px] border border-[#e3e6ff] bg-[#ffffff] p-5 shadow-sm md:grid-cols-3">
+          {[
+            ["Learn", "Practical, mentor-led programmes designed around real career challenges."],
+            ["Grow", "Build confidence, workplace skills, and industry-ready capabilities."],
+            ["Succeed", "Choose the programme that matches your goals and accelerate your career."]
+          ].map(([title, text]) => (
+            <div className="flex gap-3" key={title}>
+              <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                <CheckCircle2 className="h-[18px] w-[18px] stroke-[1.5]" />
+              </span>
+              <div>
+                <p className="font-display text-[18px] font-extrabold text-[#111827]">{title}</p>
+                <p className="mt-1 text-[14px] font-medium leading-6 text-[#4b5563]">{text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {courseProgrammes.map((program, index) => {
+            const isNotify = program.cta === "Notify Me";
+
+            return (
+              <Reveal className="h-full" delay={index * 80} key={program.title}>
+                <article className="flex h-full flex-col rounded-[14px] border border-[#e3e6ff] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]">
+                  <div className="mb-5 flex items-start justify-between gap-3">
+                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                      <BriefcaseBusiness className="h-6 w-6 stroke-[1.5]" />
+                    </div>
+                    {program.badge && (
+                      <span className={cn(
+                        "rounded-full px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.08em]",
+                        program.badge === "Coming Soon"
+                          ? "bg-[#f9fafb] text-[#6b7280]"
+                          : "bg-[#ffee0f] text-[#111827]"
+                      )}>
+                        {program.badge}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-display text-[25px] font-extrabold text-[#111827]">
+                    {program.title}
+                  </h3>
+                  <p className="mt-2 text-[14px] font-extrabold text-[#7886fb]">
+                    {program.subtitle}
+                  </p>
+                  <p className="mt-4 text-[15px] font-medium leading-7 text-[#4b5563]">
+                    {program.description}
+                  </p>
+
+                  {program.highlights ? (
+                    <div className="mt-5 rounded-[12px] bg-[#f9fafb] p-4">
+                      <p className="mb-3 text-[12px] font-extrabold uppercase tracking-[0.12em] text-[#6b7280]">
+                        What you&apos;ll learn
+                      </p>
+                      <div className="grid gap-2">
+                        {program.highlights.map((highlight) => (
+                          <span className="flex items-center gap-2 text-[14px] font-bold text-[#4b5563]" key={highlight}>
+                            <CheckCircle2 className="h-4 w-4 shrink-0 stroke-[1.5] text-[#7886fb]" />
+                            {highlight}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-5 grid gap-2 rounded-[12px] bg-[#f9fafb] p-4">
+                      <span className="text-[13px] font-bold text-[#6b7280]">
+                        Duration: <span className="text-[#111827]">{program.duration}</span>
+                      </span>
+                      <span className="text-[13px] font-bold text-[#6b7280]">
+                        {program.price}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="mt-auto pt-6">
+                    {isNotify ? (
+                      <button
+                        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] border border-[#7886fb] px-5 py-3 text-[14px] font-extrabold text-[#7886fb] transition hover:bg-[#f1f3ff]"
+                        onClick={() => {
+                          setNotifyProgram(program.title);
+                          setNotifySubmitted(false);
+                        }}
+                        type="button"
+                      >
+                        <Bell className="h-4 w-4 stroke-[1.5]" />
+                        Notify Me
+                      </button>
+                    ) : (
+                      <a
+                        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-[#7886fb] px-5 py-3 text-[14px] font-extrabold text-white shadow-[0_14px_32px_rgba(120,134,251,0.22)] transition hover:bg-[#6978f7]"
+                        href={program.href}
+                      >
+                        {program.cta}
+                        <ArrowRight className="h-4 w-4 stroke-[1.5]" />
+                      </a>
+                    )}
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        <div className="mt-10 rounded-[18px] bg-[#0a1b33] p-7 text-white md:flex md:items-center md:justify-between md:gap-8">
+          <div>
+            <h2 className="font-display text-[30px] font-extrabold leading-tight">
+              Not Sure Which Programme Is Right for You?
+            </h2>
+            <p className="mt-3 max-w-[760px] text-[16px] font-semibold leading-7 text-white/78">
+              Book a free career consultation, and we&apos;ll help you choose the programme that best aligns with your goals, experience, and aspirations.
+            </p>
+          </div>
           <a
-            className="rounded-[14px] border border-[#e3e6ff] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(17,24,39,0.1)]"
-            href={program.href}
-            key={program.title}
+            className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-white px-6 py-4 text-[15px] font-extrabold text-[#111827] md:mt-0 md:w-auto"
+            href={talkHref}
           >
-            <div className="mb-5 grid h-12 w-12 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
-              <BriefcaseBusiness className="h-6 w-6 stroke-[1.5]" />
-            </div>
-            <p className="text-[13px] font-extrabold uppercase tracking-[0.12em] text-[#7886fb]">
-              {program.category}
-            </p>
-            <h3 className="mt-3 font-display text-[24px] font-extrabold text-[#111827]">
-              {program.title}
-            </h3>
-            <p className="mt-3 text-[15px] font-medium leading-7 text-[#4b5563]">
-              {program.description}
-            </p>
-            <div className="mt-6 flex items-center justify-between border-t border-[#e3e6ff] pt-5">
-              <span className="text-[13px] font-bold text-[#6b7280]">
-                <StatText text={program.lessons} />
-              </span>
-              <span className="font-display text-[17px] font-extrabold text-[#7886fb]">
-                {program.price}
-              </span>
-            </div>
+            Book a Career Consultation
+            <ArrowRight className="h-4 w-4 stroke-[1.5]" />
           </a>
-        ))}
-      </div>
-    </PageShell>
+        </div>
+      </PageShell>
+
+      {notifyProgram && (
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-[#0a1b33]/40 px-4 backdrop-blur-sm">
+          <div className="w-full max-w-[440px] rounded-[18px] border border-[#e3e6ff] bg-white p-6 shadow-[0_30px_90px_rgba(17,24,39,0.22)]">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+                  Launch alert
+                </p>
+                <h3 className="mt-2 font-display text-[28px] font-extrabold text-[#111827]">
+                  {notifyProgram}
+                </h3>
+              </div>
+              <button
+                aria-label="Close notification form"
+                className="grid h-10 w-10 place-items-center rounded-[8px] border border-[#dfe3ff] text-[#111827]"
+                onClick={() => setNotifyProgram(null)}
+                type="button"
+              >
+                <X className="h-5 w-5 stroke-[1.5]" />
+              </button>
+            </div>
+
+            {notifySubmitted ? (
+              <p className="mt-5 rounded-[12px] bg-[#f1f3ff] p-4 text-[15px] font-bold text-[#111827]">
+                You&apos;re on the list. We&apos;ll email you when this programme opens.
+              </p>
+            ) : (
+              <form className="mt-5 grid gap-3" onSubmit={handleNotifySubmit}>
+                <label className="grid gap-2">
+                  <span className="text-[13px] font-extrabold text-[#4b5563]">Email</span>
+                  <input
+                    className="rounded-[8px] border border-[#dfe3ff] px-4 py-3 text-[#111827] outline-none transition focus:border-[#7886fb]"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                    type="email"
+                  />
+                </label>
+                <button
+                  className="rounded-[8px] bg-[#7886fb] px-5 py-3 text-[15px] font-extrabold text-white"
+                  type="submit"
+                >
+                  Notify Me
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -1013,8 +1204,8 @@ function AboutPage() {
   return (
     <PageShell
       label="About YAA"
-      title="We exist for candidates who can do the job, but cannot yet show it."
-      description="YAA brings together Hireable, communication training, and career readiness for students and early professionals who need real practice before real opportunities."
+      title="Building Careers. Creating Added Advantage."
+      description="YAA (Your Added Advantage) is the EdTech wing of The Closing Gap, helping students and professionals bridge the gap between education and employability through practical, career-focused learning."
     >
       <div className="mb-8 grid gap-8 rounded-[18px] border border-[#e3e6ff] bg-[#ffffff] p-7 shadow-sm lg:grid-cols-[0.9fr_1.1fr]">
         <div>
@@ -1022,22 +1213,24 @@ function AboutPage() {
             <GraduationCap className="h-7 w-7 stroke-[1.5]" />
           </span>
           <h2 className="font-display text-[32px] font-extrabold leading-tight text-[#111827]">
-            The gap is rarely talent. It is delivery under pressure.
+            Why YAA Exists
           </h2>
         </div>
         <p className="text-[16px] font-medium leading-8 text-[#4b5563]">
-          A candidate can know the answer, have the degree, and still lose the
-          room when the interviewer asks a follow-up. YAA trains the missing
-          layer: structure, calm, professional language, and repeated practice
-          with feedback that is honest enough to be useful.
+          We believe career success is built through practical skills, industry
+          mentorship, and real-world preparation - not just qualifications. Too
+          many talented people miss opportunities because traditional education
+          doesn&apos;t prepare them for real careers. YAA was created to bridge that
+          gap with practical, career-focused programmes that help learners
+          become workplace-ready.
         </p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         {[
-          ["Pressure first", "We train for the real moment, not the quiet room."],
-          ["Feedback fast", "Students need clear correction, not polite encouragement."],
-          ["Outcome focused", "Every module must move someone closer to a clearer answer, stronger voice, and better interview."]
+          ["Industry-Led Learning", "Learn from professionals with real corporate experience who understand today's workplace expectations."],
+          ["Practical Learning", "Interactive sessions, practical activities, mentorship, and real-world application - not just theory."],
+          ["Career-Focused Outcomes", "Every programme is designed to build confidence, workplace readiness, and long-term career growth."]
         ].map(([title, text]) => (
           <div className="rounded-[14px] border border-[#e3e6ff] bg-white p-7" key={title}>
             <span className="mb-5 grid h-12 w-12 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
@@ -1047,6 +1240,38 @@ function AboutPage() {
             <p className="mt-3 text-[15px] font-medium leading-7 text-[#4b5563]">{text}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-14 rounded-[20px] bg-[#f9fafb] p-6 sm:p-8">
+        <div className="mb-8 max-w-[760px]">
+          <p className="mb-3 text-[13px] font-extrabold uppercase tracking-[0.14em] text-[#7886fb]">
+            Student trust
+          </p>
+          <h2 className="font-display text-[34px] font-extrabold leading-tight text-[#111827] sm:text-[44px]">
+            Why Students Trust YAA
+          </h2>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            "EdTech Wing of The Closing Gap",
+            "Backed by an ISO-Certified Organization",
+            "Mentors with 10+ Years of Corporate Experience",
+            "Career-Focused Learning",
+            "Growing Learning Community",
+            "Practical. Personalised. Professional."
+          ].map((item, index) => (
+            <Reveal className="h-full" delay={index * 80} key={item}>
+              <div className="h-full rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm">
+                <span className="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                  <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
+                </span>
+                <p className="font-display text-[20px] font-extrabold leading-snug text-[#111827]">
+                  {item}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </PageShell>
   );
@@ -1073,9 +1298,29 @@ function ContactPage() {
   return (
     <PageShell
       label="Contact"
-      title="Tell us where candidates are getting stuck."
-      description="Tell us what is blocking you: interview nerves, communication confidence, career break concerns, or corporate readiness. We will help you choose the right next step."
+      title="Let's Talk About Your Career Goals."
+      description="Whether you're preparing for interviews, exploring our programmes, or unsure where to begin, our team is here to guide you towards the right learning path."
     >
+      <div className="mb-8 grid gap-4 md:grid-cols-4">
+        {[
+          "Have a question about our programmes?",
+          "Looking for career guidance?",
+          "Need help choosing the right programme?",
+          "We're happy to help."
+        ].map((item, index) => (
+          <Reveal className="h-full" delay={index * 80} key={item}>
+            <div className="flex h-full items-center gap-3 rounded-[14px] border border-[#e3e6ff] bg-white p-5 shadow-sm">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#f1f3ff] text-[#7886fb]">
+                <CheckCircle2 className="h-5 w-5 stroke-[1.5]" />
+              </span>
+              <p className="text-[15px] font-extrabold leading-6 text-[#111827]">
+                {item}
+              </p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="rounded-[16px] bg-[#7886fb] p-8 text-white">
           <span className="mb-8 grid h-14 w-14 place-items-center rounded-full bg-white/15 text-white">
@@ -1083,8 +1328,8 @@ function ContactPage() {
           </span>
           <h3 className="font-display text-[32px] font-extrabold">Talk to YAA</h3>
           <p className="mt-4 text-[16px] leading-8 text-white/80">
-            One conversation is enough to understand where you are freezing,
-            what you need to practice, and whether Hireable is the right fit.
+            One conversation is enough to understand your goals, your current
+            gap, and the programme that fits you best.
           </p>
           <div className="mt-8 grid gap-3">
             <a
@@ -1104,6 +1349,9 @@ function ContactPage() {
           </div>
         </div>
         <form className="rounded-[16px] border border-[#e3e6ff] bg-white p-8" onSubmit={handleSubmit}>
+          <h2 className="mb-5 font-display text-[30px] font-extrabold text-[#111827]">
+            How can we help you?
+          </h2>
           <div className="grid gap-4">
             <label className="grid gap-2">
               <span className="text-[13px] font-extrabold text-[#4b5563]">Name</span>
@@ -1127,12 +1375,12 @@ function ContactPage() {
             </label>
             <label className="grid gap-2">
               <span className="text-[13px] font-extrabold text-[#4b5563]">
-                What are you struggling with?
+                Tell us about your goals
               </span>
               <textarea
                 className="min-h-28 rounded-[8px] border border-[#e3e6ff] bg-[#ffffff] px-4 py-4 text-[#111827] outline-none transition focus:border-[#7886fb]"
                 name="challenge"
-                placeholder="Interview fear, communication confidence, career break, self introduction..."
+                placeholder="Tell us about your goals or how we can help you..."
                 required
               />
             </label>
@@ -1187,7 +1435,9 @@ function Footer({ route }: { route: RouteName }) {
       <div className="bg-[#7886fb]">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-5 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <h2 className="font-display text-[30px] font-extrabold leading-tight sm:text-[40px]">
-            {route === "home" ? "Ready to Build Your Added Advantage?" : "Ready to fix your delivery?"}
+            {route === "home" || route === "courses" || route === "about" || route === "contact"
+              ? "Ready to Build Your Added Advantage?"
+              : "Ready to fix your delivery?"}
           </h2>
           <a
             className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[8px] bg-white px-6 py-4 text-[15px] font-extrabold text-[#111827] shadow-[0_18px_44px_rgba(17,24,39,0.14)] transition hover:-translate-y-0.5 md:w-auto"
